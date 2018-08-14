@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Archivo');
 
-body {
-  margin      : 0;
-  padding     : 0;
+.Home {
+  text-align : center;
   font-family: 'Archivo', sans-serif;
-  background-color: #F0EFEF;
+}
+
+.panel{
+  width : 200px;
 }

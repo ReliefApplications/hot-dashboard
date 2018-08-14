@@ -1,0 +1,21 @@
+.header-component {
+  text-align : center;
+}
+
+.header {
+  display : flex;
+  flex-direction : row;
+  height           : 50px;
+  padding          : 10px;
+  background-color : #D73F3F;
+  color            : white;
+  box-shadow: 0 5px 50px 0 #929DB3;
+}
+
+.header-title {
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  margin : 0 auto;
+  font-size       : 1.5em;
+}
