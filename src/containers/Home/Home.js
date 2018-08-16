@@ -30,8 +30,9 @@ class Home extends React.Component {
 
   state = {
     menuLeft                : false, // State of the left menu.
-    MainContentSelected     : true,  // When Main Content is selected
-    TrainingContentSelected : false, // When Training Content is selected
+    mainContentSelected     : true,  // When Main Content is selected
+    trainingContentSelected : false, // When Training Content is selected
+    pageName : 'Main'
   };
 
 
@@ -60,16 +61,18 @@ class Home extends React.Component {
   /** To show the Main Content **/
   openMainContent = (open) => () => {
     this.setState({
-      MainContentSelected     : open,
-      TrainingContentSelected : false
+      pageName : 'Main',
+      mainContentSelected     : open,
+      trainingContentSelected : false
     });
   };
 
   /** To show the Training Content **/
   openTrainingContent = (open) => () => {
     this.setState({
-      TrainingContentSelected : open,
-      MainContentSelected     : false
+      pageName : 'Training',
+      trainingContentSelected : open,
+      mainContentSelected     : false
     });
   };
 
@@ -93,7 +96,7 @@ class Home extends React.Component {
         <div className="Home">
 
         {/* Header */}
-          <Header sendToHeader={this.openMenu}></Header>
+          <Header sendToHeader={this.openMenu} pageName={this.state.pageName}></Header>
 
         {/* SideMenu */}
          <SwipeableDrawer
@@ -114,8 +117,8 @@ class Home extends React.Component {
           </SwipeableDrawer>
 
         {/* Contents */}
-          {this.state.MainContentSelected     && (<MainContent></MainContent>)}
-          {this.state.TrainingContentSelected && (<TrainingContent></TrainingContent>)}
+          {this.state.mainContentSelected     && (<MainContent></MainContent>)}
+          {this.state.trainingContentSelected && (<TrainingContent></TrainingContent>)}
 
         </div>
       );

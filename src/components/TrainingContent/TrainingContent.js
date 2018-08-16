@@ -8,6 +8,7 @@ import './TrainingContent.css';
 import trainingIMG   from '../../logos/training.png';
 
 /** Material UI **/
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Typography     from '@material-ui/core/Typography';
 import Card           from '@material-ui/core/Card';
 import CardContent    from '@material-ui/core/CardContent';
@@ -32,6 +33,14 @@ import      Papa         from 'papaparse';
 
 const jsonService = new JsonService();
 
+const font = "'Barlow Condensed', sans-serif";
+
+const GlobalTheme = createMuiTheme({
+  typography: {
+    fontSize   :  18,
+    fontFamily : font
+  },
+})
 
 class TrainingContent extends Component {
   constructor (props) {
@@ -74,6 +83,7 @@ class TrainingContent extends Component {
   render() {
     return (
   <div>
+    <MuiThemeProvider theme={GlobalTheme}>
     <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
 
   {/* First row */}
@@ -83,6 +93,7 @@ class TrainingContent extends Component {
       </Grid>
 
     </Grid>
+    </MuiThemeProvider>
   </div>
   );
  }

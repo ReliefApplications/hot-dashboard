@@ -10,10 +10,11 @@ import projectsIMG   from '../../logos/projects.png';
 import mapIMG        from '../../logos/map.png';
 
 /** Material UI **/
-import Typography     from '@material-ui/core/Typography';
-import Card           from '@material-ui/core/Card';
-import CardContent    from '@material-ui/core/CardContent';
-import Grid           from '@material-ui/core/Grid';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Typography       from '@material-ui/core/Typography';
+import Card             from '@material-ui/core/Card';
+import CardContent      from '@material-ui/core/CardContent';
+import Grid             from '@material-ui/core/Grid';
 
 /** Components **/
 import WidgetIndicator from '../Widgets/WidgetIndicator';
@@ -34,6 +35,23 @@ import      Papa         from 'papaparse';
 
 const jsonService = new JsonService();
 
+const font = "'Barlow Condensed', sans-serif";
+const fontSize = 18;
+
+const GlobalTheme = createMuiTheme({
+  typography: {
+    fontSize   :  fontSize,
+    fontFamily : font
+  },
+})
+
+const MappedElementTheme = createMuiTheme({
+  typography: {
+    fontSize   :  fontSize,
+    fontFamily : font,
+    color: 'white'
+  },
+})
 
 class MainContent extends Component {
   constructor (props) {
@@ -78,6 +96,7 @@ class MainContent extends Component {
     return (
   <div>
     <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
+    <MuiThemeProvider theme={GlobalTheme}>
 
   {/* First row */}
 
@@ -96,7 +115,6 @@ class MainContent extends Component {
           <WidgetIndicator title="Mapathons" img={mapathonsIMG} data={this.state.dataJSONfromAPI.totalMappers}/>
         </Grid>
 
-
   {/* Second row */}
 
         {/* Mapped elements */}
@@ -105,6 +123,7 @@ class MainContent extends Component {
             <CardContent className="widget-text">
               <Typography variant="caption" className="widget-mappedElements-title"> Number of elements mapped </Typography>
               <div className="widget-mappedElements-text">
+              <MuiThemeProvider theme={MappedElementTheme}>
                 <Typography color="textSecondary" className="widget-mappedElements-text-item-green">
                   {new Intl.NumberFormat('en-GB', {
                      minimumFractionDigits : 0,
@@ -115,6 +134,7 @@ class MainContent extends Component {
                      minimumFractionDigits : 0,
                      maximumFractionDigits : 0
                    }).format(this.state.dataJSONfromAPI.totalRoads)} Roads</Typography>
+                   </MuiThemeProvider>
               </div>
             </CardContent>
           </Card>
@@ -131,6 +151,7 @@ class MainContent extends Component {
                                  innerRadius = {100}
                                  width       = {450}
                                  colorScale  = {[ "#FAA71E", "#D73F3F"]}
+                                 style={{ labels: {fontSize: 18} }}
                                  data = {[
                                    { x: "Women", y: 41 },
                                    { x: "Men",   y: 59 },
@@ -170,6 +191,7 @@ class MainContent extends Component {
 
         </Grid>
 
+        </MuiThemeProvider>
       </Grid>
     </div>
     );

@@ -25,7 +25,7 @@ class Header extends Component {
           <IconButton color="inherit" aria-label="Menu" >
             <MenuIcon onClick={this.openLeftMenu(true)}/>
           </IconButton>
-          <h1 className="header-title">HOT Overview</h1>
+          <h1 className="header-title">HOT Overview - {this.props.pageName}</h1>
         </header>
       </div>
     );
