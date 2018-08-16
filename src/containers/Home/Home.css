@@ -8,3 +8,14 @@
 .panel{
   width : 200px;
 }
+
+.listMenu-item{
+  text-align  : center;
+  width       : 100%;
+  margin      : 0 auto;
+  cursor      : pointer;
+}
+
+.listMenu-item:hover{
+  background : #F0EFEF;
+}

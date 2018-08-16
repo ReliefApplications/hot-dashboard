@@ -8,7 +8,6 @@ import CardContent    from '@material-ui/core/CardContent';
 import CardMedia      from '@material-ui/core/CardMedia';
 
 
-
 class WidgetIndicator extends Component {
   render() {
 

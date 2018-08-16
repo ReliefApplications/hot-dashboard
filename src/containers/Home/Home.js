@@ -2,85 +2,126 @@
 import React from 'react';
 
 /** Containers **/
-import Header    from '../../components/Header/Header'
-import Content   from '../../components/Content/Content'
+import Header          from '../../components/Header/Header'
+import MainContent     from '../../components/MainContent/MainContent'
+import TrainingContent from '../../components/TrainingContent/TrainingContent'
 
 /** CSS **/
 import './Home.css';
 
 /** Material **/
 import { withStyles }  from '@material-ui/core/styles';
-import PropTypes       from 'prop-types';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List            from '@material-ui/core/List';
 import Divider         from '@material-ui/core/Divider';
-import Button          from '@material-ui/core/Button';
+import PropTypes       from 'prop-types';
 
 const styles = {
   list: {
-    width: 250,
+    width: 200,
   },
 };
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props)
+    this.openMenu = this.openMenu.bind(this);
+  }
 
   state = {
-    right: false,
+    menuLeft                : false, // State of the left menu.
+    MainContentSelected     : true,  // When Main Content is selected
+    TrainingContentSelected : false, // When Training Content is selected
   };
 
-  toggleDrawer = (side, open) => () => {
+
+  //------------------------------------------------------------------------//
+  //---------------------------------- Menu --------------------------------//
+  //------------------------------------------------------------------------//
+
+  /** To open the Menu from the Header child component **/
+  openMenu(openORclose){
     this.setState({
-      [side]: open,
+      menuLeft: openORclose,
+    });
+  }
+
+  /** To close the Menu **/
+  closeMenu = (open) => () => {
+    this.setState({
+      menuLeft: open,
     });
   };
 
+  //------------------------------------------------------------------------//
+  //----------------------------- Menu Contents ----------------------------//
+  //------------------------------------------------------------------------//
 
-render() {
-  const { classes } = this.props;
+  /** To show the Main Content **/
+  openMainContent = (open) => () => {
+    this.setState({
+      MainContentSelected     : open,
+      TrainingContentSelected : false
+    });
+  };
 
-{/* Items Menu list  */}
-  const sideList = (
-     <div className={classes.list}>
-       <List>"pop"</List>
-       <Divider />
-       <List>"pop"</List>
-     </div>
-   );
+  /** To show the Training Content **/
+  openTrainingContent = (open) => () => {
+    this.setState({
+      TrainingContentSelected : open,
+      MainContentSelected     : false
+    });
+  };
 
+  //------------------------------------------------------------------------//
+  //-------------------------------- Render --------------------------------//
+  //------------------------------------------------------------------------//
 
-    return (
-      <div className="Home">
+  render() {
+    const { classes } = this.props;
 
-      {/* Header */}
-        <Header></Header>
+  {/* Items Menu list  */}
+    const sideList = (
+       <div className={classes.list}>
+         <List className="listMenu-item" onClick = {this.openMainContent(true)}>Main</List>
+         <Divider />
+         <List className="listMenu-item" onClick = {this.openTrainingContent(true)}>Training</List>
+       </div>
+     );
 
-      {/* Button test SideMenu (to delete) */}
-      {/*  <Button onClick={this.toggleDrawer('right', true)}>Open Right</Button> */}
+      return (
+        <div className="Home">
 
-      {/* SideMenu */}
-        <SwipeableDrawer
-          anchor  = "right"
-          open    = {this.state.right}
-          onClose = {this.toggleDrawer('right', false)}
-          onOpen  = {this.toggleDrawer('right', true)}>
+        {/* Header */}
+          <Header sendToHeader={this.openMenu}></Header>
 
-          <div
-            tabIndex={0}
-            role      = "button"
-            onClick   = {this.toggleDrawer('right', false)}
-            onKeyDown = {this.toggleDrawer('right', false)}>
+        {/* SideMenu */}
+         <SwipeableDrawer
+            anchor  = "left"
+            open    = {this.state.menuLeft}
+            onClose = {this.closeMenu(false)}
+            onOpen  = {this.openMenu}>
 
-            {sideList}
-          </div>
-        </SwipeableDrawer>
+            <div
+              tabIndex  = {0}
+              role      = "button"
+              onClick   = {this.closeMenu(false)}
+              onKeyDown = {this.closeMenu(false)}>
 
+              {sideList}
 
-      {/* content items */}
-        <Content></Content>
-      </div>
-    );
+            </div>
+          </SwipeableDrawer>
+
+        {/* Contents */}
+          {this.state.MainContentSelected     && (<MainContent></MainContent>)}
+          {this.state.TrainingContentSelected && (<TrainingContent></TrainingContent>)}
+
+        </div>
+      );
+    }
   }
-}
+
 
 Home.propTypes = {
   classes: PropTypes.object.isRequired,

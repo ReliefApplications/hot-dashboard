@@ -2,13 +2,12 @@
 import React, { Component } from 'react';
 
 /** CSS **/
-import './Content.css';
+import './MainContent.css';
 
 /** Logos **/
-import mapathonsIMG  from '../../logos/mapathons.svg';
-import projectsIMG   from '../../logos/projects.svg';
-import mapIMG        from '../../logos/map.svg';
-import trainingIMG   from '../../logos/training.svg';
+import mapathonsIMG  from '../../logos/mapathons.png';
+import projectsIMG   from '../../logos/projects.png';
+import mapIMG        from '../../logos/map.png';
 
 /** Material UI **/
 import Typography     from '@material-ui/core/Typography';
@@ -36,7 +35,7 @@ import      Papa         from 'papaparse';
 const jsonService = new JsonService();
 
 
-class Content extends Component {
+class MainContent extends Component {
   constructor (props) {
     super(props);
 
@@ -45,6 +44,11 @@ class Content extends Component {
       dataCSV         : [],  // CSV from  Github API
     }
   }
+
+
+  //------------------------------------------------------------------------//
+  //--------------------------------- Init ---------------------------------//
+  //------------------------------------------------------------------------//
 
   /** Call datas from the GitHub api **/
    async componentDidMount(){
@@ -58,16 +62,17 @@ class Content extends Component {
 
     Papa.parse(events, {
     	complete: function(results) {
-    		console.log("Finished:", results.data);
+    		console.log("CSV read:", results.data);
     	}
     });
 
     // fetch('https://drive.google.com/file/d/1BN4K55eKENyYFfwxPiQcb4tyx2lrJn8A/view?usp=sharing').
-
   }
 
 
-
+  //------------------------------------------------------------------------//
+  //-------------------------------- Render --------------------------------//
+  //------------------------------------------------------------------------//
 
   render() {
     return (
@@ -91,15 +96,11 @@ class Content extends Component {
           <WidgetIndicator title="Mapathons" img={mapathonsIMG} data={this.state.dataJSONfromAPI.totalMappers}/>
         </Grid>
 
-        {/* People trained */}
-        <Grid item xs={12} sm={6} md={3}>
-          <WidgetIndicator title="People trained" img={trainingIMG}  data={this.state.dataJSONfromAPI.totalProjects}/>
-        </Grid>
 
   {/* Second row */}
 
         {/* Mapped elements */}
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6} md={3}>
           <Card className="widget-container">
             <CardContent className="widget-text">
               <Typography variant="caption" className="widget-mappedElements-title"> Number of elements mapped </Typography>
@@ -175,4 +176,4 @@ class Content extends Component {
   }
 }
 
-export default Content;
+export default MainContent;

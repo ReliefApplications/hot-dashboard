@@ -1,5 +1,6 @@
 .header-component {
   text-align : center;
+
 }
 
 .header {
@@ -14,8 +15,8 @@
 
 .header-title {
   display         : flex;
+  /* position        : absolute; */
   justify-content : center;
-  align-items     : center;
-  margin : 0 auto;
   font-size       : 1.5em;
+  width : 100%;
 }

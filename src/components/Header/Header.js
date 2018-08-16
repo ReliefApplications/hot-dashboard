@@ -13,18 +13,17 @@ import MenuIcon         from '@material-ui/icons/Menu';
 
 class Header extends Component {
 
-  toggleDrawer = (side, open) => () => {
-    this.setState({
-      [side]: open,
-    });
+  //To open the left Menu (on Home.js)
+  openLeftMenu = (open) => () => {
+    this.props.sendToHeader(open);
   };
 
   render() {
     return (
       <div className="header-component">
         <header className="header">
-          <IconButton color="inherit" aria-label="Menu" onClick={this.toggleDrawer('right', true)}>
-            <MenuIcon />
+          <IconButton color="inherit" aria-label="Menu" >
+            <MenuIcon onClick={this.openLeftMenu(true)}/>
           </IconButton>
           <h1 className="header-title">HOT Overview</h1>
         </header>
