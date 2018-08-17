@@ -20,22 +20,27 @@ import Grid             from '@material-ui/core/Grid';
 import WidgetIndicator from '../Widgets/WidgetIndicator';
 import WidgetGraph     from '../Widgets/WidgetGraph';
 
-/** Datas **/
-import events         from '../../datas/CSV/events.csv'
+/** Constants **/
+import * as constants from '../../datas/Constants'
 
 /** Services **/
-import JsonService  from '../../services/JsonService'
+import JsonService  from '../../services/JsonService';
+import CsvService   from '../../services/CsvService';
 
 /** Plugins **/
 import { VictoryPie   }  from 'victory';
 import { VictoryChart }  from 'victory';
 import { VictoryLine  }  from 'victory';
 import { VictoryBar   }  from 'victory';
-import      Papa         from 'papaparse';
 
+
+/** Services calling **/
 const jsonService = new JsonService();
+const csvService  = new CsvService();
 
-const font = "'Barlow Condensed', sans-serif";
+
+/** Themes **/
+const font     = "'Barlow Condensed', sans-serif";
 const fontSize = 18;
 
 const GlobalTheme = createMuiTheme({
@@ -53,13 +58,22 @@ const MappedElementTheme = createMuiTheme({
   },
 })
 
+
+
 class MainContent extends Component {
   constructor (props) {
     super(props);
+    this.updateCSV = this.updateCSV.bind(this);
 
     this.state = {
       dataJSONfromAPI : [],  // JSON from Github API
-      dataCSV         : [],  // CSV from  Github API
+      dataCSVfromAPI  : [],  // CSV from Github API
+
+      hotData2014    : [],
+      hotData2015    : [],
+      hotData2016    : [],
+      hotData2017    : [],
+      hotData2018    : [],
     }
   }
 
@@ -70,21 +84,55 @@ class MainContent extends Component {
 
   /** Call datas from the GitHub api **/
    async componentDidMount(){
-    const dataJson = await jsonService.getData();
 
+    // Get JSON from JsonService
+    const dataJson = await jsonService.getData(constants.jsonAggregatedStats);
     this.setState({
       dataJSONfromAPI: dataJson
     });
-    console.log('data de lAPI content', this.state.dataJSONfromAPI)
+    console.log('data de lAPI json', this.state.dataJSONfromAPI)
+
+    // Get CSV from CsvService
+    csvService.getData(constants.csvEvents, this.updateCSV);
+  }
 
 
-    Papa.parse(events, {
-    	complete: function(results) {
-    		console.log("CSV read:", results.data);
-    	}
+
+  updateCSV(result) {
+    const data = result.data;
+
+    this.setState({
+      dataCSVfromAPI: data
     });
+    console.log('dataCSVfromAPI dans updateCSV', this.state.dataCSVfromAPI)
 
-    // fetch('https://drive.google.com/file/d/1BN4K55eKENyYFfwxPiQcb4tyx2lrJn8A/view?usp=sharing').
+    var getYearPattern = (year) => {
+      return new RegExp(year+'-([0-9]{2})-([0-9]{2})');   // English date format
+      // return new RegExp('([0-9]{2})/[0-9]{2}/'+year); // French date format
+    };
+
+    const numberOf2014 = this.state.dataCSVfromAPI
+    .filter(row => row.date && row.date.match(getYearPattern(2014))).length;
+
+    const numberOf2015 = this.state.dataCSVfromAPI
+    .filter(row => row.date && row.date.match(getYearPattern(2015))).length;
+
+    const numberOf2016 = this.state.dataCSVfromAPI
+    .filter(row => row.date && row.date.match(getYearPattern(2016))).length;
+
+    const numberOf2017 = this.state.dataCSVfromAPI
+    .filter(row => row.date && row.date.match(getYearPattern(2017))).length;
+
+    const numberOf2018 = this.state.dataCSVfromAPI
+    .filter(row => row.date && row.date.match(getYearPattern(2018))).length;
+
+    this.setState({
+      hotData2014: numberOf2014,
+      hotData2015: numberOf2015,
+      hotData2016: numberOf2016,
+      hotData2017: numberOf2017,
+      hotData2018: numberOf2018,
+    });
   }
 
 
@@ -107,12 +155,12 @@ class MainContent extends Component {
 
         {/* Map edits */}
         <Grid item xs={12} sm={6} md={3}>
-          <WidgetIndicator title="Map edits" img={mapIMG} data={this.state.dataJSONfromAPI.totalRoads}/>
+          <WidgetIndicator title="Map edits" img={mapIMG} data={this.state.dataJSONfromAPI.totalMappers}/>
         </Grid>
 
         {/* Mapathons */}
         <Grid item xs={12} sm={6} md={3}>
-          <WidgetIndicator title="Mapathons" img={mapathonsIMG} data={this.state.dataJSONfromAPI.totalMappers}/>
+          <WidgetIndicator title="Mapathons" img={mapathonsIMG} data={this.state.dataCSVfromAPI.length}/>
         </Grid>
 
   {/* Second row */}
@@ -162,9 +210,16 @@ class MainContent extends Component {
         {/* Usage of HOT Data */}
         <Grid item xs={12} sm={6} md={4}>
           <WidgetGraph title = "Increase of usage of HOT data"
-                       data  = {this.state.dataJSONfromAPI.totalProjects}
                        graph = {<VictoryChart domainPadding={10}>
-                                  <VictoryBar style={{ data: { fill: "#D73F3F" } }}/>
+                                  <VictoryBar style  = {{ data: { fill: "#D73F3F" } }}
+                                              data   = {[
+                                                { x: '2014', y: 0, y0: this.state.hotData2014 },
+                                                { x: '2015', y: 0, y0: this.state.hotData2015 },
+                                                { x: '2016', y: 0, y0: this.state.hotData2016 },
+                                                { x: '2017', y: 0, y0: this.state.hotData2017 },
+                                                { x: '2018', y: 0, y0: this.state.hotData2018 }
+                                                ]}
+                                  />
                                 </VictoryChart>}/>
         </Grid>
 
@@ -172,7 +227,6 @@ class MainContent extends Component {
         {/* Validataion errors */}
         <Grid item xs={12} sm={6} md={4}>
           <WidgetGraph title = "Proportion of validation errors"
-                       data  = {this.state.dataJSONfromAPI.totalProjects}
                        graph = {<VictoryChart>
                                  <VictoryLine
                                    style={{
@@ -180,11 +234,11 @@ class MainContent extends Component {
                                      parent : { border: "1px solid #ccc"}
                                    }}
                                    data = {[
-                                     { x: 1, y: 2 },
-                                     { x: 2, y: 3 },
-                                     { x: 3, y: 5 },
-                                     { x: 4, y: 4 },
-                                     { x: 5, y: 7 }
+                                     { x: '2014', y: this.state.hotData2014 },
+                                     { x: '2015', y: this.state.hotData2015 },
+                                     { x: '2016', y: this.state.hotData2016 },
+                                     { x: '2017', y: this.state.hotData2017 },
+                                     { x: '2018', y: this.state.hotData2018 }
                                    ]}
                                  />
                                </VictoryChart>}/>

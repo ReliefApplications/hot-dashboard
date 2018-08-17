@@ -16,12 +16,6 @@ class WidgetGraph extends Component {
           <CardContent className="widget-text">
             <Typography variant="caption"> {this.props.title} </Typography>
               {this.props.graph}
-              <Typography>
-                {new Intl.NumberFormat('en-GB', {
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0
-                }).format(this.props.data)}
-              </Typography>
           </CardContent>
         </Card>
       </div>

@@ -18,8 +18,8 @@ import Grid           from '@material-ui/core/Grid';
 import WidgetIndicator from '../Widgets/WidgetIndicator';
 import WidgetGraph     from '../Widgets/WidgetGraph';
 
-/** Datas **/
-import events         from '../../datas/CSV/events.csv'
+/** Constants **/
+import * as constants from '../../datas/Constants'
 
 /** Services **/
 import JsonService  from '../../services/JsonService'
@@ -58,21 +58,11 @@ class TrainingContent extends Component {
 
   /** Call datas from the GitHub api **/
    async componentDidMount(){
-    const dataJson = await jsonService.getData();
+    const dataJson = await jsonService.getData(constants.jsonAggregatedStats);
 
     this.setState({
       dataJSONfromAPI: dataJson
     });
-    console.log('data de lAPI content', this.state.dataJSONfromAPI)
-
-
-    Papa.parse(events, {
-    	complete: function(results) {
-    		console.log("Finished:", results.data);
-    	}
-    });
-
-    // fetch('https://drive.google.com/file/d/1BN4K55eKENyYFfwxPiQcb4tyx2lrJn8A/view?usp=sharing').
   }
 
 
