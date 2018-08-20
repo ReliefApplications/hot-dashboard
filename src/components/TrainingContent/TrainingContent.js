@@ -45,7 +45,7 @@ const GlobalTheme = createMuiTheme({
 class TrainingContent extends Component {
   constructor (props) {
     super(props);
-
+    console.log('Inside TrainingContent.');
     this.state = {
       dataJSONfromAPI : [],  // JSON from Github API
       dataCSV         : [],  // CSV from  Github API

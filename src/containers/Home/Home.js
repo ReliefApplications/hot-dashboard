@@ -5,6 +5,7 @@ import React from 'react';
 import Header          from '../../components/Header/Header'
 import MainContent     from '../../components/MainContent/MainContent'
 import TrainingContent from '../../components/TrainingContent/TrainingContent'
+import UpdateData     from '../../components/UpdateData/UpdateData'
 
 /** CSS **/
 import './Home.css';
@@ -32,6 +33,7 @@ class Home extends React.Component {
     menuLeft                : false, // State of the left menu.
     mainContentSelected     : true,  // When Main Content is selected
     trainingContentSelected : false, // When Training Content is selected
+    updateDataSelected      : false, //When Update Data page is selected, maybe not necessary
     pageName : 'Main'
   };
 
@@ -63,7 +65,19 @@ class Home extends React.Component {
     this.setState({
       pageName : 'Main',
       mainContentSelected     : open,
-      trainingContentSelected : false
+      trainingContentSelected : false,
+      updateDataSelected      : false
+    });
+  };
+
+  /** To show the UpdateData Page **/
+  openUpdateDataContent = (open) => () => {
+    console.log('Inside openUpdateDataContent, Open: ' + open);
+    this.setState({
+      pageName : 'UpdateData',
+      mainContentSelected     : false,
+      trainingContentSelected : false,
+      updateDataSelected      : open
     });
   };
 
@@ -72,7 +86,8 @@ class Home extends React.Component {
     this.setState({
       pageName : 'Training',
       trainingContentSelected : open,
-      mainContentSelected     : false
+      mainContentSelected     : false,
+      updateDataSelected      : false
     });
   };
 
@@ -89,6 +104,8 @@ class Home extends React.Component {
          <List className="listMenu-item" onClick = {this.openMainContent(true)}>Main</List>
          <Divider />
          <List className="listMenu-item" onClick = {this.openTrainingContent(true)}>Training</List>
+         <Divider />
+         <List className="listMenu-item" onClick = {this.openUpdateDataContent(true)}>Update data</List>
        </div>
      );
 
@@ -119,7 +136,7 @@ class Home extends React.Component {
         {/* Contents */}
           {this.state.mainContentSelected     && (<MainContent></MainContent>)}
           {this.state.trainingContentSelected && (<TrainingContent></TrainingContent>)}
-
+          {this.state.UpdateDataSelected && (<UpdateData></UpdateData>)}
         </div>
       );
     }

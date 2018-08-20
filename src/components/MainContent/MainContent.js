@@ -58,13 +58,11 @@ const MappedElementTheme = createMuiTheme({
   },
 })
 
-
-
 class MainContent extends Component {
   constructor (props) {
     super(props);
     this.updateCSV = this.updateCSV.bind(this);
-
+    console.log('Inside MainContent.');
     this.state = {
       dataJSONfromAPI : [],  // JSON from Github API
       dataCSVfromAPI  : [],  // CSV from Github API
