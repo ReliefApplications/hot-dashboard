@@ -1,21 +1,132 @@
 @import url('https://fonts.googleapis.com/css?family=Barlow+Condensed');
 
+/*------------------------------------------------------------------------//
+//------------------------------- General --------------------------------//
+//------------------------------------------------------------------------*/
+
 .Home {
   text-align : center;
   font-family: 'Archivo', sans-serif;
 }
 
-.panel{
-  width : 200px;
+/*------------------------------------------------------------------------//
+//-------------------------------- Header --------------------------------//
+//------------------------------------------------------------------------*/
+
+.header-component {
+  text-align : center;
+}
+.header {
+  display          : flex;
+  flex-direction   : row;
+  height           : 50px;
+  padding          : 10px;
+  background-color : #D73F3F;
+  color            : white;
+  box-shadow       : 0 5px 50px 0 #929DB3;
+}
+.header-title {
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  width           : 100%;
+  font-family     : 'Barlow Condensed', sans-serif;
 }
 
+/*------------------------------------------------------------------------//
+//--------------------------------- Menu ---------------------------------//
+//------------------------------------------------------------------------*/
+
+.listMenu-item-red{
+  background: #D73F3F;
+}
 .listMenu-item{
   text-align  : center;
   width       : 100%;
   margin      : 0 auto;
   cursor      : pointer;
 }
-
 .listMenu-item:hover{
   background : #F0EFEF;
+}
+
+/*------------------------------------------------------------------------//
+//--------------------------------- Tabs ---------------------------------//
+//------------------------------------------------------------------------*/
+
+.tabs{
+  display         : flex;
+  justify-content : space-around;
+  padding-top      : 20px;
+  padding-bottom   : 10px;
+}
+
+/*------------------------------------------------------------------------//
+//------------------------------- Content --------------------------------//
+//------------------------------------------------------------------------*/
+
+/** General contents div **/
+.content-row {
+  display      : flex;
+  text-align   : center;
+  padding      : 0 !important;
+}
+
+/*------------------------------------------------------------------------//
+//------------------------- Update Data Content --------------------------//
+//------------------------------------------------------------------------*/
+
+.update-data-button{
+  margin-top : 40px;
+}
+.update-data-button-icon{
+  margin-left : 10px;
+  color : white;
+}
+
+/*------------------------------------------------------------------------//
+//------------------------------- Widgets --------------------------------//
+//------------------------------------------------------------------------*/
+
+/** External widgets **/
+.widget-container {
+	display       : flex;
+  margin        : 20px;
+  margin-top    : 40px;
+  margin-bottom : 0px;
+}
+.widget-image{
+  background-color : #D73F3F;
+  width            : 80px;
+}
+.widget-text{
+  display         : flex;
+  flex-direction  : column;
+  justify-content : center;
+  text-align      : center;
+  margin          : 0 auto;
+  padding         : 10px;
+}
+
+
+
+/** 'Mapped elements' div **/
+.widget-mappedElements-title{
+  margin : 20px;
+}
+.widget-mappedElements-text{
+  display         : flex;
+  flex-direction  : row;
+  justify-content : space-evenly;
+  width           : 100%;
+  margin-top      : 10px;
+}
+.widget-mappedElements-text-item-green{
+  padding          : 10px;
+  background-color : #D73F3F;
+  color            : white;
+}
+.widget-mappedElements-text-item-grey{
+  padding          : 10px;
+  background-color : #E1E0E0;
 }

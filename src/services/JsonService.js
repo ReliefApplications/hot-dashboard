@@ -9,7 +9,6 @@ class JsonService {
       return this.data = findResponse;
     });
   }
-
 }
 
 export default JsonService;
