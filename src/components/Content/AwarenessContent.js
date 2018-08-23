@@ -19,7 +19,6 @@ const GlobalTheme = createMuiTheme({
 })
 
 class CapacityBuildingContent extends Component {
-
   render() {
 
     return (

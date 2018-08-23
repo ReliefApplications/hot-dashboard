@@ -50,6 +50,7 @@ class PreProcessingService {
   //------------------------------------------------------------------------//
   //------------------------------- Projects -------------------------------//
   //------------------------------------------------------------------------//
+  /** Return the project **/
   getDataFromProjectsFile(result){
     return result.data;
   }
@@ -93,7 +94,6 @@ class PreProcessingService {
   }
 
 
-
   /** Get the property name in the new created array **/
   /** https://stackoverflow.com/questions/6906108/in-javascript-how-can-i-dynamically-get-a-nested-property-of-an-object **/
   getPropByString(object, propertyString) {  // propertyString  = name, name.lastname, etc..
@@ -108,7 +108,7 @@ class PreProcessingService {
         var candidate = object[prop];
         if (candidate !== undefined) {
             object = candidate;
-        } else {
+        }else {
             break;
         }
     }

@@ -6,12 +6,14 @@ import Button       from '@material-ui/core/Button';
 import Menu         from '@material-ui/core/Menu';
 import MenuItem     from '@material-ui/core/MenuItem';
 import CloudUploadIcon  from '@material-ui/icons/CloudUpload';
+import Grid             from '@material-ui/core/Grid';
+
 
 /** Styles **/
 const Buttons = {
     background : '#C43636',
     color      : 'white',
-    margin     : '0 0 0 10px',
+    margin     : '0 0 0 5px',
     fontFamily : "'Barlow Condensed', sans-serif",
     fontSize   :  18
 };
@@ -26,7 +28,7 @@ class Header extends Component {
     this.selectProjectFromMiniMenu = this.selectProjectFromMiniMenu.bind(this);
 
     this.state = {
-      anchorProject              : null,
+      anchorProject : null,
     }
   }
 
@@ -86,34 +88,35 @@ class Header extends Component {
 
     return (
       <div className="header-component">
-        <header className="header">
 
-          {/* 'Project' button */}
-          <Button style     = {Buttons}
-                  aria-owns = {anchorProject ? 'MiniMenuGlobal' : null}
-                  variant   = "contained"
-                  component = "span"
-                  onClick   = {this.openMiniMenu}>
-            Projects
-          </Button>
-          <Menu id       = "MiniMenuGlobal"
-                anchorEl = {anchorProject}
-                open     = {Boolean(anchorProject)}
-                onClose  = {this.closeMiniMenu}
-          >
-            {projectsList}
-          </Menu>
+    {/* First row */}
+          <header className="header">
+              {/* 'Project' button */}
+              <Button style     = {Buttons}
+                      aria-owns = {anchorProject ? 'MiniMenuGlobal' : null}
+                      variant   = "contained"
+                      component = "span"
+                      onClick   = {this.openMiniMenu}>
+                Projects
+              </Button>
+              <Menu id       = "MiniMenuGlobal"
+                    anchorEl = {anchorProject}
+                    open     = {Boolean(anchorProject)}
+                    onClose  = {this.closeMiniMenu}
+              >
+                {projectsList}
+              </Menu>
 
-          {/* Update Data button */}
-          <Button style     = {Buttons}
-                  variant   = "contained"
-                  component = "span">
-            Upload
-            <CloudUploadIcon className="update-data-button-icon"/>
-          </Button>
+              {/* Update Data button
+              <Button style     = {Buttons}
+                      variant   = "contained"
+                      component = "span">
+                Upload
+                <CloudUploadIcon className="update-data-button-icon"/>
+              </Button> */}
 
-          {/* Title */}
-          <h1 className="header-title">HOT Overview - {this.props.pageName}</h1>
+              {/* Title */}
+              <h2 className="header-title">HOT Overview - {this.props.pageName}</h2>
 
         </header>
       </div>

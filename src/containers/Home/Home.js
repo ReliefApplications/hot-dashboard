@@ -71,7 +71,7 @@ class Home extends React.Component {
       importedProjects   : projectsFromAPI,
       importedIndicators : dataFromAPI
     })
-    console.log("importedProjects HOME",   this.state.importedProjects)
+    console.log("importedProjects   HOME",   this.state.importedProjects)
     console.log('importedIndicators HOME', this.state.importedIndicators)
   }
 
@@ -82,13 +82,13 @@ class Home extends React.Component {
 
   /** Select the project from the header button **/
   selectProjectFromHeader(selectedProject){
-    // this.setState({
-    //   anchorGlobal                    : null,
-    //   pageName                        : selectedProject[0].pageName,
-    //   mainContentSelected             : selectedProject[0].mainContent,
-    //   capacityBuildingContentSelected : selectedProject[0].trainingContent,
-    //   awarenessContentSelected        : selectedProject[0].updateContent
-    // });
+    this.setState({
+      anchorGlobal                    : null,
+      pageName                        : selectedProject[0].pageName,
+      mainContentSelected             : selectedProject[0].mainContent,
+      capacityBuildingContentSelected : selectedProject[0].trainingContent,
+      awarenessContentSelected        : selectedProject[0].updateContent
+    });
   }
 
   /** Select the new content chosen in the filter tabs component **/
@@ -119,8 +119,8 @@ class Home extends React.Component {
           <Divider />
 
         {/* Contents */}
-          {this.state.mainContentSelected             && (<MainContent             importedIndicators = {this.state.importedIndicators.global} ></MainContent>)}
-          {this.state.capacityBuildingContentSelected && (<CapacityBuildingContent importedIndicators = {this.state.importedIndicators.global} ></CapacityBuildingContent>)}
+          {this.state.mainContentSelected             && (<MainContent             importedIndicators = {this.state.importedIndicators.global}></MainContent>)}
+          {this.state.capacityBuildingContentSelected && (<CapacityBuildingContent importedIndicators = {this.state.importedIndicators.global}></CapacityBuildingContent>)}
           {this.state.awarenessContentSelected        && (<AwarenessContent></AwarenessContent>)}
         </div>
       );
