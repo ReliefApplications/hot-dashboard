@@ -17,8 +17,6 @@ const GlobalTheme = createMuiTheme({
 })
 
 
-
-
 class FilterTabs extends Component {
   constructor(props) {
     super(props)
@@ -53,7 +51,6 @@ class FilterTabs extends Component {
   selectContentMiniMenu = (content) => () => {
 
     let selectedContent = []; //Object sended to container (Home)
-    // let anchor = null;
 
     // Initialize all content state to false
     let selectedPageName         = ''
@@ -105,9 +102,9 @@ class FilterTabs extends Component {
                   open     = {Boolean(anchorGlobal)}
                   onClose  = {this.closeMiniMenu}
             >
-              <MenuItem onClick={this.selectContentMiniMenu('global')}  >Global</MenuItem>
-              <MenuItem onClick={this.selectContentMiniMenu('training')}>Training</MenuItem>
-              <MenuItem onClick={this.selectContentMiniMenu('upload')}  >Upload</MenuItem>
+              <MenuItem onClick={this.selectContentMiniMenu('global')}   >Global  </MenuItem>
+              <MenuItem onClick={this.selectContentMiniMenu('training')} >Training</MenuItem>
+              <MenuItem onClick={this.selectContentMiniMenu('upload')}   >Upload  </MenuItem>
             </Menu>
 
 
@@ -117,8 +114,9 @@ class FilterTabs extends Component {
                     component = "span"
                     color     = "primary"
                     onClick   = {this.openMiniMenu}>
-              Project 2
+              Ramanihuria
             </Button>
+
 
             {/* 'Project 3' button */}
             <Button aria-owns = {anchorGlobal ? 'MiniMenuGlobal' : null}

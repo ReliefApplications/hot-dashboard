@@ -17,10 +17,25 @@ class PreProcessingService {
   //---------------------------------- Init --------------------------------//
   //------------------------------------------------------------------------//
 
-  /** Initilize the data receive from the API **/
-  initialize(){
+
+  getProjectsFromAPI(){
     return new Promise((resolve,reject) => {
-      csvService.getData(constants.allDatas, this.getAllDatas)
+
+      csvService.getData(constants.projects, this.getDataFromProjectsFile)
+      .then((allProjects) =>{
+        resolve(allProjects);
+      })
+      .catch((error) =>{
+        reject(error);
+      });
+    });
+  }
+
+
+  /** Initilize the data receive from the API **/
+  getDataFromProjects(projectSource){
+    return new Promise((resolve,reject) => {
+      csvService.getData(projectSource[0].configfileurl, this.getAllDatas)
       .then((allDatasFromAPIwithLinks) =>{
         resolve(allDatasFromAPIwithLinks);
       })
@@ -28,6 +43,13 @@ class PreProcessingService {
         reject(error);
       });
     });
+  }
+
+  //------------------------------------------------------------------------//
+  //------------------------------- Projects -------------------------------//
+  //------------------------------------------------------------------------//
+  getDataFromProjectsFile(result){
+    return result.data;
   }
 
 

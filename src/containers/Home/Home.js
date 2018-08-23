@@ -59,6 +59,7 @@ class Home extends React.Component {
       updateDataContentSelected : false,    // When updateDataSelected Content is selected
       pageName                  : 'Global', // Name of the actual page
 
+      importedProjects    : [],
       importedIndicators  : [],
     }
   }
@@ -70,17 +71,30 @@ class Home extends React.Component {
   /** Call all datas file from the GitHub api **/
   async componentDidMount(){
 
-    let preProcessing = [];
+    let projectsFromAPI = [];
+    let dataFromAPI     = [];
+
+
+    //  1. Get the projects
     try {
-      preProcessing = await preProcessingService.initialize();
+      projectsFromAPI = await preProcessingService.getProjectsFromAPI();
     } catch (e) {
       console.log('preProcessing  error', e)
     }
 
+    // 2. Get the indicators
+    try {
+      dataFromAPI = await preProcessingService.getDataFromProjects(projectsFromAPI);
+    } catch (e) {
+      console.log('preProcessing  error', e)
+    }
 
+    // 3. Set the states received
     this.setState({
-      importedIndicators : preProcessing
+      importedProjects   : projectsFromAPI,
+      importedIndicators : dataFromAPI
     })
+    console.log("importedProjects HOME",   this.state.importedProjects)
     console.log('importedIndicators HOME', this.state.importedIndicators)
   }
 
@@ -119,7 +133,7 @@ class Home extends React.Component {
           <Divider />
 
         {/* Contents */}
-          {this.state.mainContentSelected       && (<MainContent     importedIndicators = {this.state.importedIndicators} updageOfData={this.state.importedIndicators}></MainContent>)}
+          {this.state.mainContentSelected       && (<MainContent     importedIndicators = {this.state.importedIndicators} ></MainContent>)}
           {this.state.trainingContentSelected   && (<TrainingContent importedIndicators = {this.state.importedIndicators} ></TrainingContent>)}
           {this.state.updateDataContentSelected && (<UpdateDataContent></UpdateDataContent>)}
         </div>
