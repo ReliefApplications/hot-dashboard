@@ -3,6 +3,7 @@ import React from 'react';
 
 /** Containers **/
 import Header             from '../../components/Header'
+import FilterTabs         from '../../components/FilterTabs'
 import MainContent        from '../../components/Content/MainContent'
 import TrainingContent    from '../../components/Content/TrainingContent'
 import UpdateDataContent  from '../../components/Content/UpdateDataContent'
@@ -18,9 +19,11 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { withStyles }  from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List            from '@material-ui/core/List';
-import Divider         from '@material-ui/core/Divider';
 import Button          from '@material-ui/core/Button';
+import Menu            from '@material-ui/core/Menu';
+import MenuItem        from '@material-ui/core/MenuItem';
 import PropTypes       from 'prop-types';
+import Divider         from '@material-ui/core/Divider';
 
 const preProcessingService  = new PreProcessingService();
 
@@ -44,8 +47,10 @@ const GlobalTheme = createMuiTheme({
 class Home extends React.Component {
   constructor(props) {
     super(props)
-    this.openMenu = this.openMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
+
+    // Mini Menu
+    this.selectContentInPage = this.selectContentInPage.bind(this);
+
 
     this.state = {
       menuLeft                  : false,    // State of the left menu.
@@ -80,59 +85,21 @@ class Home extends React.Component {
   }
 
 
-
-
   //------------------------------------------------------------------------//
-  //---------------------------------- Menu --------------------------------//
+  //----------------------- Mini Menu ( Filter Tabs) -----------------------//
   //------------------------------------------------------------------------//
 
-  /** To open the Menu from the Header child component **/
-  openMenu(open){
+  /** Select the new content chosen in the filter tabs component **/
+  selectContentInPage(selectedContent){
     this.setState({
-      menuLeft: open,
+      anchorGlobal              : null,
+      pageName                  : selectedContent[0].pageName,
+      mainContentSelected       : selectedContent[0].mainContent,
+      trainingContentSelected   : selectedContent[0].trainingContent,
+      updateDataContentSelected : selectedContent[0].updateContent
     });
   }
 
-  /** To close the Menu **/
-  closeMenu = (close) => () => {
-    this.setState({
-      menuLeft: close,
-    });
-  };
-
-  //------------------------------------------------------------------------//
-  //-------------------------- Menu/filter Contents ------------------------//
-  //------------------------------------------------------------------------//
-
-  /** To show the Main Content **/
-  openMainContent = (open) => () => {
-    this.setState({
-      pageName : 'Global',
-      mainContentSelected       : open,
-      trainingContentSelected   : false,
-      updateDataContentSelected : false
-    });
-  };
-
-  /** To show the Training Content **/
-  openTrainingContent = (open) => () => {
-    this.setState({
-      pageName : 'Training',
-      mainContentSelected       : false,
-      trainingContentSelected   : open,
-      updateDataContentSelected : false
-    });
-  };
-
-  /** To show the Update Data Content **/
-  openUpdateDataContent = (open) => () => {
-    this.setState({
-      pageName : 'Update data',
-      mainContentSelected       : false,
-      trainingContentSelected   : false,
-      updateDataContentSelected : open
-    });
-  };
 
   //------------------------------------------------------------------------//
   //-------------------------------- Render --------------------------------//
@@ -141,62 +108,14 @@ class Home extends React.Component {
   render() {
     const { classes } = this.props;
 
-  {/* Items Menu list  */}
-    const sideList = (
-       <div className={classes.list}>
-         <List className="listMenu-item-red"></List>
-         <Divider />
-         <List className="listMenu-item" onClick = {this.openMainContent(true)}>Main</List>
-         <Divider />
-         <List className="listMenu-item" onClick = {this.openTrainingContent(true)}>Training</List>
-         <Divider />
-         <List className="listMenu-item" onClick = {this.openUpdateDataContent(true)}>Update data</List>
-       </div>
-     );
-
       return (
         <div className="Home">
 
         {/* Header */}
-          <Header sendToHeader={this.openMenu} pageName={this.state.pageName}></Header>
+          <Header sendToHome={this.openMenu} pageName={this.state.pageName}></Header>
 
-        {/* Side Menu */}
-         <SwipeableDrawer
-            anchor  = "left"
-            open    = {this.state.menuLeft}
-            onClose = {this.closeMenu(false)}
-            onOpen  = {this.openMenu}>
-            <div
-              tabIndex  = {0}
-              role      = "button"
-              onClick   = {this.closeMenu(false)}
-              onKeyDown = {this.closeMenu(false)}>
-
-              {sideList}
-            </div>
-          </SwipeableDrawer>
-
-
-          {/* Tabs filters */}
-          <MuiThemeProvider theme={GlobalTheme}>
-            <div className="tabs">
-                {/* 'Gloabal' button */}
-                <Button variant="contained" component="span" color="primary" onClick = {this.openMainContent(true)}>
-                  Global
-                </Button>
-
-                {/* 'Training' button */}
-                <Button variant="contained" component="span" color="primary" onClick = {this.openTrainingContent(true)}>
-                  Training
-                </Button>
-
-                {/* 'Upload' button */}
-                <Button variant="contained" component="span" color="primary" onClick = {this.openUpdateDataContent(true)}>
-                  Upload
-                </Button>
-            </div>
-          </MuiThemeProvider>
-
+        {/* Filter Tabs */}
+          <FilterTabs sendToHome={this.selectContentInPage}></FilterTabs>
           <Divider />
 
         {/* Contents */}

@@ -11,7 +11,6 @@ const csvService   = new CsvService();
 class PreProcessingService {
   constructor() {
     this.getAllDatas = this.getAllDatas.bind(this);
-
   }
 
   //------------------------------------------------------------------------//

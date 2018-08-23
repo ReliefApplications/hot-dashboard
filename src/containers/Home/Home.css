@@ -19,7 +19,7 @@
 .header {
   display          : flex;
   flex-direction   : row;
-  height           : 50px;
+  height           : 40px;
   padding          : 10px;
   background-color : #D73F3F;
   color            : white;

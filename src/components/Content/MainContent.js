@@ -119,13 +119,14 @@ class MainContent extends Component {
                                                 { x: '2018', y: 0, y0: this.props.importedIndicators.usageOfHotData.data2018 }
                                                 ]}
                                   />
-                                </VictoryChart>}/>)}
+                                </VictoryChart>}/>
+          )}
         </Grid>
 
 
         {/* Validataion errors */}
         <Grid item xs={12} sm={6} md={4}>
-        {this.props.importedIndicators.usageOfHotData &&
+          {this.props.importedIndicators.usageOfHotData &&
           (<WidgetGraph title = "Proportion of validation errors"
                        graph = {<VictoryChart>
                                  <VictoryLine
@@ -141,8 +142,8 @@ class MainContent extends Component {
                                      { x: '2018', y: this.props.importedIndicators.usageOfHotData.data2018 }
                                    ]}
                                  />
-                               </VictoryChart>}/>)}
-
+                               </VictoryChart>}/>
+          )}
         </Grid>
 
         </MuiThemeProvider>
