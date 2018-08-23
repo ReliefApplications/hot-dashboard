@@ -19,7 +19,7 @@ const GlobalTheme = createMuiTheme({
   },
 })
 
-class TrainingContent extends Component {
+class CapacityBuildingContent extends Component {
 
   //------------------------------------------------------------------------//
   //-------------------------------- Render --------------------------------//
@@ -44,4 +44,4 @@ class TrainingContent extends Component {
  }
 }
 
-export default TrainingContent;
+export default CapacityBuildingContent;

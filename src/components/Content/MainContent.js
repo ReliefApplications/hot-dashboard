@@ -50,23 +50,24 @@ class MainContent extends Component {
 
        {/* Active projects */}
         <Grid item xs={12} sm={6} md={3}>
-          <WidgetIndicator title="Active projects" img={projectsIMG}  data={this.props.importedIndicators.totalProjects}/>
+          {this.props.importedIndicators && (<WidgetIndicator title="Active projects" img={projectsIMG} data={this.props.importedIndicators.totalProjects}/>)}
         </Grid>
 
         {/* Map edits */}
         <Grid item xs={12} sm={6} md={3}>
-          <WidgetIndicator title="Map edits" img={mapIMG} data={this.props.importedIndicators.totalMappers}/>
+          {this.props.importedIndicators && (<WidgetIndicator title="Map edits" img={mapIMG} data={this.props.importedIndicators.totalMappers}/>)}
         </Grid>
 
         {/* Mapathons */}
         <Grid item xs={12} sm={6} md={3}>
-          <WidgetIndicator title="Mapathons" img={mapathonsIMG} data={this.props.importedIndicators.totalMapathons}/>
+          {this.props.importedIndicators && (<WidgetIndicator title="Mapathons" img={mapathonsIMG} data={this.props.importedIndicators.totalMapathons}/>)}
         </Grid>
 
   {/* Second row */}
 
         {/* Mapped elements */}
         <Grid item xs={12} sm={6} md={3}>
+          {this.props.importedIndicators && (
           <Card className="widget-container">
             <CardContent className="widget-text">
               <Typography variant="caption" className="widget-mappedElements-title"> Number of elements mapped </Typography>
@@ -83,14 +84,15 @@ class MainContent extends Component {
                    }).format(this.props.importedIndicators.totalRoads)} Roads</Typography>
               </div>
             </CardContent>
-          </Card>
+          </Card>)}
         </Grid>
 
   {/* Third row */}
 
         {/* Community mappers */}
         <Grid item xs={12} sm={6} md={4}>
-          <WidgetGraph title = "Number of community mappers (by sex)"
+          {this.props.importedIndicators && (
+            <WidgetGraph title = "Number of community mappers (by sex)"
                        data  = {126}
                        graph = {<VictoryPie
                                  padAngle    = {2}
@@ -102,12 +104,12 @@ class MainContent extends Component {
                                    { x: "Women", y: 41 },
                                    { x: "Men",   y: 59 },
                                  ]}
-                               />}/>
+                               />}/>)}
         </Grid>
 
         {/* Usage of HOT Data */}
         <Grid item xs={12} sm={6} md={4}>
-          {this.props.importedIndicators.usageOfHotData &&
+          {this.props.importedIndicators &&
             (<WidgetGraph title = "Increase of usage of HOT data"
                        graph = {<VictoryChart domainPadding={10}>
                                   <VictoryBar style  = {{ data: { fill: "#D73F3F" } }}
@@ -126,7 +128,7 @@ class MainContent extends Component {
 
         {/* Validataion errors */}
         <Grid item xs={12} sm={6} md={4}>
-          {this.props.importedIndicators.usageOfHotData &&
+          {this.props.importedIndicators &&
           (<WidgetGraph title = "Proportion of validation errors"
                        graph = {<VictoryChart>
                                  <VictoryLine

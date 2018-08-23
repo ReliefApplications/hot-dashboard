@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 
 /** Material UI **/
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Grid            from '@material-ui/core/Grid';
-import Button          from '@material-ui/core/Button';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import Grid  from '@material-ui/core/Grid';
 
 /** Styles **/
 const GlobalTheme = createMuiTheme({
@@ -20,22 +18,13 @@ const GlobalTheme = createMuiTheme({
   },
 })
 
-class UpdateDataContent extends Component {
+class CapacityBuildingContent extends Component {
 
   render() {
 
     return (
   <div>
     <MuiThemeProvider theme={GlobalTheme}>
-
-      {/* Update Data button */}
-      <div className="update-data-button">
-        <Button variant="contained" component="span" color="primary">
-          Upload
-          <CloudUploadIcon className="update-data-button-icon"/>
-        </Button>
-      </div>
-
 
     <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
   {/* First row */}
@@ -49,4 +38,4 @@ class UpdateDataContent extends Component {
  }
 }
 
-export default UpdateDataContent;
+export default CapacityBuildingContent;

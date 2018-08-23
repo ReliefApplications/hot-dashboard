@@ -17,7 +17,7 @@ class PreProcessingService {
   //---------------------------------- Init --------------------------------//
   //------------------------------------------------------------------------//
 
-
+  /** Get the projects from the API **/
   getProjectsFromAPI(){
     return new Promise((resolve,reject) => {
 
@@ -33,15 +33,17 @@ class PreProcessingService {
 
 
   /** Initilize the data receive from the API **/
-  getDataFromProjects(projectSource){
+  getDataFromProjects(projectSource, i){
     return new Promise((resolve,reject) => {
-      csvService.getData(projectSource[0].configfileurl, this.getAllDatas)
+
+      csvService.getData(projectSource[i].configfileurl, this.getAllDatas)
       .then((allDatasFromAPIwithLinks) =>{
         resolve(allDatasFromAPIwithLinks);
       })
       .catch((error) =>{
         reject(error);
       });
+
     });
   }
 
@@ -61,7 +63,7 @@ class PreProcessingService {
   async getAllDatas(result){
     const allDatasFromAPIwithLinks = result.data;
 
-    let generalData = []; // Array of data with all the indicators we want
+    let generalData = {}; // Array of data with all the indicators we want
 
     // For each little objects on the big object
     for(let i=0; i<allDatasFromAPIwithLinks.length; i++){
@@ -69,20 +71,23 @@ class PreProcessingService {
       // Control if the 'link' attribute in the object is not undefined
       if(allDatasFromAPIwithLinks[i].link !== undefined ){
 
-        // If there is a json file
-        if(allDatasFromAPIwithLinks[i].type === "json"){
+        // If there is a json file (type : json or api)
+        if(allDatasFromAPIwithLinks[i].type === "json" || allDatasFromAPIwithLinks[i].type === "api"){
           const jsonGeneratedWithLink = await jsonService.getData(allDatasFromAPIwithLinks[i].link);
           generalData[allDatasFromAPIwithLinks[i].name] = this.getPropByString(jsonGeneratedWithLink, allDatasFromAPIwithLinks[i].name);
         }
-        // Else if there is a csv file
+        // Else if there is a csv file (type: csb)
         else if(allDatasFromAPIwithLinks[i].type === "csv"){
           const csvGeneratedWithLink = await csvService.getData(allDatasFromAPIwithLinks[i].link, this.createNewCSVindicator);
           generalData[allDatasFromAPIwithLinks[i].name] = csvGeneratedWithLink;
         }
       }
     }
-    this.getUsageOfHotData(generalData);
-    this.getTotalMapathons(generalData);
+
+    if(generalData.totalEvents !== undefined){
+      this.getUsageOfHotData(generalData);
+      this.getTotalMapathons(generalData);
+    }
 
     return generalData;
   }
@@ -93,11 +98,11 @@ class PreProcessingService {
   /** https://stackoverflow.com/questions/6906108/in-javascript-how-can-i-dynamically-get-a-nested-property-of-an-object **/
   getPropByString(object, propertyString) {  // propertyString  = name, name.lastname, etc..
     if (!propertyString)
-        return object;
+        return null;
 
     var prop, props = propertyString.split('.');
 
-    for (var i = 0, iLen = props.length - 1; i < iLen; i++) {
+    for (var i = 0; i < props.length - 1; i++) {
         prop = props[i];
 
         var candidate = object[prop];
