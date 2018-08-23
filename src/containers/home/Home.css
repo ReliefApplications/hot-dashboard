@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Barlow+Condensed');
+
+.Home {
+  text-align : center;
+  font-family: 'Archivo', sans-serif;
+}
+
+.panel{
+  width : 200px;
+}
+
+.listMenu-item{
+  text-align  : center;
+  width       : 100%;
+  margin      : 0 auto;
+  cursor      : pointer;
+}
+
+.listMenu-item:hover{
+  background : #F0EFEF;
+}

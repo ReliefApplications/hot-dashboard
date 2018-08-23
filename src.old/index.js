@@ -4,7 +4,7 @@ import ReactDOM              from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 
 /** Containers **/
-import Home                  from './containers/home/Home';
+import Home                  from './containers/Home/Home';
 
 /** CSS **/
 import './index.css';
