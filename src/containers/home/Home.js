@@ -2,132 +2,124 @@
 import React from 'react';
 
 /** Containers **/
-import Header          from '../../components/header/Header'
-import MainContent     from '../../components/content/global/MainContent'
-import TrainingContent from '../../components/content/projet1/TrainingContent'
+import Header             from '../../components/header/Header'
+import FilterTabs         from '../../components/filter/Filter'
+import MainContent        from '../../components/content/global/MainContent'
+import CapacityBuildingContent from '../../components/content/global/CapacityBuildingContent'
+import AwarenessContent from '../../components/content/global/AwarenessContent'
 
 /** CSS **/
 import './Home.css';
 
-/** Material **/
-import { withStyles }  from '@material-ui/core/styles';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import List            from '@material-ui/core/List';
-import Divider         from '@material-ui/core/Divider';
-import PropTypes       from 'prop-types';
+/** Services **/
+import PreProcessor   from '../../core/preprocessor/PreProcessor';
 
-const styles = {
-  list: {
-    width: 200,
-  },
-};
+/** Material **/
+import Divider         from '@material-ui/core/Divider';
+
+const preProcessingService  = new PreProcessor();
+
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.openMenu = this.openMenu.bind(this);
+    this.selectProjectFromHeader     = this.selectProjectFromHeader.bind(this);
+    this.selectContentFromFilterTabs = this.selectContentFromFilterTabs.bind(this);
+
+    this.state = {
+      menuLeft                  : false, // State of the left menu.
+      mainContentSelected       : true,  // When Main Content is selected
+      trainingContentSelected   : false, // When Training Content is selected
+      updateDataContentSelected : false,    // When updateDataSelected Content is selected
+      pageName                  : 'Global', // Name of the actual page
+
+      importedProjects    : [],
+      importedIndicators : [],
+    }
   }
 
-  state = {
-    menuLeft                : false, // State of the left menu.
-    mainContentSelected     : true,  // When Main Content is selected
-    trainingContentSelected : false, // When Training Content is selected
-    pageName : 'Main'
-  };
-
-
   //------------------------------------------------------------------------//
-  //---------------------------------- Menu --------------------------------//
+  //---------------------------------- Init --------------------------------//
   //------------------------------------------------------------------------//
 
-  /** To open the Menu from the Header child component **/
-  openMenu(openORclose){
+  /** Call all datas file from the GitHub api **/
+  async componentDidMount(){
+
+    let projectsFromAPI = [];
+    let dataFromAPI     = {};
+
+    //  1. Get the projects
+    try {
+      projectsFromAPI = await preProcessingService.getProjectsFromAPI();
+    } catch (e) {
+      console.log('preProcessing projects error', e)
+    }
+
+    // 2. Get the indicators
+    try {
+      for(let i=0; i<projectsFromAPI.length; i++){
+        dataFromAPI[projectsFromAPI[i].projectname] = await preProcessingService.getDataFromProjects(projectsFromAPI, i);
+      }
+    } catch (e) {
+      console.log('preProcessing data error', e)
+    }
+
+    // 3. Set the states received
     this.setState({
-      menuLeft: openORclose,
+      importedProjects   : projectsFromAPI,
+      importedIndicators : dataFromAPI
     });
+    console.log("importedProjects HOME",   this.state.importedProjects)
+    console.log('importedIndicators HOME', this.state.importedIndicators)
   }
 
-  /** To close the Menu **/
-  closeMenu = (open) => () => {
-    this.setState({
-      menuLeft: open,
-    });
-  };
-
   //------------------------------------------------------------------------//
-  //----------------------------- Menu Contents ----------------------------//
+  //------------------------ Mini Menu ( Filter Tabs) ---------------------//
   //------------------------------------------------------------------------//
 
-  /** To show the Main Content **/
-  openMainContent = (open) => () => {
-    this.setState({
-      pageName : 'Main',
-      mainContentSelected     : open,
-      trainingContentSelected : false
-    });
-  };
+  /** Select the project from the header button **/
+  selectProjectFromHeader(selectedProject){
+    // this.setState({
+    //   anchorGlobal                    : null,
+    //   pageName                        : selectedProject[0].pageName,
+    //   mainContentSelected             : selectedProject[0].mainContent,
+    //   capacityBuildingContentSelected : selectedProject[0].trainingContent,
+    //   awarenessContentSelected        : selectedProject[0].updateContent
+    // });
+  }
 
-  /** To show the Training Content **/
-  openTrainingContent = (open) => () => {
+  /** Select the new content chosen in the filter tabs component **/
+  selectContentFromFilterTabs(selectedContent){
     this.setState({
-      pageName : 'Training',
-      trainingContentSelected : open,
-      mainContentSelected     : false
+      pageName                        : selectedContent[0].pageName,
+      mainContentSelected             : selectedContent[0].mainContent,
+      capacityBuildingContentSelected : selectedContent[0].capacityBuildingContent,
+      awarenessContentSelected        : selectedContent[0].awarenessContent
     });
-  };
+  }
 
   //------------------------------------------------------------------------//
   //-------------------------------- Render --------------------------------//
   //------------------------------------------------------------------------//
 
   render() {
-    const { classes } = this.props;
-
-  {/* Items Menu list  */}
-    const sideList = (
-       <div className={classes.list}>
-         <List className="listMenu-item" onClick = {this.openMainContent(true)}>Main</List>
-         <Divider />
-         <List className="listMenu-item" onClick = {this.openTrainingContent(true)}>Training</List>
-       </div>
-     );
-
-      return (
+    return (
         <div className="Home">
 
-        {/* Header */}
-          <Header sendToHeader={this.openMenu} pageName={this.state.pageName}></Header>
+          {/* Header */}
+          <Header sendToHome={this.selectProjectFromHeader} pageName={this.state.pageName} importedProjects={this.state.importedProjects}></Header>
 
-        {/* SideMenu */}
-         <SwipeableDrawer
-            anchor  = "left"
-            open    = {this.state.menuLeft}
-            onClose = {this.closeMenu(false)}
-            onOpen  = {this.openMenu}>
+          {/* Filter Tabs */}
+          <FilterTabs sendToHome={this.selectContentFromFilterTabs}></FilterTabs>
+          <Divider />
 
-            <div
-              tabIndex  = {0}
-              role      = "button"
-              onClick   = {this.closeMenu(false)}
-              onKeyDown = {this.closeMenu(false)}>
-
-              {sideList}
-
-            </div>
-          </SwipeableDrawer>
-
-        {/* Contents */}
-          {this.state.mainContentSelected     && (<MainContent></MainContent>)}
-          {this.state.trainingContentSelected && (<TrainingContent></TrainingContent>)}
-
+          {/* Contents */}
+          {this.state.mainContentSelected             && (<MainContent             importedIndicators = {this.state.importedIndicators.global} ></MainContent>)}
+          {this.state.capacityBuildingContentSelected && (<CapacityBuildingContent importedIndicators = {this.state.importedIndicators.global} ></CapacityBuildingContent>)}
+          {this.state.awarenessContentSelected        && (<AwarenessContent></AwarenessContent>)}
         </div>
-      );
-    }
+    );
   }
+}
 
-
-Home.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(Home);
+export default Home;

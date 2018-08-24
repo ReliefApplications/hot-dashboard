@@ -8,7 +8,7 @@ import CardContent    from '@material-ui/core/CardContent';
 import CardMedia      from '@material-ui/core/CardMedia';
 
 
-class Indicator extends Component {
+class WidgetIndicator extends Component {
   render() {
 
     return (
@@ -31,4 +31,4 @@ class Indicator extends Component {
   }
 }
 
-export default Indicator;
+export default WidgetIndicator;

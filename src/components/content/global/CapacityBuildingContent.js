@@ -1,26 +1,28 @@
 /** Natives **/
 import React, { Component } from 'react';
 
+/** CSS **/
+import './CapacityBuildingContent.css';
+
 /** Logos **/
-import trainingIMG   from '../../assets/logos/training.png';
+import trainingIMG   from '../../../assets/images/logos/training.png';
 
 /** Material UI **/
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Grid                                 from '@material-ui/core/Grid';
+import Grid           from '@material-ui/core/Grid';
 
 /** Components **/
-import WidgetIndicator from '../Widgets/WidgetIndicator';
+import WidgetIndicator from '../../widget/Indicator';
 
-
+/** Themes **/
 const GlobalTheme = createMuiTheme({
   typography: {
     fontSize   :  18,
     fontFamily : "'Barlow Condensed', sans-serif"
   },
-})
+});
 
-class TrainingContent extends Component {
-
+class CapacityBuildingContent extends Component {
   //------------------------------------------------------------------------//
   //-------------------------------- Render --------------------------------//
   //------------------------------------------------------------------------//
@@ -44,4 +46,4 @@ class TrainingContent extends Component {
  }
 }
 
-export default TrainingContent;
+export default CapacityBuildingContent;

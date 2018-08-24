@@ -7,7 +7,7 @@ import Card           from '@material-ui/core/Card';
 import CardContent    from '@material-ui/core/CardContent';
 
 
-class Graph extends Component {
+class WidgetGraph extends Component {
   render() {
 
     return (
@@ -23,4 +23,4 @@ class Graph extends Component {
   }
 }
 
-export default Graph;
+export default WidgetGraph;

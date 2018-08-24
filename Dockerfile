@@ -44,6 +44,8 @@ COPY ./Docker/check-project.sh ./Docker/check-project.sh
 #  node:1000:65536
 ##
 RUN chown -R $USER:$USER $WORKSPACE
+RUN echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf
+RUN cat /proc/sys/fs/inotify/max_user_watches
 
 USER $USER
 
