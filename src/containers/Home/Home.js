@@ -11,17 +11,15 @@ import AwarenessContent        from '../../components/Content/AwarenessContent'
 /** CSS **/
 import './Home.css';
 
-/** Services **/
-import PreProcessingService   from '../../services/PreProcessingService';
-
 /** Material **/
-import Divider         from '@material-ui/core/Divider';
+import Divider from '@material-ui/core/Divider';
+
+/** Services **/
+import PreProcessingService  from '../../services/PreProcessingService';
 
 const preProcessingService  = new PreProcessingService();
 
 
-
-/** Victory doc : https://formidable.com/open-source/victory/docs/victory-chart/ **/
 class Home extends React.Component {
   constructor(props) {
     super(props)
@@ -29,11 +27,13 @@ class Home extends React.Component {
     this.selectContentFromFilterTabs = this.selectContentFromFilterTabs.bind(this);
 
     this.state = {
-      menuLeft                          : false,    // State of the left menu.
-      mainContentSelected               : true,     // When Main Content is selected
-      capacityBuildingContentSelected   : false,    // When Training Content is selected
-      awarenessContentSelected          : false,    // When updateDataSelected Content is selected
-      pageName                          : 'Global', // Name of the actual page
+      menuLeft                        : false,    // State of the left menu.
+      mainContentSelected             : true,     // When Main Content is selected
+      capacityBuildingContentSelected : false,    // When Training Content is selected
+      awarenessContentSelected        : false,    // When updateDataSelected Content is selected
+
+      projectName : 'Global', // Name of the actual project
+      contentName : 'Main',   // Name of the actual content
 
       importedProjects    : [],
       importedIndicators  : [],
@@ -71,30 +71,29 @@ class Home extends React.Component {
       importedProjects   : projectsFromAPI,
       importedIndicators : dataFromAPI
     })
-    console.log("importedProjects   HOME",   this.state.importedProjects)
+    console.log("importedProjects   HOME", this.state.importedProjects)
     console.log('importedIndicators HOME', this.state.importedIndicators)
+    console.log('projectName HOME',        this.state.projectName)
+
   }
 
 
   //------------------------------------------------------------------------//
-  //----------------------- Mini Menu ( Filter Tabs) -----------------------//
+  //---------------------- Project & Content display -----------------------//
   //------------------------------------------------------------------------//
 
-  /** Select the project from the header button **/
-  selectProjectFromHeader(selectedProject){
+  /** Selecting the project from the header button **/
+  selectProjectFromHeader(selectedProjectFromHeader){
+
     this.setState({
-      anchorGlobal                    : null,
-      pageName                        : selectedProject[0].pageName,
-      mainContentSelected             : selectedProject[0].mainContent,
-      capacityBuildingContentSelected : selectedProject[0].trainingContent,
-      awarenessContentSelected        : selectedProject[0].updateContent
+      projectName : selectedProjectFromHeader
     });
   }
 
-  /** Select the new content chosen in the filter tabs component **/
+  /** Selecting the new content chosen in the filter tabs component **/
   selectContentFromFilterTabs(selectedContent){
     this.setState({
-      pageName                        : selectedContent[0].pageName,
+      contentName                     : selectedContent[0].contentName,
       mainContentSelected             : selectedContent[0].mainContent,
       capacityBuildingContentSelected : selectedContent[0].capacityBuildingContent,
       awarenessContentSelected        : selectedContent[0].awarenessContent
@@ -107,21 +106,28 @@ class Home extends React.Component {
   //------------------------------------------------------------------------//
 
   render() {
+    const { mainContentSelected }             = this.state;
+    const { capacityBuildingContentSelected } = this.state;
+    const { awarenessContentSelected }        = this.state;
+    const { importedIndicators }              = this.state;
+
 
       return (
         <div className="Home">
 
         {/* Header */}
-          <Header sendToHome={this.selectProjectFromHeader} pageName={this.state.pageName} importedProjects={this.state.importedProjects}></Header>
+          <Header sendToHome={this.selectProjectFromHeader} contentName={this.state.contentName} importedProjects={this.state.importedProjects}></Header>
 
         {/* Filter Tabs */}
           <FilterTabs sendToHome={this.selectContentFromFilterTabs}></FilterTabs>
+
+        {/* Line between filter component & content */}
           <Divider />
 
         {/* Contents */}
-          {this.state.mainContentSelected             && (<MainContent             importedIndicators = {this.state.importedIndicators.global}></MainContent>)}
-          {this.state.capacityBuildingContentSelected && (<CapacityBuildingContent importedIndicators = {this.state.importedIndicators.global}></CapacityBuildingContent>)}
-          {this.state.awarenessContentSelected        && (<AwarenessContent></AwarenessContent>)}
+          {mainContentSelected             && (<MainContent             importedIndicators = {importedIndicators.global}></MainContent>)}
+          {capacityBuildingContentSelected && (<CapacityBuildingContent importedIndicators = {importedIndicators.global}></CapacityBuildingContent>)}
+          {awarenessContentSelected        && (<AwarenessContent></AwarenessContent>)}
         </div>
       );
     }
