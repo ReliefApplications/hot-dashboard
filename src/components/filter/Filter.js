@@ -28,19 +28,19 @@ class FilterTabs extends Component {
     let selectedContent = []; //Object sended to container (Home)
 
     // Initialize all content state to false
-    let selectedPageName               = ''
+    let selectedcontentName               = ''
     let mainContentChanged             = false;
     let capacityBuildingContentChanged = false;
     let awarenessContentChanged        = false;
 
     // Check which button is clicked
-    if     (content === 'main')              { mainContentChanged             = true;  selectedPageName='Main';              }
-    else if(content === 'capacity_building') { capacityBuildingContentChanged = true;  selectedPageName='Capacity building'; }
-    else if(content === 'awareness')         { awarenessContentChanged        = true;  selectedPageName='Awareness';         }
+    if     (content === 'main')              { mainContentChanged             = true;  selectedcontentName='Main';              }
+    else if(content === 'capacity_building') { capacityBuildingContentChanged = true;  selectedcontentName='Capacity building'; }
+    else if(content === 'awareness')         { awarenessContentChanged        = true;  selectedcontentName='Awareness';         }
 
     // Push new item to the array to send
     selectedContent.push({
-      pageName                : selectedPageName,
+      contentName                : selectedcontentName,
       mainContent             : mainContentChanged,
       capacityBuildingContent : capacityBuildingContentChanged,
       awarenessContent        : awarenessContentChanged

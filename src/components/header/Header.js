@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import Button       from '@material-ui/core/Button';
 import Menu         from '@material-ui/core/Menu';
 import MenuItem     from '@material-ui/core/MenuItem';
-// import CloudUploadIcon  from '@material-ui/icons/CloudUpload';
 
 /** Styles **/
 const Buttons = {
@@ -27,9 +26,21 @@ class Header extends Component {
 
     this.state = {
       anchorProject              : null,
+        selectedProject : 'Global'
     }
   }
 
+  //------------------------------------------------------------------------//
+  //------------------------------- General --------------------------------//
+  //------------------------------------------------------------------------//
+  /** Set the first letter of a string to uppercase **/
+  upperCaseFirstChar(string){
+    return string[0].toUpperCase() + string.substring(1);
+  }
+
+  //------------------------------------------------------------------------//
+  //------------------------------ Mini Menu -------------------------------//
+  //------------------------------------------------------------------------//
   /** Open Mini Menu **/
   openMiniMenu = event => {
     this.setState({
@@ -44,33 +55,15 @@ class Header extends Component {
 
 
   /** Open content & close mini menu **/
-  selectProjectFromMiniMenu = (content) => () => {
-    let selectedProject = []; //Object sended to container (Home)
-
-    // // Initialize all content state to false
-    // let selectedPageName         = ''
-    // let mainContentChanged       = false;
-    // let trainingContentChanged   = false;
-    // let updateDataContentChanged = false;
-
-    // // Check which button is clicked
-    // if     (content === 'global')   { mainContentChanged       = true;   selectedPageName='Global';   }
-    // else if(content === 'training') { trainingContentChanged   = true;   selectedPageName='Training'; }
-    // else if(content === 'upload')   { updateDataContentChanged = true;   selectedPageName='Upload';   }
-
-    // // Push new item to the array to send
-    // selectedProject.push({
-    //   pageName        : selectedPageName,
-    //   mainContent     : mainContentChanged,
-    //   trainingContent : trainingContentChanged,
-    //   updateContent   : updateDataContentChanged
-    // })
-
+  selectProjectFromMiniMenu = (projectName) => () => {
     // Close the mini menu
-    this.setState({ anchorProject: null });
+    this.setState({
+      anchorProject   : null,
+      selectedProject : projectName
+    });
 
-    // Sending the array
-    // this.props.sendToHome(selectedProject)
+    // Sending the project
+    this.props.sendToHome(projectName)
   };
 
 
@@ -80,7 +73,7 @@ class Header extends Component {
 
     var projectsList = this.props.importedProjects.map((item) => {
       return (
-          <MenuItem key={item.projectname} onClick={this.selectProjectFromMiniMenu(item.projectname)}> {item.projectname[0].toUpperCase() + item.projectname.substring(1)} </MenuItem>
+          <MenuItem key={item.projectname} onClick={this.selectProjectFromMiniMenu(item.projectname)}> {this.upperCaseFirstChar(item.projectname)} </MenuItem>
       );
     });
 
@@ -104,16 +97,8 @@ class Header extends Component {
               {projectsList}
             </Menu>
 
-            {/*/!* Update Data button *!/*/}
-            {/*<Button style     = {Buttons}*/}
-                    {/*variant   = "contained"*/}
-                    {/*component = "span">*/}
-              {/*Upload*/}
-              {/*<CloudUploadIcon className="update-data-button-icon"/>*/}
-            {/*</Button>*/}
-
             {/* Title */}
-            <h1 className="header-title">HOT Overview - {this.props.pageName}</h1>
+            <h2 className="header-title">{this.upperCaseFirstChar(this.state.selectedProject)} Overview - {this.props.contentName}</h2>
 
           </header>
         </div>
