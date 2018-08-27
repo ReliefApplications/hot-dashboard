@@ -87,7 +87,8 @@ class PreProcessor {
       }
     }
     if(generalData.totalEvents !== undefined){
-      new Global(generalData);
+      let project = new Global(generalData);
+      generalData = project.process();
     }
     // project1.process();
     //Abstract class ou if process

@@ -6,6 +6,8 @@ import Typography     from '@material-ui/core/Typography';
 import Card           from '@material-ui/core/Card';
 import CardContent    from '@material-ui/core/CardContent';
 
+/** CSS **/
+import './Widget.css';
 
 class WidgetGraph extends Component {
   render() {

@@ -1,11 +1,18 @@
-class Global {
+import AbstractProject from './AbstractProject'
+
+class Global extends AbstractProject{
   constructor(generalData) {
-    this.process(generalData);
+    super(generalData);
+    this.functions.push("getUsageOfHotData");
+    this.functions.push("getTotalMapathons");
   }
 
-  process(generalData) {
-    this.getUsageOfHotData(generalData);
-    this.getTotalMapathons(generalData);
+  process() {
+    for (let i = 0; i < this.functions.length; i++) {
+      //Calls every function
+      this[this.functions[i]](this.data);
+    }
+    return this.data;
   }
 
   /** Get the number of total event per year **/
@@ -23,7 +30,6 @@ class Global {
     generalData["usageOfHotData"] = usageOfHotData;
     return generalData;
   }
-
 
   /** Get the number of total mapathons **/
   getTotalMapathons(generalData) {

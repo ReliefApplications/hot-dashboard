@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 /** Material UI **/
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Grid            from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 
 /** Styles **/
 const GlobalTheme = createMuiTheme({
@@ -22,7 +22,8 @@ class CapacityBuildingContent extends Component {
   render() {
 
     return (
-        <div>
+        // The padding prevent the page to be too wide because of the option spacing
+        <div style={{ padding: 12 }}>
           <MuiThemeProvider theme={GlobalTheme}>
 
             <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}

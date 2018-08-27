@@ -1,26 +1,23 @@
 @import url('https://fonts.googleapis.com/css?family=Barlow+Condensed');
 
+/*------------------------------------------------------------------------//
+//------------------------------- Content --------------------------------//
+//------------------------------------------------------------------------*/
 /** General contents div **/
 .content-row {
     display      : flex;
     text-align   : center;
-    margin       : 40px;
     padding      : 0 !important;
 }
 
-
+/*------------------------------------------------------------------------//
+//------------------------------- Widgets --------------------------------//
+//------------------------------------------------------------------------*/
+/** External widgets **/
 .widget-container {
     display       : flex;
-    margin        : 20px;
-    margin-top    : 40px;
-    margin-bottom : 0px;
+    margin: 40px 20px 0px;
 }
-
-.widget-image{
-    background-color : #150dd7;
-    width            : 80px;
-}
-
 .widget-text{
     display         : flex;
     flex-direction  : column;
@@ -30,23 +27,20 @@
     padding         : 10px;
 }
 
-
 /** 'Mapped elements' div **/
 .widget-mappedElements-title{
     margin : 20px;
 }
-
 .widget-mappedElements-text{
     display         : flex;
     flex-direction  : row;
     justify-content : space-evenly;
     width           : 100%;
-    margin-top : 10px;
+    margin-top      : 10px;
 }
-
 .widget-mappedElements-text-item-green{
     padding          : 10px;
-    background-color : #150dd7;
+    background-color : #D73F3F;
     color            : white;
 }
 .widget-mappedElements-text-item-grey{

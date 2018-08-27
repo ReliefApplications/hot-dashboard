@@ -47,7 +47,8 @@ class MainContent extends Component {
 
   render() {
     return (
-        <div>
+        // The padding prevent the page to be too wide because of the option spacing
+        <div style={{ padding: 12 }}>
           <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
             <MuiThemeProvider theme={GlobalTheme}>
 
@@ -67,7 +68,6 @@ class MainContent extends Component {
                 {this.props.importedIndicators && (<WidgetIndicator title="Mapathons" img={mapathonsIMG} data={this.props.importedIndicators.totalMapathons}/>)}
               </Grid>
 
-              {/* Second row */}
               {/* Mapped elements */}
               <Grid item xs={12} sm={6} md={3}>
                 {this.props.importedIndicators && (
@@ -75,7 +75,7 @@ class MainContent extends Component {
                       <CardContent className="widget-text">
                         <Typography variant="caption" className="widget-mappedElements-title"> Number of elements mapped </Typography>
                         <div className="widget-mappedElements-text">
-                          <Typography color="textSecondary" className="widget-mappedElements-text-item-green" color="primary">
+                          <Typography className="widget-mappedElements-text-item-green" color="primary">
                             {new Intl.NumberFormat('en-GB', {
                               minimumFractionDigits : 0,
                               maximumFractionDigits : 0
@@ -90,7 +90,7 @@ class MainContent extends Component {
                     </Card>)}
               </Grid>
 
-              {/* Third row */}
+              {/* Second row */}
               {/* Community mappers */}
               <Grid item xs={12} sm={6} md={4}>
                 {this.props.importedIndicators && (

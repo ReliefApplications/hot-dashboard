@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 /** CSS **/
-import './MainContent.css';
+import './AwarenessContent.css';
 
 /** Logos **/
 import mapathonsIMG  from '../../../assets/images/logos/mapathons.png';
@@ -40,13 +40,14 @@ const GlobalTheme = createMuiTheme({
 });
 
 
-class MainContent extends Component {
+class AwarenessContent extends Component {
   //------------------------------------------------------------------------//
   //-------------------------------- Render --------------------------------//
   //------------------------------------------------------------------------//
 
   render() {
     return (
+        // The padding prevent the page to be too wide because of the option spacing
         <div style={{ padding: 12 }}>
           <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
             <MuiThemeProvider theme={GlobalTheme}>
@@ -156,4 +157,4 @@ class MainContent extends Component {
   }
 }
 
-export default MainContent;
+export default AwarenessContent;

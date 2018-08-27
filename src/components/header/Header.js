@@ -6,6 +6,12 @@ import Button       from '@material-ui/core/Button';
 import Menu         from '@material-ui/core/Menu';
 import MenuItem     from '@material-ui/core/MenuItem';
 
+/** CSS **/
+import './Header.css';
+
+/** Constants **/
+// import {BUTTONSSTYLE} from '../../core/external/Constants';
+
 /** Styles **/
 const Buttons = {
   background : '#C43636',
@@ -18,15 +24,14 @@ const Buttons = {
 
 class Header extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.openMiniMenu              = this.openMiniMenu.bind(this);
     this.closeMiniMenu             = this.closeMiniMenu.bind(this);
     this.selectProjectFromMiniMenu = this.selectProjectFromMiniMenu.bind(this);
-
     this.state = {
       anchorProject              : null,
-        selectedProject : 'Global'
+      selectedProject : 'Global'
     }
   }
 
@@ -59,7 +64,7 @@ class Header extends Component {
     // Close the mini menu
     this.setState({
       anchorProject   : null,
-      selectedProject : projectName
+      selectedProject : projectName,
     });
 
     // Sending the project

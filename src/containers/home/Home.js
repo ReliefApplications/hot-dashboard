@@ -5,7 +5,6 @@ import React from 'react';
 import Header             from '../../components/header/Header'
 import FilterTabs         from '../../components/filter/Filter'
 import MainContentGlobal        from '../../components/content/global/MainContent'
-// import MainContentGlobal2        from '../../components/content/ramanihuria/MainContent'
 import CapacityBuildingContentGlobal from '../../components/content/global/CapacityBuildingContent'
 import AwarenessContentGlobal from '../../components/content/global/AwarenessContent'
 
@@ -49,7 +48,7 @@ class Home extends React.Component {
 
   /** Call all datas file from the GitHub api **/
   async componentDidMount(){
-
+    console.log("process");
     let projectsFromAPI = [];
     let dataFromAPI     = {};
 
@@ -85,19 +84,21 @@ class Home extends React.Component {
 
   /** Selecting the project from the header button **/
   async selectProjectFromHeader(selectedProjectFromHeader){
-    console.log(selectedProjectFromHeader);
     let mainContentImported = await import('../../components/content/'+selectedProjectFromHeader+'/MainContent');
-    // import('../../components/content/'+selectedProjectFromHeader+'/MainContent').then(function(m) {
-    //   mainContentImported = MainContentGlobal2;
-    //   console.log(m.default, MainContentGlobal2);
-    // });
+    /** TODO
+     * lazy load the content not displayed
+     */
+    let capacityBuildingContentImported = await import('../../components/content/'+selectedProjectFromHeader+'/CapacityBuildingContent');
+    let awarenessContentImported = await import('../../components/content/'+selectedProjectFromHeader+'/AwarenessContent');
     this.setState({
-      pageName                        : 'Main',
+      contentName                     : 'Main',
       mainContentSelected             : true,
       capacityBuildingContentSelected : false,
       awarenessContentSelected        : false,
       projectName                     : selectedProjectFromHeader,
-      MainContent                     : mainContentImported.default
+      MainContent                     : mainContentImported.default,
+      CapacityBuildingContent         : capacityBuildingContentImported.default,
+      AwarenessContent                : awarenessContentImported.default,
     });
   }
 
@@ -128,7 +129,7 @@ class Home extends React.Component {
           <Header sendToHome={this.selectProjectFromHeader} contentName={this.state.contentName} importedProjects={this.state.importedProjects}></Header>
 
           {/* Filter Tabs */}
-          <FilterTabs sendToHome={this.selectContentFromFilterTabs}></FilterTabs>
+          <FilterTabs sendToHome={this.selectContentFromFilterTabs} contentName={this.state.contentName}></FilterTabs>
 
           {/* Line between filter component & content */}
           <Divider />
@@ -136,7 +137,7 @@ class Home extends React.Component {
           {/* Contents */}
           {mainContentSelected             && (<this.state.MainContent             importedIndicators = {importedIndicators.global} ></this.state.MainContent>)}
           {capacityBuildingContentSelected && (<this.state.CapacityBuildingContent importedIndicators = {importedIndicators.global} ></this.state.CapacityBuildingContent>)}
-          {awarenessContentSelected        && (<this.state.AwarenessContent></this.state.AwarenessContent>)}
+          {awarenessContentSelected        && (<this.state.AwarenessContent importedIndicators = {importedIndicators.global}></this.state.AwarenessContent>)}
         </div>
     );
   }
