@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import Button          from '@material-ui/core/Button';
 
 /** CSS **/
-import './Filter.css';
+import './ContentFilter.css';
 
 /** Constants **/
 // import {BUTTONSSTYLE} from '../../core/external/Constants';
@@ -27,7 +27,7 @@ const FilterSelected = {
 };
 
 
-class FilterTabs extends Component {
+class ContentFilter extends Component {
   constructor(props) {
     super(props)
     this.selectContent = this.selectContent.bind(this);
@@ -104,4 +104,4 @@ class FilterTabs extends Component {
   }
 }
 
-export default FilterTabs;
+export default ContentFilter;

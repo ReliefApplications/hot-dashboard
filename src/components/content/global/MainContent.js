@@ -55,22 +55,22 @@ class MainContent extends Component {
               {/* First row */}
               {/* Active projects */}
               <Grid item xs={12} sm={6} md={3}>
-                {this.props.importedIndicators && (<WidgetIndicator title="Active projects" img={projectsIMG} data={this.props.importedIndicators.totalProjects}/>)}
+                {this.props.importedIndicators.global && (<WidgetIndicator title="Active projects" img={projectsIMG} data={this.props.importedIndicators.global.totalProjects}/>)}
               </Grid>
 
               {/* Map edits */}
               <Grid item xs={12} sm={6} md={3}>
-                {this.props.importedIndicators && (<WidgetIndicator title="Map edits" img={mapIMG} data={this.props.importedIndicators.totalMappers}/>)}
+                {this.props.importedIndicators.global && (<WidgetIndicator title="Map edits" img={mapIMG} data={this.props.importedIndicators.global.totalMappers}/>)}
               </Grid>
 
               {/* Mapathons */}
               <Grid item xs={12} sm={6} md={3}>
-                {this.props.importedIndicators && (<WidgetIndicator title="Mapathons" img={mapathonsIMG} data={this.props.importedIndicators.totalMapathons}/>)}
+                {this.props.importedIndicators.global && (<WidgetIndicator title="Mapathons" img={mapathonsIMG} data={this.props.importedIndicators.global.totalMapathons}/>)}
               </Grid>
 
               {/* Mapped elements */}
               <Grid item xs={12} sm={6} md={3}>
-                {this.props.importedIndicators && (
+                {this.props.importedIndicators.global && (
                     <Card className="widget-container">
                       <CardContent className="widget-text">
                         <Typography variant="caption" className="widget-mappedElements-title"> Number of elements mapped </Typography>
@@ -79,12 +79,12 @@ class MainContent extends Component {
                             {new Intl.NumberFormat('en-GB', {
                               minimumFractionDigits : 0,
                               maximumFractionDigits : 0
-                            }).format(this.props.importedIndicators.totalBuildings)} Buildings</Typography>
+                            }).format(this.props.importedIndicators.global.totalBuildings)} Buildings</Typography>
                           <Typography className="widget-mappedElements-text-item-grey">
                             {new Intl.NumberFormat('en-GB', {
                               minimumFractionDigits : 0,
                               maximumFractionDigits : 0
-                            }).format(this.props.importedIndicators.totalRoads)} Roads</Typography>
+                            }).format(this.props.importedIndicators.global.totalRoads)} Roads</Typography>
                         </div>
                       </CardContent>
                     </Card>)}
@@ -93,7 +93,7 @@ class MainContent extends Component {
               {/* Second row */}
               {/* Community mappers */}
               <Grid item xs={12} sm={6} md={4}>
-                {this.props.importedIndicators && (
+                {this.props.importedIndicators.global && (
                     <WidgetGraph title = "Number of community mappers (by sex)"
                                  data  = {126}
                                  graph = {<VictoryPie
@@ -111,17 +111,17 @@ class MainContent extends Component {
 
               {/* Usage of HOT Data */}
               <Grid item xs={12} sm={6} md={4}>
-                {this.props.importedIndicators &&
+                {this.props.importedIndicators.global &&
                 (<WidgetGraph title = "Increase of usage of HOT data"
                               graph = {<VictoryChart domainPadding={10}>
                                 <VictoryBar style  = {{ data: { fill: "#D73F3F" } }}
-                                            data   = {[
-                                              { x: '2014', y: 0, y0: this.props.importedIndicators.usageOfHotData.data2014 },
-                                              { x: '2015', y: 0, y0: this.props.importedIndicators.usageOfHotData.data2015 },
-                                              { x: '2016', y: 0, y0: this.props.importedIndicators.usageOfHotData.data2016 },
-                                              { x: '2017', y: 0, y0: this.props.importedIndicators.usageOfHotData.data2017 },
-                                              { x: '2018', y: 0, y0: this.props.importedIndicators.usageOfHotData.data2018 }
-                                            ]}
+                                            // data   = {[
+                                            //   { x: '2014', y: 0, y0: this.props.importedIndicators.global.usageOfHotData.data2014 },
+                                            //   { x: '2015', y: 0, y0: this.props.importedIndicators.global.usageOfHotData.data2015 },
+                                            //   { x: '2016', y: 0, y0: this.props.importedIndicators.global.usageOfHotData.data2016 },
+                                            //   { x: '2017', y: 0, y0: this.props.importedIndicators.global.usageOfHotData.data2017 },
+                                            //   { x: '2018', y: 0, y0: this.props.importedIndicators.global.usageOfHotData.data2018 }
+                                            // ]}
                                 />
                               </VictoryChart>}/>
                 )}
@@ -130,7 +130,7 @@ class MainContent extends Component {
 
               {/* Validataion errors */}
               <Grid item xs={12} sm={6} md={4}>
-                {this.props.importedIndicators &&
+                {this.props.importedIndicators.global &&
                 (<WidgetGraph title = "Proportion of validation errors"
                               graph = {<VictoryChart>
                                 <VictoryLine
@@ -138,13 +138,13 @@ class MainContent extends Component {
                                       data   : { stroke: "#2C3038" },
                                       parent : { border: "1px solid #ccc"}
                                     }}
-                                    data = {[
-                                      { x: '2014', y: this.props.importedIndicators.usageOfHotData.data2014 },
-                                      { x: '2015', y: this.props.importedIndicators.usageOfHotData.data2015 },
-                                      { x: '2016', y: this.props.importedIndicators.usageOfHotData.data2016 },
-                                      { x: '2017', y: this.props.importedIndicators.usageOfHotData.data2017 },
-                                      { x: '2018', y: this.props.importedIndicators.usageOfHotData.data2018 }
-                                    ]}
+                                    // data = {[
+                                    //   { x: '2014', y: this.props.importedIndicators.global.usageOfHotData.data2014 },
+                                    //   { x: '2015', y: this.props.importedIndicators.global.usageOfHotData.data2015 },
+                                    //   { x: '2016', y: this.props.importedIndicators.global.usageOfHotData.data2016 },
+                                    //   { x: '2017', y: this.props.importedIndicators.global.usageOfHotData.data2017 },
+                                    //   { x: '2018', y: this.props.importedIndicators.global.usageOfHotData.data2018 }
+                                    // ]}
                                 />
                               </VictoryChart>}/>
                 )}

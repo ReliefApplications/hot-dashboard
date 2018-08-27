@@ -31,7 +31,7 @@ class Header extends Component {
     this.selectProjectFromMiniMenu = this.selectProjectFromMiniMenu.bind(this);
     this.state = {
       anchorProject              : null,
-      selectedProject : 'Global'
+        selectedProject : 'Global'
     }
   }
 

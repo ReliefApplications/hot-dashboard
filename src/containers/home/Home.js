@@ -3,7 +3,7 @@ import React from 'react';
 
 /** Containers **/
 import Header             from '../../components/header/Header'
-import FilterTabs         from '../../components/filter/Filter'
+import FilterTabs         from '../../components/filter/ContentFilter'
 import MainContentGlobal        from '../../components/content/global/MainContent'
 import CapacityBuildingContentGlobal from '../../components/content/global/CapacityBuildingContent'
 import AwarenessContentGlobal from '../../components/content/global/AwarenessContent'
@@ -13,6 +13,9 @@ import './Home.css';
 
 /** Services **/
 import PreProcessor   from '../../core/preprocessor/PreProcessor';
+import Global from '../../core/preprocessor/Global';
+import RamaniHuria from '../../core/preprocessor/Global';
+import Preprocess from "../../core/scripts/Preprocess";
 
 /** Material **/
 import Divider         from '@material-ui/core/Divider';
@@ -47,35 +50,8 @@ class Home extends React.Component {
   //------------------------------------------------------------------------//
 
   /** Call all datas file from the GitHub api **/
-  async componentDidMount(){
-    console.log("process");
-    let projectsFromAPI = [];
-    let dataFromAPI     = {};
-
-    //  1. Get the projects
-    try {
-      projectsFromAPI = await preProcessingService.getProjectsFromAPI();
-    } catch (e) {
-      console.log('preProcessing projects error', e)
-    }
-
-    // 2. Get the indicators
-    try {
-      for(let i=0; i<projectsFromAPI.length; i++){
-        dataFromAPI[projectsFromAPI[i].projectname] = await preProcessingService.getDataFromProjects(projectsFromAPI, i);
-      }
-    } catch (e) {
-      console.log('preProcessing data error', e)
-    }
-
-    // 3. Set the states received
-    this.setState({
-      importedProjects   : projectsFromAPI,
-      importedIndicators : dataFromAPI
-    });
-    console.log('importedProjects   HOME', this.state.importedProjects);
-    console.log('importedIndicators HOME', this.state.importedIndicators);
-    console.log('projectName HOME',        this.state.projectName);
+  async componentDidMount() {
+    new Preprocess().process().then(res => {console.log(res);});
   }
 
   //------------------------------------------------------------------------//
@@ -135,9 +111,9 @@ class Home extends React.Component {
           <Divider />
 
           {/* Contents */}
-          {mainContentSelected             && (<this.state.MainContent             importedIndicators = {importedIndicators.global} ></this.state.MainContent>)}
-          {capacityBuildingContentSelected && (<this.state.CapacityBuildingContent importedIndicators = {importedIndicators.global} ></this.state.CapacityBuildingContent>)}
-          {awarenessContentSelected        && (<this.state.AwarenessContent importedIndicators = {importedIndicators.global}></this.state.AwarenessContent>)}
+          {mainContentSelected             && (<this.state.MainContent             importedIndicators = {importedIndicators} ></this.state.MainContent>)}
+          {capacityBuildingContentSelected && (<this.state.CapacityBuildingContent importedIndicators = {importedIndicators} ></this.state.CapacityBuildingContent>)}
+          {awarenessContentSelected        && (<this.state.AwarenessContent importedIndicators = {importedIndicators}></this.state.AwarenessContent>)}
         </div>
     );
   }

@@ -19,7 +19,6 @@ class PreProcessor {
   /** Get the projects from the API **/
   getProjectsFromAPI(){
     return new Promise((resolve,reject) => {
-
       reader.getCsv(CONFIG.projects, this.getDataFromProjectsFile)
           .then((allProjects) =>{
             resolve(allProjects);
@@ -32,8 +31,8 @@ class PreProcessor {
 
   /** Initilize the data received from the API **/
   getDataFromProjects(projectSource, i){
+    this.projectSource = projectSource;
     return new Promise((resolve,reject) => {
-
       reader.getCsv(projectSource[i].configfileurl, this.getAllDatas)
           .then((allDatasFromAPIwithLinks) =>{
             resolve(allDatasFromAPIwithLinks);
@@ -59,7 +58,6 @@ class PreProcessor {
   /** Update all datas to the 'allDatasFromAPIwithLinks' value **/
   async getAllDatas(result){
     const allDatasFromAPIwithLinks = result.data;
-
     let generalData = {}; // Array of data with all the indicators we want
 
     // For each little objects on the big object
@@ -86,13 +84,10 @@ class PreProcessor {
         }
       }
     }
-    if(generalData.totalEvents !== undefined){
-      let project = new Global(generalData);
-      generalData = project.process();
-    }
-    // project1.process();
-    //Abstract class ou if process
-    /** TODO **/
+    // if(generalData.totalEvents !== undefined){
+    //   let project = new Global(generalData);
+    //   generalData = project.process();
+    // }
     return generalData;
   }
 }
