@@ -1,9 +1,11 @@
 import Papa           from 'papaparse';
+import CONFIG from "../external/Constants";
 
 class Reader {
   constructor() {
     this.getCsv   = this.getCsv.bind(this);
     this.getJson   = this.getJson.bind(this);
+    this.getJsonFromAWS  = this.getJsonFromAWS.bind(this);
   }
 
   /** Get the CSV datas **/
@@ -25,13 +27,18 @@ class Reader {
 
   /** Get the JSON datas **/
   getJson(config) {
-    const url = config.link;
-    const name = config.name;
-    return fetch(url)
-        .then((Response)=> Response.json())
-        .then((findResponse)=>{
-          return this.getPropByString(findResponse, name);
-        });
+    if(config.link) {
+      const url = config.link;
+      const name = config.name;
+      return fetch(url)
+          .then((Response) => Response.json())
+          .then((findResponse) => {
+            return this.getPropByString(findResponse, name);
+          });
+    }
+    else {
+      return {};
+    }
   }
 
   /** Get the property name in the new created array **/
@@ -55,6 +62,17 @@ class Reader {
     return object[props[i]]; // return you object with
   }
 
+
+  getJsonFromAWS() {
+    return fetch(CONFIG.awsBucket)
+        .then((Response)=> Response.json())
+        .then(function (data) {
+          return data;
+        })
+        .catch(function (error) {
+          console.error('Request failure: ', error);
+        });
+  }
 }
 
 export default Reader;

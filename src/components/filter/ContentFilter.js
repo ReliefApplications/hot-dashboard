@@ -39,7 +39,7 @@ class ContentFilter extends Component {
 
   /** Open content & close mini menu **/
   selectContent = (content) => () => {
-    console.log(this.props.contentName);
+    // console.log(this.props.contentName);
     let selectedContent = []; //Object sended to container (Home)
 
     // Initialize all content state to false

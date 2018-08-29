@@ -24,13 +24,10 @@
   justify-content : center;
   text-align      : center;
   margin          : 0 auto;
-  padding         : 10px;
+  padding         : 16px 10px 10px;
 }
 
 /** 'Mapped elements' div **/
-.widget-mappedElements-title{
-  margin : 20px;
-}
 .widget-mappedElements-text{
   display         : flex;
   flex-direction  : row;

@@ -6,33 +6,17 @@ class Writer {
   }
   /** Set the JSON datas **/
   setJson(data) {
-    // return (async () => {
-    //   const rawResponse = await fetch(CONFIG.hotdata, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({slt: "c moi"})
-    //   });
-    //   const content = await rawResponse.json();
-    //
-    //   console.log(content);
-    // })();
-
-
-    // const url = CONFIG.hotdata;
-    // return fetch(url)
-    //     .then((Response)=> Response.json())
-    //     .then((findResponse)=>{
-    //     });
-
-
-    // return fetch(url)
-    //     .then((Response)=> Response.json())
-    //     .then((findResponse)=>{
-    //       return this.getPropByString(findResponse, name);
-    //     });
+    return (async () => {
+      await fetch(CONFIG.awsBucket, {
+        method: 'PUT',
+        body: JSON.stringify(data)})
+          .then(function (resp) {
+            console.log('Request success: ', resp);
+          })
+          .catch(function (error) {
+            console.log('Request failure: ', error);
+          });
+    })();
   }
 
 }

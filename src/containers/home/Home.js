@@ -12,16 +12,14 @@ import AwarenessContentGlobal from '../../components/content/global/AwarenessCon
 import './Home.css';
 
 /** Services **/
-import PreProcessor   from '../../core/preprocessor/PreProcessor';
-import Global from '../../core/preprocessor/Global';
-import RamaniHuria from '../../core/preprocessor/Global';
 import Preprocess from "../../core/scripts/Preprocess";
+import Reader from "../../core/utils/Reader";
 
 /** Material **/
 import Divider         from '@material-ui/core/Divider';
 
-const preProcessingService  = new PreProcessor();
-
+// const preProcessingService  = new PreProcessor();
+const reader = new Reader();
 
 class Home extends React.Component {
   constructor(props) {
@@ -51,7 +49,18 @@ class Home extends React.Component {
 
   /** Call all datas file from the GitHub api **/
   async componentDidMount() {
-    new Preprocess().process().then(res => {console.log(res);});
+    new Preprocess().process().then(res => {this.setState({importedProjects: res.projects})});
+    this.setState({importedIndicators : await new Promise((resolve,reject) => {
+        reader.getJsonFromAWS()
+            .then((data) =>{
+              resolve(data);
+            })
+            .catch((error) =>{
+              reject(error);
+            });
+      })
+    });
+    console.log("imported indicators        HOME", this.state.importedIndicators);
   }
 
   //------------------------------------------------------------------------//

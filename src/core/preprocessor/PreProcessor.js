@@ -3,13 +3,15 @@ import CONFIG from '../external/Constants'
 
 /** Services **/
 import Reader   from '../utils/Reader';
-import Global   from './Global';
 
 const reader = new Reader();
 
 class PreProcessor {
   constructor() {
     this.getAllDatas = this.getAllDatas.bind(this);
+    this.getDataFromProjects = this.getDataFromProjects.bind(this);
+    this.getProjectsFromAPI = this.getProjectsFromAPI.bind(this);
+    this.getDataFromProjectsFile = this.getDataFromProjectsFile.bind(this);
   }
 
   //------------------------------------------------------------------------//
@@ -31,7 +33,6 @@ class PreProcessor {
 
   /** Initilize the data received from the API **/
   getDataFromProjects(projectSource, i){
-    this.projectSource = projectSource;
     return new Promise((resolve,reject) => {
       reader.getCsv(projectSource[i].configfileurl, this.getAllDatas)
           .then((allDatasFromAPIwithLinks) =>{
@@ -57,37 +58,46 @@ class PreProcessor {
 
   /** Update all datas to the 'allDatasFromAPIwithLinks' value **/
   async getAllDatas(result){
+    // console.log(result.data);
     const allDatasFromAPIwithLinks = result.data;
-    let generalData = {}; // Array of data with all the indicators we want
+    let generalData = {
+      main: {},
+      capacitybuilding: {},
+      awareness: {}
+    }; // Array of data with all the indicators we want
 
     // For each little objects on the big object
     for(let i=0; i<allDatasFromAPIwithLinks.length; i++) {
 
       // Control if the 'link' attribute in the object is not undefined
       if (allDatasFromAPIwithLinks[i].link !== undefined) {
-
-        switch (allDatasFromAPIwithLinks[i].type) {
+        let dataGeneratedWithLink = undefined;
+        switch (allDatasFromAPIwithLinks[i].type.toLowerCase()) {
           // If there is a JSON file or if it is an API
           case "api":
-          case "json": {
-            const jsonGeneratedWithLink = await reader.getJson(allDatasFromAPIwithLinks[i]);
-            generalData[allDatasFromAPIwithLinks[i].name] = jsonGeneratedWithLink;
-          }
+          case "json":
+            dataGeneratedWithLink = await reader.getJson(allDatasFromAPIwithLinks[i]);
             break;
           // If there is a csv file
-          case "csv": {
-            const csvGeneratedWithLink = await reader.getCsv(allDatasFromAPIwithLinks[i].link, (result) => result.data);
-            generalData[allDatasFromAPIwithLinks[i].name] = csvGeneratedWithLink;
-          }
+          case "csv":
+            dataGeneratedWithLink = await reader.getCsv(allDatasFromAPIwithLinks[i].link, (result) => result.data);
+            break;
+          default:
+        }
+        switch (allDatasFromAPIwithLinks[i].category.toLowerCase()) {
+          case "mapping":
+            generalData.main[allDatasFromAPIwithLinks[i].name] = dataGeneratedWithLink;
+            break;
+          case "awareness":
+            generalData.awareness[allDatasFromAPIwithLinks[i].name] = dataGeneratedWithLink;
+            break;
+          case "capacitybuilding":
+            generalData.capacitybuilding[allDatasFromAPIwithLinks[i].name] = dataGeneratedWithLink;
             break;
           default:
         }
       }
     }
-    // if(generalData.totalEvents !== undefined){
-    //   let project = new Global(generalData);
-    //   generalData = project.process();
-    // }
     return generalData;
   }
 }

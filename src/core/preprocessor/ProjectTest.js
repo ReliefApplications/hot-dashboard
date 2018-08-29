@@ -1,6 +1,6 @@
 import AbstractProject from './AbstractProject'
 
-class RamaniHuria extends AbstractProject{
+class ProjectTest extends AbstractProject{
   constructor(generalData) {
     super(generalData);
     this.functions.push("getPeopleTrained");
@@ -100,4 +100,4 @@ class RamaniHuria extends AbstractProject{
   }
 }
 
-export default RamaniHuria;
+export default ProjectTest;
