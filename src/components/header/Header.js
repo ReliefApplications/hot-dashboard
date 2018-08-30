@@ -18,7 +18,7 @@ const Buttons = {
   color      : 'white',
   margin     : '0 0 0 10px',
   fontFamily : "'Barlow Condensed', sans-serif",
-  fontSize   :  18
+  fontSize   : 18
 };
 
 
@@ -32,7 +32,7 @@ class Header extends Component {
     this.state = {
       anchorProject              : null,
         selectedProject : 'Global'
-    }
+    };
   }
 
   //------------------------------------------------------------------------//
@@ -83,30 +83,26 @@ class Header extends Component {
     });
 
     return (
-        <div className="header-component">
-          <header className="header">
+        <header className="header">
+          {/* 'Project' button */}
+          <Button style     = {Buttons}
+                  aria-owns = {anchorProject ? 'MiniMenuGlobal' : null}
+                  variant   = "contained"
+                  component = "span"
+                  onClick   = {this.openMiniMenu}>
+            Projects
+          </Button>
+          <Menu id       = "MiniMenuGlobal"
+                anchorEl = {anchorProject}
+                open     = {Boolean(anchorProject)}
+                onClose  = {this.closeMiniMenu}
+          >
+            {projectsList}
+          </Menu>
 
-            {/* 'Project' button */}
-            <Button style     = {Buttons}
-                    aria-owns = {anchorProject ? 'MiniMenuGlobal' : null}
-                    variant   = "contained"
-                    component = "span"
-                    onClick   = {this.openMiniMenu}>
-              Projects
-            </Button>
-            <Menu id       = "MiniMenuGlobal"
-                  anchorEl = {anchorProject}
-                  open     = {Boolean(anchorProject)}
-                  onClose  = {this.closeMiniMenu}
-            >
-              {projectsList}
-            </Menu>
-
-            {/* Title */}
-            <h2 className="header-title">{this.upperCaseFirstChar(this.state.selectedProject)} Overview - {this.props.contentName}</h2>
-
-          </header>
-        </div>
+          {/* Title */}
+          <h2 className="header-title">{this.upperCaseFirstChar(this.state.selectedProject)} Overview - {this.props.contentName}</h2>
+        </header>
     );
   }
 }

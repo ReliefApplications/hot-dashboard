@@ -48,6 +48,10 @@ class CapacityBuildingContent extends Component {
                 <WidgetIndicator title="People trained" img={trainingIMG}  data={this.props.importedIndicators.ramanihuria.capacitybuilding.trainings.total}/>
               </Grid>
 
+              {/*Fill the gap to have another row of widget for the big ones*/}
+              {/*<Grid item xs={0} sm={6} md={9} className="grid-item">*/}
+              {/*</Grid>*/}
+
               {/* Monthly training */}
               <Grid item xs={12} sm={6} md={4}>
                 {this.props.importedIndicators.global &&
