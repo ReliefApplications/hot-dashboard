@@ -17,9 +17,6 @@ import WidgetGraph from "../../widget/Graph";
 
 /** Plugins **/
 import { VictoryPie   }  from 'victory';
-import { VictoryChart }  from 'victory';
-import { VictoryLine   }  from 'victory';
-import { VictoryAxis  }  from 'victory';
 
 /** Themes **/
 const GlobalTheme = createMuiTheme({
@@ -49,45 +46,45 @@ class CapacityBuildingContent extends Component {
               </Grid>
 
               {/* Monthly training */}
-              <Grid item xs={12} sm={6} md={4}>
-                {this.props.importedIndicators.global &&
-                (<WidgetGraph title = {this.props.importedIndicators.global.capacitybuilding.monthlyDivision.title}
-                              graph = {<VictoryChart domainPadding={ {x: 15}}>
-                                <VictoryAxis
-                                    style={{ tickLabels: { padding: 20, angle: -0 } }}
-                                />
-                                <VictoryAxis
-                                    dependentAxis
-                                />
-                                <VictoryLine
-                                    style={{
-                                      data   : { stroke: "#2C3038" },
-                                      parent : { border: "1px solid #ccc"}
-                                    }}
-                                    data   = {[
-                                      { x: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data7"].label,
-                                        y: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data7"].value
-                                      },
-                                      { x: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data8"].label,
-                                        y: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data8"].value
-                                      },
-                                      { x: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data9"].label,
-                                        y: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data9"].value
-                                      },
-                                      { x: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data10"].label,
-                                        y: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data10"].value
-                                      },
-                                      { x: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data11"].label,
-                                        y: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data11"].value
-                                      },
-                                      { x: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data12"].label,
-                                        y: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data12"].value
-                                      }
-                                    ]}
-                                />
-                              </VictoryChart>}/>
-                )}
-              </Grid>
+              {/*<Grid item xs={12} sm={6} md={4}>*/}
+                {/*{this.props.importedIndicators.global &&*/}
+                {/*(<WidgetGraph title = {this.props.importedIndicators.global.capacitybuilding.monthlyDivision.title}*/}
+                              {/*graph = {<VictoryChart domainPadding={ {x: 15}}>*/}
+                                {/*<VictoryAxis*/}
+                                    {/*style={{ tickLabels: { padding: 20, angle: -0 } }}*/}
+                                {/*/>*/}
+                                {/*<VictoryAxis*/}
+                                    {/*dependentAxis*/}
+                                {/*/>*/}
+                                {/*<VictoryLine*/}
+                                    {/*style={{*/}
+                                      {/*data   : { stroke: "#2C3038" },*/}
+                                      {/*parent : { border: "1px solid #ccc"}*/}
+                                    {/*}}*/}
+                                    {/*data   = {[*/}
+                                      {/*{ x: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data7"].label,*/}
+                                        {/*y: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data7"].value*/}
+                                      {/*},*/}
+                                      {/*{ x: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data8"].label,*/}
+                                        {/*y: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data8"].value*/}
+                                      {/*},*/}
+                                      {/*{ x: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data9"].label,*/}
+                                        {/*y: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data9"].value*/}
+                                      {/*},*/}
+                                      {/*{ x: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data10"].label,*/}
+                                        {/*y: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data10"].value*/}
+                                      {/*},*/}
+                                      {/*{ x: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data11"].label,*/}
+                                        {/*y: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data11"].value*/}
+                                      {/*},*/}
+                                      {/*{ x: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data12"].label,*/}
+                                        {/*y: this.props.importedIndicators.global.capacitybuilding.monthlyDivision.data["data12"].value*/}
+                                      {/*}*/}
+                                    {/*]}*/}
+                                {/*/>*/}
+                              {/*</VictoryChart>}/>*/}
+                {/*)}*/}
+              {/*</Grid>*/}
 
               {/* Training by genders */}
               <Grid item xs={12} sm={6} md={4}>

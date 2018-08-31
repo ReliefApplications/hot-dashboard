@@ -34,11 +34,13 @@ class PreProcessor {
   /** Initilize the data received from the API **/
   getDataFromProjects(projectSource, i){
     return new Promise((resolve,reject) => {
-      reader.getCsv(projectSource[i].configfileurl, this.getAllDatas)
+      reader.getCsv(projectSource[i]["config file url"], this.getAllDatas)
           .then((allDatasFromAPIwithLinks) =>{
             resolve(allDatasFromAPIwithLinks);
           })
           .catch((error) =>{
+            console.log(projectSource);
+            console.error(error);
             reject(error);
           });
     });
@@ -58,7 +60,6 @@ class PreProcessor {
 
   /** Update all datas to the 'allDatasFromAPIwithLinks' value **/
   async getAllDatas(result){
-    // console.log(result.data);
     const allDatasFromAPIwithLinks = result.data;
     let generalData = {
       main: {},
@@ -92,6 +93,7 @@ class PreProcessor {
             generalData.awareness[allDatasFromAPIwithLinks[i].name] = dataGeneratedWithLink;
             break;
           case "capacitybuilding":
+          case "capacity building" :
             generalData.capacitybuilding[allDatasFromAPIwithLinks[i].name] = dataGeneratedWithLink;
             break;
           default:

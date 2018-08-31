@@ -78,7 +78,7 @@ class Header extends Component {
 
     var projectsList = this.props.importedProjects.map((item) => {
       return (
-          <MenuItem key={item.projectname} onClick={this.selectProjectFromMiniMenu(item.projectname)}> {this.upperCaseFirstChar(item.projectname)} </MenuItem>
+          <MenuItem key={item["project name"]} onClick={this.selectProjectFromMiniMenu(item["project name"])}> {this.upperCaseFirstChar(item["project name"])} </MenuItem>
       );
     });
 

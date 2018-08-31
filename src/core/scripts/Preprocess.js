@@ -19,15 +19,17 @@ class Preprocess {
     try {
       projectsFromAPI = await
         this.preProcessingService.getProjectsFromAPI();
+      // console.log("PROCESSED DATA", projectsFromAPI);
     } catch (e) {
       console.error('preProcessing projects error', e);
     }
     // 2. Get the indicators
     try {
       for (let i = 0; i < projectsFromAPI.length; i++) {
-        dataFromAPI[projectsFromAPI[i].projectname] = await
+        dataFromAPI[projectsFromAPI[i]["project name"]] = await
             this.preProcessingService.getDataFromProjects(projectsFromAPI, i);
       }
+      console.log("PROCESSED DATA", dataFromAPI);
     } catch (e) {
       console.error('preProcessing data error', e)
     }
@@ -36,7 +38,7 @@ class Preprocess {
     try {
       let project = {};
       for (let i = 0; i < projectsFromAPI.length; i++) {
-        switch (projectsFromAPI[i].projectname.toLowerCase()) {
+        switch (projectsFromAPI[i]["project name"].toLowerCase()) {
           case "ramanihuria":
             project = new RamaniHuria(dataFromAPI.ramanihuria);
             dataFromAPI.ramanihuria = project.process();
@@ -57,6 +59,7 @@ class Preprocess {
 
     // 4. Json saving in the bucket Amazon
     try {
+      console.log("DATA", dataFromAPI);
       writer.setJson(dataFromAPI);
     }
     catch (e) {
@@ -65,6 +68,8 @@ class Preprocess {
 
     let res = {};
     res.projects = projectsFromAPI;
+    res.data = dataFromAPI;
+    console.log("res",res);
     return res;
   }
 }
