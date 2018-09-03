@@ -16,47 +16,54 @@ class RamaniHuria extends AbstractProject{
     return this.data;
   }
 
+  /** Get the number of attendees and of institutions trained during the workshops (by month) **/
   getAttendeesAndInstitutions(data) {
-    console.log(data);
     let attendees = data.capacitybuilding.nbattendees;
     let attendeesArray = [];
-    let res = {};
-    let nbOfInstitutions = 0;
-    // console.log("TEST DATE", (new Date(attendees[0]["End date"]).toUTCString().split(" ", 4).pop()));//Math.max.apply(this, attendees["End date"]));//attendees.filter(row => Math.max(row["End date"])));
-    // for (let i = 0; i <= attendees.length; i++) {
-    //   let date = (new Date(attendees[i]["End date"]).toUTCString())+"/"+(new Date(t["End date"]).getFullYear())
-    //   attendeesArray.date
-    // }
-    
-    for (let i = 2018; i >= 2017; i--) {
-      let maxMonth = (i === 2018) ? 8 : 12;
-      for (let j = maxMonth; j >= 1; j--) {
-        let t = attendees.filter(row => (new Date(row["End date"]).getMonth() === j) && (new Date(row["End date"]).getFullYear() === i))[0];
-        if (t) {
-          data.capacitybuilding["attendeesAndInstitutions"] = {
-            date:       (new Date(t["End date"]).getMonth()+1)+"/"+(new Date(t["End date"]).getFullYear()),
-            nbattendees : t["Number attendees"],
-            nbInstitutions : t["Number institutions"]
-          };
+    let exist = false;
+    for (let i = 0; i < attendees.length; i++) {
+      let date = (new Date(attendees[i]["End date"]));
+      // This loop is here to add the row in the right array cell in order to have a descending order
+      for (let j = 0; j < attendeesArray.length && !exist; j++) {
+        // If the date of the current row is greater (newer) than the item in the array
+        if (date.getFullYear() > attendeesArray[j].date.getFullYear() || (date.getMonth() > attendeesArray[j].date.getMonth() && attendeesArray[j].date.getFullYear() === date.getFullYear())) {
+          let attendeesTemp = [];
+          attendeesTemp.push({
+            date : date,
+            label : date.toUTCString().split(" ", 3)[2]+" "+date.toUTCString().split(" ", 4)[3],
+            nbAttendees: attendees[i]["Number attendees"],
+            nbInstitutions: attendees[i]["Number institutions"],
+          });
+          let res = [];
+          res = attendeesArray.splice(0, j);
+          res = res.concat(attendeesTemp);
+          res = res.concat(attendeesArray);
+          attendeesArray = res;
+          exist = true;
         }
-      // let tabSize = nbOfAttendees.length;
-      // if (tabSize > 0) {
-      //   let nbPerMonth = 0;
-      //   while (tabSize > 0) {
-      //     nbPerMonth += nbPeopleTrainedAMonth[tabSize - 1]["#people trained"];
-      //     tabSize--;
-      //   }
-      //   monthlyDivisionData["data" + (12 - counter)] = {
-      //     "label": month + "/" + i,
-      //     "value": nbPerMonth
-      //   };
-      //   lastMonth = month;
-      //   lastYear = i;
-      //   counter++;
+        // If the date of the current row is equal to the date of the item in the array
+        else if (attendeesArray[j].date.getMonth() === date.getMonth() && attendeesArray[j].date.getFullYear() === date.getFullYear()) {
+          attendeesArray[j].nbAttendees += attendees[i]["Number attendees"];
+          attendeesArray[j].nbInstitutions += attendees[i]["Number institutions"];
+          exist = true;
+        }
+      }
+      // Otherwise, the current row is lower (older) than the last item of the array
+      if(!exist) {
+        attendeesArray.push({
+          date : date,
+          label : date.toUTCString().split(" ", 3)[2]+" "+date.toUTCString().split(" ", 4)[3],
+          nbAttendees: attendees[i]["Number attendees"],
+          nbInstitutions: attendees[i]["Number institutions"],
+        });
+      }
+      else {
+        exist = false;
       }
     }
+    // We store the data calculated in the data stored on the rawdata
+    data.capacitybuilding["attendeesAndInstitutions"] = attendeesArray;
     return data;
-    // let endDate = data.main["End date"]
   }
 
   /** Get the number of people trained by gender and in total **/

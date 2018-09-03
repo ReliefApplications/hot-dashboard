@@ -29,7 +29,7 @@ class Preprocess {
         dataFromAPI[projectsFromAPI[i]["project name"]] = await
             this.preProcessingService.getDataFromProjects(projectsFromAPI, i);
       }
-      console.log("PROCESSED DATA", dataFromAPI);
+      // console.log("PROCESSED DATA", dataFromAPI);
     } catch (e) {
       console.error('preProcessing data error', e)
     }
@@ -65,12 +65,6 @@ class Preprocess {
     catch (e) {
       console.error('Writing the json file failed', e)
     }
-
-    let res = {};
-    res.projects = projectsFromAPI;
-    res.data = dataFromAPI;
-    console.log("res",res);
-    return res;
   }
 }
 export default Preprocess;

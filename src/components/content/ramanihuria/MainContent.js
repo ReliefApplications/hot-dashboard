@@ -36,17 +36,18 @@ class MainContent extends Component {
   render() {
     return (
         <div style={{ padding: 12 }}>
-          <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
-            <MuiThemeProvider theme={GlobalTheme}>
+          {this.props.importedData &&
+          (<MuiThemeProvider theme={GlobalTheme}>
+            <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
 
               {/* First row */}
               {/* Map edits */}
               <Grid item xs={12} sm={6} md={3}>
-                {this.props.importedIndicators.ramanihuria && (<WidgetIndicator title="Map edits" img={mapIMG} data={this.props.importedIndicators.ramanihuria.main.edits}/>)}
+                {this.props.importedData.ramanihuria && (<WidgetIndicator title="Map edits" img={mapIMG} data={this.props.importedData.ramanihuria.main.edits}/>)}
               </Grid>
-
-            </MuiThemeProvider>
-          </Grid>
+            </Grid>
+          </MuiThemeProvider>
+          )}
         </div>
     );
   }

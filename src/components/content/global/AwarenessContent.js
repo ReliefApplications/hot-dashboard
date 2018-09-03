@@ -24,8 +24,8 @@ class CapacityBuildingContent extends Component {
     return (
         // The padding prevent the page to be too wide because of the option spacing
         <div style={{ padding: 12 }}>
-          <MuiThemeProvider theme={GlobalTheme}>
-
+          {this.props.importedData &&
+          (<MuiThemeProvider theme={GlobalTheme}>
             <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
               {/* First row */}
               <Grid item xs={12} sm={6} md={3}>
@@ -33,6 +33,7 @@ class CapacityBuildingContent extends Component {
             </Grid>
 
           </MuiThemeProvider>
+          )}
         </div>
     );
   }

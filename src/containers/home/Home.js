@@ -35,11 +35,12 @@ class Home extends React.Component {
       capacityBuildingContentSelected : false,    // When Training Content is selected
       awarenessContentSelected        : false,    // When updateDataSelected Content is selected
 
+      //By default, the global project and the main content are displayed
       projectName : 'Global', // Name of the actual project
       contentName : 'Main',   // Name of the actual content
 
       importedProjects    : [],
-      importedIndicators : [],
+      importedData : [],
     };
   }
 
@@ -47,20 +48,23 @@ class Home extends React.Component {
   //---------------------------------- Init --------------------------------//
   //------------------------------------------------------------------------//
 
-  /** Call all datas file from the GitHub api **/
+  /** Call all datas file from the GitHub api once the page is rendered **/
   async componentDidMount() {
-    new Preprocess().process().then(res => {this.setState({importedProjects: res.projects})});
-    this.setState({importedIndicators : await new Promise((resolve,reject) => {
+    new Preprocess().process();
+    this.setState({importedData : await new Promise((resolve,reject) => {
+      // Getting data from the preprocessed file
         reader.getJsonFromAWS()
             .then((data) =>{
+              // Getting the projects names available
+              this.setState({importedProjects: Object.keys(data)});
               resolve(data);
             })
             .catch((error) =>{
+              this.setState({importedProjects: []});
               reject(error);
             });
       })
     });
-    console.log("imported indicators        HOME", this.state.importedIndicators);
   }
 
   //------------------------------------------------------------------------//
@@ -105,7 +109,7 @@ class Home extends React.Component {
     const { mainContentSelected }             = this.state;
     const { capacityBuildingContentSelected } = this.state;
     const { awarenessContentSelected }        = this.state;
-    const { importedIndicators }              = this.state;
+    const { importedData }                    = this.state;
 
     return (
         <div className="Home">
@@ -120,9 +124,9 @@ class Home extends React.Component {
           <Divider />
 
           {/* Contents */}
-          {mainContentSelected             && (<this.state.MainContent             importedIndicators = {importedIndicators} ></this.state.MainContent>)}
-          {capacityBuildingContentSelected && (<this.state.CapacityBuildingContent importedIndicators = {importedIndicators} ></this.state.CapacityBuildingContent>)}
-          {awarenessContentSelected        && (<this.state.AwarenessContent importedIndicators = {importedIndicators}></this.state.AwarenessContent>)}
+          {mainContentSelected             && (<this.state.MainContent             importedData = {importedData} ></this.state.MainContent>)}
+          {capacityBuildingContentSelected && (<this.state.CapacityBuildingContent importedData = {importedData} ></this.state.CapacityBuildingContent>)}
+          {awarenessContentSelected        && (<this.state.AwarenessContent importedData = {importedData}></this.state.AwarenessContent>)}
         </div>
     );
   }

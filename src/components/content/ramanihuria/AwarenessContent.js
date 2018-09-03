@@ -31,16 +31,16 @@ class AwarenessContent extends Component {
     return (
         // The padding prevent the page to be too wide because of the option spacing
         <div style={{ padding: 12 }}>
-          <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
-            <MuiThemeProvider theme={GlobalTheme}>
+          {this.props.importedData &&
+          (<MuiThemeProvider theme={GlobalTheme}>
+            <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
 
               {/* First row */}
               <Grid item>
-
               </Grid>
-
-            </MuiThemeProvider>
-          </Grid>
+            </Grid>
+          </MuiThemeProvider>
+          )}
         </div>
     );
   }
