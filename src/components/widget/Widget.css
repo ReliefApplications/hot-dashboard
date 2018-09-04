@@ -6,6 +6,12 @@
     display       : flex;
     margin: 40px 20px 0px;
 }
+/** External widgets **/
+.indicator-container {
+    display       : flex;
+    height: auto !important;
+    margin: 40px 20px 0px;
+}
 .widget-image{
     background-color : #D73F3F;
     width            : 80px;

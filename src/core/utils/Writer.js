@@ -11,7 +11,6 @@ class Writer {
         method: 'PUT',
         body: JSON.stringify(data)})
           .then(function (resp) {
-
             console.log('Request success!');
           })
           .catch(function (error) {

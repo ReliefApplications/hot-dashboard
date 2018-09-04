@@ -7,6 +7,7 @@ class Global extends AbstractProject{
     this.functions.push("getTotalMapathons");
     this.functions.push("getTotalTrainings");
     this.functions.push("getTotalAttendeesAndInstitutions");
+    this.functions.push("getTotalMapEdits");
   }
 
   process() {
@@ -98,7 +99,7 @@ class Global extends AbstractProject{
     return generalData;
   }
 
-  /** Get the number of people trained during the workshops **/
+  /** Get the number of people and organizations trained during the workshops **/
   getTotalAttendeesAndInstitutions(generalData) {
     let projectName = "";
     let totalAttendees = [];
@@ -143,6 +144,26 @@ class Global extends AbstractProject{
       }
     }
     generalData.global.capacitybuilding["attendeesAndInstitutions"] = totalAttendees;
+    return generalData;
+  }
+
+  /** Get the number of map edits **/
+  getTotalMapEdits(generalData) {
+    let totalEdits = 0;
+    let projectName = "";
+    //We're going through every project except global which is this one
+    for (let i = 0; i < Object.keys(generalData).length; i++) {
+      projectName = Object.keys(generalData)[i];
+      if (projectName !== "global") {
+        for (let j = 0; j < Object.keys(generalData[projectName]).length; j++) {
+          let subProject = Object.keys(generalData[projectName])[j];
+          if (Object.keys(generalData[projectName][subProject]).includes("edits")) {
+            totalEdits += generalData[projectName][subProject].edits;
+          }
+        }
+      }
+    }
+    generalData.global.main["edits"] = totalEdits;
     return generalData;
   }
 }

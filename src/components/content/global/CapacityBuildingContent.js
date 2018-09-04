@@ -47,10 +47,10 @@ class CapacityBuildingContent extends Component {
             <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
 
               {/* First row */}
-               {/*Number of */}
+               {/*Number of workshops */}
               <Grid item xs={12} sm={6} md={4}>
                 {this.props.importedData.global &&
-                (<WidgetGraph title = "Increase of usage of HOT data"
+                (<WidgetGraph title = "Workshop numbers"
                               graph = {<VictoryChart domainPadding={10}>
                                 <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
                                   <VictoryStack colorScale={"red"}>

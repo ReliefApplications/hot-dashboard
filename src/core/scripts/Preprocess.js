@@ -63,7 +63,7 @@ class Preprocess {
       writer.setJson(dataFromAPI);
     }
     catch (e) {
-      console.error('Writing the json file failed', e)
+      console.error('Writing the json file failed', e);
     }
   }
 }
