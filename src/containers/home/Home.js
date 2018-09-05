@@ -12,7 +12,6 @@ import AwarenessContentGlobal from '../../components/content/global/AwarenessCon
 import './Home.css';
 
 /** Services **/
-import Preprocess from "../../core/scripts/Preprocess";
 import Reader from "../../core/utils/Reader";
 
 /** Material **/
@@ -50,13 +49,15 @@ class Home extends React.Component {
 
   /** Call all datas file from the GitHub api once the page is rendered **/
   async componentDidMount() {
-    new Preprocess().process();
+    // new Preprocess().process();
     this.setState({importedData : await new Promise((resolve,reject) => {
       // Getting data from the preprocessed file
         reader.getJsonFromAWS()
             .then((data) =>{
               // Getting the projects names available
-              this.setState({importedProjects: Object.keys(data)});
+              let projectsNames = Object.keys(data);
+              projectsNames.push("demo");
+              this.setState({importedProjects: projectsNames});
               resolve(data);
             })
             .catch((error) =>{

@@ -4,19 +4,20 @@ import React, { Component } from 'react';
 /** CSS **/
 import './CapacityBuildingContent.css';
 
+/** Logos **/
+import mapIMG from "../../../assets/images/logos/map.png";
+
 /** Material UI **/
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Grid           from '@material-ui/core/Grid';
 
 /** Components **/
 import WidgetGraph from "../../widget/Graph";
+import WidgetIndicator from "../../widget/Indicator";
 
 /** Plugins **/
 import { VictoryChart }  from 'victory';
-import { VictoryLine   }  from 'victory';
 import { VictoryAxis  }  from 'victory';
-import { VictoryGroup  }  from 'victory';
-import { VictoryStack  }  from 'victory';
 import { VictoryBar  }  from 'victory';
 import { VictoryTooltip }  from 'victory';
 
@@ -43,36 +44,86 @@ class CapacityBuildingContent extends Component {
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
 
                   {/* First row */}
+                  {/* Number of people trained */}
                   <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData.ramanihuria &&
-                    (<WidgetGraph title = "Workshop numbers"
-                                  graph = {<VictoryChart domainPadding={10}>
-                                    <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
-                                      <VictoryStack colorScale={"red"}>
-                                        {<VictoryBar
-                                            labelComponent={<VictoryTooltip/>}
-                                            style  = {{ data: { fill: "#D73F3F" } }}
-                                            data   = {[
-                                              { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions[0].label,
-                                                y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions[0].nbAttendees,
-                                                label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions[0].nbAttendees + " people trained"
-                                              },
-                                            ]}
-                                        />}
-                                      </VictoryStack>
-                                      <VictoryStack colorScale={"green"}>
-                                        {<VictoryBar
-                                            labelComponent={<VictoryTooltip/>}
-                                            style  = {{ data: { fill: "#" } }}
-                                            data   = {[
-                                              { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions[0].label,
-                                                y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions[0].nbInstitutions,
-                                                label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions[0].nbInstitutions + " institutions trained"
-                                              },
-                                            ]}
-                                        />}
-                                      </VictoryStack>
-                                    </VictoryGroup>
+                    (<WidgetGraph title = {this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.titleAttendees}
+                                  graph = {<VictoryChart domainPadding={15}>
+                                    <VictoryAxis
+                                        style={{ tickLabels: { padding: 20, angle: -0 } }}
+                                    />
+                                    <VictoryAxis
+                                        dependentAxis
+                                    />
+                                    {<VictoryBar
+                                        labelComponent={<VictoryTooltip/>}
+                                        style  = {{ data: { fill: "#D73F3F" } }}
+                                        data   = {[
+                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].label,
+                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].nbAttendees,
+                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].nbAttendees + " people trained"
+                                          },
+                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[1].label,
+                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[1].nbAttendees,
+                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[1].nbAttendees + " people trained"
+                                          },
+                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[2].label,
+                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[2].nbAttendees,
+                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[2].nbAttendees + " people trained"
+                                          },
+                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[3].label,
+                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[3].nbAttendees,
+                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[3].nbAttendees + " people trained"
+                                          },
+                                        ]}
+                                    />}
+                                  </VictoryChart>
+                                  }/>
+
+                    )}
+                  </Grid>
+
+                  {/* Workshops that happened */}
+                  <Grid item xs={12} sm={6} md={3}>
+                    {this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions &&
+                    (<WidgetIndicator title={this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.titleWorkshop}
+                                      img={mapIMG}
+                                      data={this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.workshops}/>)}
+                  </Grid>
+
+                  {/* Number of institutions trained */}
+                  <Grid item xs={12} sm={6} md={4}>
+                    {this.props.importedData.ramanihuria &&
+                    (<WidgetGraph title = {this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.titleInstitutions}
+                                  graph = {<VictoryChart domainPadding={15}>
+                                    <VictoryAxis
+                                        style={{ tickLabels: { padding: 20, angle: -0 } }}
+                                    />
+                                    <VictoryAxis
+                                        dependentAxis
+                                    />
+                                    {<VictoryBar
+                                        labelComponent={<VictoryTooltip/>}
+                                        style  = {{ data: { fill: "#D73F3F" } }}
+                                        data   = {[
+                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].label,
+                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions,
+                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions + " institutions trained"
+                                          },
+                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[1].label,
+                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[1].nbInstitutions,
+                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[1].nbInstitutions + " institutions trained"
+                                          },
+                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[2].label,
+                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[2].nbInstitutions,
+                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[2].nbInstitutions + " institutions trained"
+                                          },
+                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[3].label,
+                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[3].nbInstitutions,
+                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[3].nbInstitutions + " institutions trained"
+                                          },
+                                        ]}
+                                    />}
                                   </VictoryChart>
                                   }/>
 

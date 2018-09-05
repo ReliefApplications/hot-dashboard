@@ -21,10 +21,10 @@ import WidgetIndicator from '../../widget/Indicator';
 import WidgetGraph     from '../../widget/Graph';
 
 /** Plugins **/
-import { VictoryPie   }  from 'victory';
 import { VictoryChart }  from 'victory';
-import { VictoryLine  }  from 'victory';
 import { VictoryBar   }  from 'victory';
+import { VictoryAxis   }  from 'victory';
+import { VictoryTooltip   }  from 'victory';
 
 /** Themes **/
 const GlobalTheme = createMuiTheme({
@@ -49,36 +49,44 @@ class MainContent extends Component {
     return (
         // The padding prevent the page to be too wide because of the option spacing
         <div style={{ padding: 12 }}>
-          {this.props.importedData &&
+          {this.props.importedData.global &&
           (<MuiThemeProvider theme={GlobalTheme}>
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
 
                   {/* First row */}
                   {/* Active projects */}
                   <Grid item xs={12} sm={6} md={3}>
-                    {this.props.importedData.global && (<WidgetIndicator title="Active projects" img={projectsIMG} data={this.props.importedData.global.main.totalProjects}/>)}
+                    {this.props.importedData.global.main.totalProjects && (<WidgetIndicator title={this.props.importedData.global.main.totalProjects.title}
+                                                                         img={projectsIMG}
+                                                                         data={this.props.importedData.global.main.totalProjects.data}/>)}
                   </Grid>
 
                   {/* Total mappers */}
                   <Grid item xs={12} sm={6} md={3}>
-                    {this.props.importedData.global && (<WidgetIndicator title="Total mappers" img={mapIMG} data={this.props.importedData.global.main.totalMappers}/>)}
+                    {this.props.importedData.global.main.totalMappers && (<WidgetIndicator title={this.props.importedData.global.main.totalMappers.title}
+                                                                         img={mapIMG}
+                                                                         data={this.props.importedData.global.main.totalMappers.data}/>)}
                   </Grid>
 
                   {/* Mapathons */}
                   <Grid item xs={12} sm={6} md={3}>
-                    {this.props.importedData.global && (<WidgetIndicator title="Mapathons" img={mapathonsIMG} data={this.props.importedData.global.main.totalMapathons}/>)}
+                    {this.props.importedData.global.main.totalMapathons && (<WidgetIndicator title={this.props.importedData.global.main.totalMapathons.title}
+                                                                         img={mapathonsIMG}
+                                                                         data={this.props.importedData.global.main.totalMapathons.data}/>)}
                   </Grid>
 
 
                   {/* Maps edits */}
                   <Grid item xs={12} sm={6} md={3}>
-                    {this.props.importedData.global && (<WidgetIndicator title="Number of map edits" img={mapIMG} data={this.props.importedData.global.main.totalEdits}/>)}
+                    {this.props.importedData.global.main.totalEdits && (<WidgetIndicator title={this.props.importedData.global.main.totalEdits.title}
+                                                                         img={mapIMG}
+                                                                         data={this.props.importedData.global.main.totalEdits.data}/>)}
                   </Grid>
 
                   {/* Second row */}
                   {/* Mapped elements */}
                   <Grid item xs={12} sm={6} md={3}>
-                    {this.props.importedData.global && (
+                    {this.props.importedData.global.main.totalBuildings && (
                         <Card className="widget-container">
                           <CardContent className="widget-text">
                             <Typography variant="caption"> Number of elements mapped </Typography>
@@ -87,15 +95,53 @@ class MainContent extends Component {
                                 {new Intl.NumberFormat('en-GB', {
                                   minimumFractionDigits : 0,
                                   maximumFractionDigits : 0
-                                }).format(this.props.importedData.global.main.totalBuildings)} Buildings</Typography>
+                                }).format(this.props.importedData.global.main.totalBuildings.data)} Buildings</Typography>
                               <Typography className="widget-mappedElements-text-item-grey">
                                 {new Intl.NumberFormat('en-GB', {
                                   minimumFractionDigits : 0,
                                   maximumFractionDigits : 0
-                                }).format(this.props.importedData.global.main.totalRoads)} Roads</Typography>
+                                }).format(this.props.importedData.global.main.totalRoads.data)} Roads</Typography>
                             </div>
                           </CardContent>
                         </Card>)}
+                  </Grid>
+
+                  {/* Number of sub-wards complete */}
+                  <Grid item xs={12} sm={6} md={4}>
+                    {this.props.importedData.global.main.totalSubwardsCompleted &&
+                    (<WidgetGraph title = {this.props.importedData.global.main.totalSubwardsCompleted.title}
+                                  graph = {<VictoryChart domainPadding={15}>
+                                    <VictoryAxis
+                                        style={{ tickLabels: { padding: 20, angle: -0 } }}
+                                    />
+                                    <VictoryAxis
+                                        dependentAxis
+                                    />
+                                    <VictoryBar
+                                        labelComponent={<VictoryTooltip/>}
+                                        style  = {{ data: { fill: "#D73F3F" } }}
+                                        data   = {[
+                                          { x: this.props.importedData.global.main.totalSubwardsCompleted.data[0].label,
+                                            y: this.props.importedData.global.main.totalSubwardsCompleted.data[0].total,
+                                            label: this.props.importedData.global.main.totalSubwardsCompleted.data[0].total + " sub-wards completed"
+                                          },
+                                          { x: this.props.importedData.global.main.totalSubwardsCompleted.data[1].label,
+                                            y: this.props.importedData.global.main.totalSubwardsCompleted.data[1].total,
+                                            label: this.props.importedData.global.main.totalSubwardsCompleted.data[1].total + " sub-wards completed"
+                                          },
+                                          { x: this.props.importedData.global.main.totalSubwardsCompleted.data[2].label,
+                                            y: this.props.importedData.global.main.totalSubwardsCompleted.data[2].total,
+                                            label: this.props.importedData.global.main.totalSubwardsCompleted.data[2].total + " sub-wards completed"
+                                          },
+                                          { x: this.props.importedData.global.main.totalSubwardsCompleted.data[3].label,
+                                            y: this.props.importedData.global.main.totalSubwardsCompleted.data[3].total,
+                                            label: this.props.importedData.global.main.totalSubwardsCompleted.data[3].total + " sub-wards completed"
+                                          }
+                                        ]}
+                                    />
+                                  </VictoryChart>}
+                        />
+                    )}
                   </Grid>
 
                   {/* Community mappers */}

@@ -17,10 +17,7 @@ import WidgetGraph from "../../widget/Graph";
 
 /** Plugins **/
 import { VictoryChart }  from 'victory';
-import { VictoryLine   }  from 'victory';
 import { VictoryAxis  }  from 'victory';
-import { VictoryGroup  }  from 'victory';
-import { VictoryStack  }  from 'victory';
 import { VictoryBar  }  from 'victory';
 import { VictoryTooltip }  from 'victory';
 
@@ -46,44 +43,48 @@ class MainContent extends Component {
   render() {
     return (
         <div style={{ padding: 12 }}>
-          {this.props.importedData &&
+          {this.props.importedData.ramanihuria &&
           (<MuiThemeProvider theme={GlobalTheme}>
             <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
 
               {/* First row */}
               {/* Map edits */}
               <Grid item xs={12} sm={6} md={3}>
-                {this.props.importedData.ramanihuria && (<WidgetIndicator title="Map edits" img={mapIMG} data={this.props.importedData.ramanihuria.main.edits}/>)}
+                {this.props.importedData.ramanihuria.main.edits && (<WidgetIndicator title={this.props.importedData.ramanihuria.main.edits.title}
+                                                                          img={mapIMG}
+                                                                          data={this.props.importedData.ramanihuria.main.edits.data}/>)}
               </Grid>
 
               {/* Number of sub-wards complete */}
               <Grid item xs={12} sm={6} md={4}>
-                {this.props.importedData.ramanihuria &&
-                (<WidgetGraph title = "Number of sub-wards complete"
-                              graph = {<VictoryChart domainPadding={ {x: 15}}>
+                {this.props.importedData.ramanihuria.main.nbsubwardscompleted &&
+                (<WidgetGraph title = {this.props.importedData.ramanihuria.main.nbsubwardscompleted.title}
+                              graph = {<VictoryChart domainPadding={15}>
                                 <VictoryAxis
                                     style={{ tickLabels: { padding: 20, angle: -0 } }}
                                 />
                                 <VictoryAxis
                                     dependentAxis
                                 />
-                                <VictoryLine
-                                    style={{
-                                      data   : { stroke: "#2C3038" },
-                                      parent : { border: "1px solid #ccc"}
-                                    }}
+                                <VictoryBar
+                                    labelComponent={<VictoryTooltip/>}
+                                    style  = {{ data: { fill: "#D73F3F" } }}
                                     data   = {[
-                                      { x: this.props.importedData.ramanihuria.main.nbsubwardscompleted[0].Date,
-                                        y: this.props.importedData.ramanihuria.main.nbsubwardscompleted[0].TOTAL
+                                      { x: this.props.importedData.ramanihuria.main.nbsubwardscompleted.data[0].Date,
+                                        y: this.props.importedData.ramanihuria.main.nbsubwardscompleted.data[0].TOTAL,
+                                        label: this.props.importedData.ramanihuria.main.nbsubwardscompleted.data[0].TOTAL + " sub-wards completed"
                                       },
-                                      { x: this.props.importedData.ramanihuria.main.nbsubwardscompleted[1].Date,
-                                        y: this.props.importedData.ramanihuria.main.nbsubwardscompleted[1].TOTAL
+                                      { x: this.props.importedData.ramanihuria.main.nbsubwardscompleted.data[1].Date,
+                                        y: this.props.importedData.ramanihuria.main.nbsubwardscompleted.data[1].TOTAL,
+                                        label: this.props.importedData.ramanihuria.main.nbsubwardscompleted.data[1].TOTAL + " sub-wards completed"
                                       },
-                                      { x: this.props.importedData.ramanihuria.main.nbsubwardscompleted[2].Date,
-                                        y: this.props.importedData.ramanihuria.main.nbsubwardscompleted[2].TOTAL
+                                      { x: this.props.importedData.ramanihuria.main.nbsubwardscompleted.data[2].Date,
+                                        y: this.props.importedData.ramanihuria.main.nbsubwardscompleted.data[2].TOTAL,
+                                        label: this.props.importedData.ramanihuria.main.nbsubwardscompleted.data[2].TOTAL + " sub-wards completed"
                                       },
-                                      { x: this.props.importedData.ramanihuria.main.nbsubwardscompleted[3].Date,
-                                        y: this.props.importedData.ramanihuria.main.nbsubwardscompleted[3].TOTAL
+                                      { x: this.props.importedData.ramanihuria.main.nbsubwardscompleted.data[3].Date,
+                                        y: this.props.importedData.ramanihuria.main.nbsubwardscompleted.data[3].TOTAL,
+                                        label: this.props.importedData.ramanihuria.main.nbsubwardscompleted.data[3].TOTAL + " sub-wards completed"
                                       }
                                     ]}
                                 />

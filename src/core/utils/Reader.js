@@ -48,7 +48,6 @@ class Reader {
       return null;
 
     var prop, props = propertyString.split('.');
-
     for (var i = 0, iLen = props.length - 1; i < iLen; i++) {
       prop = props[i];
 
