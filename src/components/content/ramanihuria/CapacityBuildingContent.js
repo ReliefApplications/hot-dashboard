@@ -36,18 +36,54 @@ class CapacityBuildingContent extends Component {
   //------------------------------------------------------------------------//
 
   render() {
+    const nbAttendeesData = function (data) {
+      let res = [];
+      for (let i=0; i<4; i++)
+      {
+        res.push({
+          x: data[i].label,
+          y: data[i].nbAttendees,
+          label: data[i].nbAttendees + " people trained"
+        })
+      }
+      return res;
+    };
+    const nbInstitutionsData = function (data) {
+      let res = [];
+      for (let i=0; i<4; i++)
+      {
+        res.push({
+          x: data[i].label,
+          y: data[i].nbInstitutions,
+          label: data[i].nbInstitutions + " people trained"
+        })
+      }
+      return res;
+    };
+
     return (
         // The padding prevent the page to be too wide because of the option spacing
         <div style={{ padding: 12 }}>
           {this.props.importedData &&
           (<MuiThemeProvider theme={GlobalTheme}>
+                {/* First row */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
+                  {/* Workshops that happened */}
+                  <Grid item xs={12} sm={6} md={3}>
+                    {this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions &&
+                    (<WidgetIndicator title={this.props.importedData.ramanihuria.capacitybuilding.nbworkshops.title}
+                                      img={mapIMG}
+                                      data={this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.workshops}/>)}
+                  </Grid>
 
-                  {/* First row */}
-                  {/* Number of people trained */}
+                </Grid>
+
+                {/* Second row */}
+                <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
+                  {/* Number of workshop attendees */}
                   <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData.ramanihuria &&
-                    (<WidgetGraph title = {this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.titleAttendees}
+                    (<WidgetGraph title = {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesMonthly.title}
                                   graph = {<VictoryChart domainPadding={15}>
                                     <VictoryAxis
                                         style={{ tickLabels: { padding: 20, angle: -0 } }}
@@ -58,24 +94,7 @@ class CapacityBuildingContent extends Component {
                                     {<VictoryBar
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
-                                        data   = {[
-                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].label,
-                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].nbAttendees,
-                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].nbAttendees + " people trained"
-                                          },
-                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[1].label,
-                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[1].nbAttendees,
-                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[1].nbAttendees + " people trained"
-                                          },
-                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[2].label,
-                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[2].nbAttendees,
-                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[2].nbAttendees + " people trained"
-                                          },
-                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[3].label,
-                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[3].nbAttendees,
-                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[3].nbAttendees + " people trained"
-                                          },
-                                        ]}
+                                        data   = {nbAttendeesData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesMonthly.data)}
                                     />}
                                   </VictoryChart>
                                   }/>
@@ -83,18 +102,10 @@ class CapacityBuildingContent extends Component {
                     )}
                   </Grid>
 
-                  {/* Workshops that happened */}
-                  <Grid item xs={12} sm={6} md={3}>
-                    {this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions &&
-                    (<WidgetIndicator title={this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.titleWorkshop}
-                                      img={mapIMG}
-                                      data={this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.workshops}/>)}
-                  </Grid>
-
                   {/* Number of institutions trained */}
                   <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData.ramanihuria &&
-                    (<WidgetGraph title = {this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.titleInstitutions}
+                    (<WidgetGraph title = {this.props.importedData.ramanihuria.capacitybuilding.nbattendeestraining.title}
                                   graph = {<VictoryChart domainPadding={15}>
                                     <VictoryAxis
                                         style={{ tickLabels: { padding: 20, angle: -0 } }}
@@ -105,24 +116,7 @@ class CapacityBuildingContent extends Component {
                                     {<VictoryBar
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
-                                        data   = {[
-                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].label,
-                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions,
-                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions + " institutions trained"
-                                          },
-                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[1].label,
-                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[1].nbInstitutions,
-                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[1].nbInstitutions + " institutions trained"
-                                          },
-                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[2].label,
-                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[2].nbInstitutions,
-                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[2].nbInstitutions + " institutions trained"
-                                          },
-                                          { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[3].label,
-                                            y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[3].nbInstitutions,
-                                            label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[3].nbInstitutions + " institutions trained"
-                                          },
-                                        ]}
+                                        data   = {nbInstitutionsData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesMonthly.data)}
                                     />}
                                   </VictoryChart>
                                   }/>

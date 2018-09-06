@@ -6,6 +6,9 @@ import './MainContent.css';
 
 /** Logos **/
 import mapIMG        from '../../../assets/images/logos/map.png';
+import mapathonsIMG  from '../../../assets/images/logos/mapathons.png';
+import projectsIMG   from '../../../assets/images/logos/projects.png';
+import trainingIMG   from '../../../assets/images/logos/training.png';
 
 /** Material UI **/
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -55,9 +58,8 @@ class MainContent extends Component {
           {/* We only show the dashboard if the matching data fetched from the rawdata is existing */}
           {this.props.importedData.global &&
           (<MuiThemeProvider theme={GlobalTheme}>
+                {/* First row */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
-
-                  {/* First row */}
                   {/* A widdgetIndicator can be used to show a little image and a value */}
                   <Grid item xs={12} sm={6} md={3}> {/* item of the container that uses bootstrap breakpoints */}
                     {/* We check again if the data displayed in the widget does exist. Then, we add the widget */}
@@ -68,7 +70,26 @@ class MainContent extends Component {
                     {/*img={projectsIMG}*/}
                     {/*data={this.props.importedData.global.main.totalProjects.data}/>)}*/}
                   </Grid>
+                  <Grid item xs={12} sm={6} md={3}>
+                    {this.props.importedData && (<WidgetIndicator title="Indicator example 2"
+                                                                  img={trainingIMG}
+                                                                  data={125}/>)}
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={3}>
+                    {this.props.importedData && (<WidgetIndicator title="Indicator example 3"
+                                                                  img={projectsIMG}
+                                                                  data={47859856}/>)}
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={3}>
+                    {this.props.importedData && (<WidgetIndicator title="Indicator example 4"
+                                                                  img={mapathonsIMG}
+                                                                  data={42}/>)}
+                  </Grid>
+                </Grid>
+                {/* En of the first row */}
 
+                {/* Second row */}
+                <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
                   {/* Bar diagram example */}
                   <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData.global.capacitybuilding.attendeesAndInstitutions &&
@@ -131,7 +152,7 @@ class MainContent extends Component {
                   </Grid>
 
                   {/* Custom widget */}
-                  <Grid item xs={12} sm={6} md={3}>
+                  <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData.global.main.totalBuildings && (
                         <Card className="widget-container">
                           <CardContent className="widget-text">
@@ -158,7 +179,7 @@ class MainContent extends Component {
                     (<WidgetGraph title = "Double bar chart example"
                                   graph = {<VictoryChart domainPadding={15}>
                                     <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
-                                      <VictoryStack colorScale={"red"}>
+                                      <VictoryStack>
                                         {<VictoryBar
                                             labelComponent={<VictoryTooltip/>}
                                             style  = {{ data: { fill: "#D73F3F" } }}
@@ -170,10 +191,10 @@ class MainContent extends Component {
                                             ]}
                                         />}
                                       </VictoryStack>
-                                      <VictoryStack colorScale={"green"}>
+                                      <VictoryStack>
                                         {<VictoryBar
                                             labelComponent={<VictoryTooltip/>}
-                                            style  = {{ data: { fill: "#" } }}
+                                            style  = {{ data: { fill: "#FAA71E" } }}
                                             data   = {[
                                               { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].label,
                                                 y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions,
@@ -196,7 +217,7 @@ class MainContent extends Component {
                                   graph = {<VictoryChart domainPadding={15}>
                                     <VictoryLine
                                         style={{
-                                          data   : { stroke: "#2C3038" },
+                                          data   : { stroke: "#FAA71E" },
                                           parent : { border: "1px solid #ccc"}
                                         }}
                                         data = {[

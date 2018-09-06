@@ -7,6 +7,7 @@ import FilterTabs         from '../../components/filter/ContentFilter'
 import MainContentGlobal        from '../../components/content/global/MainContent'
 import CapacityBuildingContentGlobal from '../../components/content/global/CapacityBuildingContent'
 import AwarenessContentGlobal from '../../components/content/global/AwarenessContent'
+import MappingCommunityContent from '../../components/content/global/MappingCommunityContent'
 
 /** CSS **/
 import './Home.css';
@@ -17,7 +18,6 @@ import Reader from "../../core/utils/Reader";
 /** Material **/
 import Divider         from '@material-ui/core/Divider';
 
-// const preProcessingService  = new PreProcessor();
 const reader = new Reader();
 
 class Home extends React.Component {
@@ -31,8 +31,9 @@ class Home extends React.Component {
       AwarenessContent          : AwarenessContentGlobal,
       menuLeft                        : false,    // State of the left menu.
       mainContentSelected             : true,     // When Main Content is selected
-      capacityBuildingContentSelected : false,    // When Training Content is selected
-      awarenessContentSelected        : false,    // When updateDataSelected Content is selected
+      capacityBuildingContentSelected : false,    // When Capacity Building Content is selected
+      awarenessContentSelected        : false,    // When Awareness Content is selected
+      MappingCommunityContent        : false,    // When Mapping Community Content is selected
 
       //By default, the global project and the main content are displayed
       projectName : 'Global', // Name of the actual project
@@ -51,11 +52,12 @@ class Home extends React.Component {
   async componentDidMount() {
     // new Preprocess().process();
     this.setState({importedData : await new Promise((resolve,reject) => {
-      // Getting data from the preprocessed file
+        // Getting data from the preprocessed file
         reader.getJsonFromAWS()
             .then((data) =>{
               // Getting the projects names available
               let projectsNames = Object.keys(data);
+              // This push is only here to add the demo project manually to the project list
               projectsNames.push("demo");
               this.setState({importedProjects: projectsNames});
               resolve(data);
@@ -65,6 +67,17 @@ class Home extends React.Component {
               reject(error);
             });
       })
+      // This .then function is only here to add fake content in order to display the menu buttons on the demo dashboard
+          .then(function(res) {
+            res["demo"] = {
+              main: {data : "yes"},
+              capacitybuilding: {data : "yes"},
+              awareness: {data : "yes"},
+              mappingcommunity: {data : "yes"}
+            };
+            return res;
+          }
+      )
     });
   }
 
@@ -74,21 +87,17 @@ class Home extends React.Component {
 
   /** Selecting the project from the header button **/
   async selectProjectFromHeader(selectedProjectFromHeader){
-    let mainContentImported = await import('../../components/content/'+selectedProjectFromHeader+'/MainContent');
-    /** TODO
-     * lazy load the content not displayed
-     */
-    let capacityBuildingContentImported = await import('../../components/content/'+selectedProjectFromHeader+'/CapacityBuildingContent');
-    let awarenessContentImported = await import('../../components/content/'+selectedProjectFromHeader+'/AwarenessContent');
+    import('../../components/content/'+selectedProjectFromHeader+'/MainContent').then((res) => this.setState({MainContent : res.default}));
+    import('../../components/content/'+selectedProjectFromHeader+'/CapacityBuildingContent').then((res) => this.setState({CapacityBuildingContent : res.default}));
+    import('../../components/content/'+selectedProjectFromHeader+'/AwarenessContent').then((res) => this.setState({AwarenessContent : res.default}));
+    import('../../components/content/'+selectedProjectFromHeader+'/MappingCommunityContent').then((res) => this.setState({MappingCommunityContent : res.default}));
     this.setState({
       contentName                     : 'Main',
       mainContentSelected             : true,
       capacityBuildingContentSelected : false,
       awarenessContentSelected        : false,
+      mappingCommunityContent         : false,
       projectName                     : selectedProjectFromHeader,
-      MainContent                     : mainContentImported.default,
-      CapacityBuildingContent         : capacityBuildingContentImported.default,
-      AwarenessContent                : awarenessContentImported.default,
     });
   }
 
@@ -98,7 +107,8 @@ class Home extends React.Component {
       contentName                     : selectedContent[0].contentName,
       mainContentSelected             : selectedContent[0].mainContent,
       capacityBuildingContentSelected : selectedContent[0].capacityBuildingContent,
-      awarenessContentSelected        : selectedContent[0].awarenessContent
+      awarenessContentSelected        : selectedContent[0].awarenessContent,
+      mappingCommunityContentSelected : selectedContent[0].mappingCommunityContent
     });
   }
 
@@ -110,6 +120,7 @@ class Home extends React.Component {
     const { mainContentSelected }             = this.state;
     const { capacityBuildingContentSelected } = this.state;
     const { awarenessContentSelected }        = this.state;
+    const { mappingCommunitySelected }        = this.state;
     const { importedData }                    = this.state;
 
     return (
@@ -119,7 +130,7 @@ class Home extends React.Component {
           <Header sendToHome={this.selectProjectFromHeader} contentName={this.state.contentName} importedProjects={this.state.importedProjects}></Header>
 
           {/* Filter Tabs */}
-          <FilterTabs sendToHome={this.selectContentFromFilterTabs} contentName={this.state.contentName}></FilterTabs>
+          <FilterTabs sendToHome={this.selectContentFromFilterTabs} contentName={this.state.contentName} importedData={importedData[this.state.projectName.toLowerCase()]}></FilterTabs>
 
           {/* Line between filter component & content */}
           <Divider />
@@ -128,6 +139,7 @@ class Home extends React.Component {
           {mainContentSelected             && (<this.state.MainContent             importedData = {importedData} ></this.state.MainContent>)}
           {capacityBuildingContentSelected && (<this.state.CapacityBuildingContent importedData = {importedData} ></this.state.CapacityBuildingContent>)}
           {awarenessContentSelected        && (<this.state.AwarenessContent importedData = {importedData}></this.state.AwarenessContent>)}
+          {mappingCommunitySelected        && (<this.state.MappingCommunityContent importedData = {importedData}></this.state.MappingCommunityContent>)}
         </div>
     );
   }

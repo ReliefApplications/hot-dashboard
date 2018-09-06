@@ -51,9 +51,8 @@ class MainContent extends Component {
         <div style={{ padding: 12 }}>
           {this.props.importedData.global &&
           (<MuiThemeProvider theme={GlobalTheme}>
+                {/* First row */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
-
-                  {/* First row */}
                   {/* Active projects */}
                   <Grid item xs={12} sm={6} md={3}>
                     {this.props.importedData.global.main.totalProjects && (<WidgetIndicator title={this.props.importedData.global.main.totalProjects.title}
@@ -82,10 +81,12 @@ class MainContent extends Component {
                                                                          img={mapIMG}
                                                                          data={this.props.importedData.global.main.totalEdits.data}/>)}
                   </Grid>
+                </Grid>
 
-                  {/* Second row */}
+                {/* Second row */}
+                <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
                   {/* Mapped elements */}
-                  <Grid item xs={12} sm={6} md={3}>
+                  <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData.global.main.totalBuildings && (
                         <Card className="widget-container">
                           <CardContent className="widget-text">

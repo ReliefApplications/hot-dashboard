@@ -7,9 +7,6 @@ import Button          from '@material-ui/core/Button';
 /** CSS **/
 import './ContentFilter.css';
 
-/** Constants **/
-// import {BUTTONSSTYLE} from '../../core/external/Constants';
-
 /** Styles **/
 const Buttons = {
   background : '#FFFFFF',
@@ -29,7 +26,7 @@ const FilterSelected = {
 
 class ContentFilter extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.selectContent = this.selectContent.bind(this);
 
     this.state = {
@@ -52,6 +49,7 @@ class ContentFilter extends Component {
     if     (content === 'main')              { mainContentChanged             = true;  selectedcontentName='Main';              }
     else if(content === 'capacity_building') { capacityBuildingContentChanged = true;  selectedcontentName='Capacity building'; }
     else if(content === 'awareness')         { awarenessContentChanged        = true;  selectedcontentName='Awareness';         }
+    else if(content === 'mapping_community') { awarenessContentChanged        = true;  selectedcontentName='Mapping community'; }
 
     // Push new item to the array to send
     selectedContent.push({
@@ -75,30 +73,52 @@ class ContentFilter extends Component {
     return (
         <div className="tabs">
           {/* 'Main' button */}
-          <Button style     = {(this.props.contentName === 'Main') ? FilterSelected : Buttons}
-                  variant   = "contained"
-                  component = "span"
-                  onClick   = {this.selectContent('main')}>
-            Main
-          </Button>
-
+          {(this.props.importedData === undefined) ?
+              null
+              : ((Object.keys(this.props.importedData.main).length !== 0) ?
+                  <Button style     = {(this.props.contentName === 'Main') ? FilterSelected : Buttons}
+                          variant   = "contained"
+                          component = "span"
+                          onClick   = {this.selectContent('main')}>
+                  Main
+                  </Button>
+                      : null)}
 
           {/* 'Capacity building' button */}
-          <Button style     = {(this.props.contentName === 'Capacity building') ? FilterSelected : Buttons}
-                  variant   = "contained"
-                  component = "span"
-                  onClick   = {this.selectContent('capacity_building')}>
-            Capacity building
-          </Button>
+          {(this.props.importedData === undefined) ?
+              null
+              : ((Object.keys(this.props.importedData.capacitybuilding).length !== 0) ?
+                  <Button style     = {(this.props.contentName === 'Capacity building') ? FilterSelected : Buttons}
+                          variant   = "contained"
+                          component = "span"
+                          onClick   = {this.selectContent('capacity_building')}>
+                    Capacity building
+                  </Button>
+                  : null)}
 
+          {/* 'Mapping Community' button */}
+          {(this.props.importedData === undefined) ?
+              null
+              : ((Object.keys(this.props.importedData.mappingcommunity).length !== 0) ?
+                  <Button style     = {(this.props.contentName === 'Mapping community') ? FilterSelected : Buttons}
+                          variant   = "contained"
+                          component = "span"
+                          onClick   = {this.selectContent('mapping_community')}>
+                    Mapping community
+                  </Button>
+                  : null)}
 
           {/* 'Awareness' button */}
-          <Button style     = {(this.props.contentName === 'Awareness') ? FilterSelected : Buttons}
-                  variant   = "contained"
-                  component = "span"
-                  onClick   = {this.selectContent('awareness')}>
-            Awareness
-          </Button>
+          {(this.props.importedData === undefined) ?
+              null
+              : ((Object.keys(this.props.importedData.awareness).length !== 0) ?
+                <Button style     = {(this.props.contentName === 'Awareness') ? FilterSelected : Buttons}
+                        variant   = "contained"
+                        component = "span"
+                        onClick   = {this.selectContent('awareness')}>
+                  Awareness
+                </Button>
+                : null)}
         </div>
     );
   }

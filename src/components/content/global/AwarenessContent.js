@@ -26,14 +26,10 @@ class CapacityBuildingContent extends Component {
         <div style={{ padding: 12 }}>
           {this.props.importedData &&
           (<MuiThemeProvider theme={GlobalTheme}>
+            {/* First row */}
             <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
-              {/* First row */}
-              <Grid item xs={12} sm={6} md={3}>
-              </Grid>
             </Grid>
-
-          </MuiThemeProvider>
-          )}
+          </MuiThemeProvider>)}
         </div>
     );
   }
