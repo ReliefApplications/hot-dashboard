@@ -45,7 +45,7 @@ class CapacityBuildingContent extends Component {
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
                   {/* Workshops that happened */}
                   <Grid item xs={12} sm={6} md={3}>
-                    {this.props.importedData.global.capacitybuilding.attendeesAndInstitutions &&
+                    {this.props.importedData.global.capacitybuilding.y &&
                     (<WidgetIndicator title={this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.titleWorkshop}
                                       img={mapIMG}
                                       data={this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.workshops}/>)}
@@ -57,7 +57,7 @@ class CapacityBuildingContent extends Component {
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
                   {/* Number of people trained */}
                   <Grid item xs={12} sm={6} md={4}>
-                    {this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data &&
+                    {this.props.importedData.global.capacitybuilding.y &&
                     (<WidgetGraph title = {this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.titleAttendees}
                                   graph = {<VictoryChart domainPadding={15}>
                                     <VictoryAxis
@@ -70,22 +70,22 @@ class CapacityBuildingContent extends Component {
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
                                         data   = {[
-                                          { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].label,
-                                            y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].nbAttendees,
-                                            label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].nbAttendees + " people trained"
-                                          },
-                                          { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].label,
-                                            y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].nbAttendees,
-                                            label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].nbAttendees + " people trained"
-                                          },
-                                          { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].label,
-                                            y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].nbAttendees,
-                                            label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].nbAttendees + " people trained"
-                                          },
-                                          { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].label,
-                                            y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].nbAttendees,
-                                            label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].nbAttendees + " people trained"
-                                          },
+                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].label,
+                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].nbAttendees,
+                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].nbAttendees + " people trained"
+                                          // },
+                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].label,
+                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].nbAttendees,
+                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].nbAttendees + " people trained"
+                                          // },
+                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].label,
+                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].nbAttendees,
+                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].nbAttendees + " people trained"
+                                          // },
+                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].label,
+                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].nbAttendees,
+                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].nbAttendees + " people trained"
+                                          // },
                                         ]}
                                     />}
                                   </VictoryChart>
@@ -96,7 +96,7 @@ class CapacityBuildingContent extends Component {
 
                   {/* Number of institutions trained */}
                   <Grid item xs={12} sm={6} md={4}>
-                    {this.props.importedData.global.capacitybuilding.attendeesAndInstitutions &&
+                    {this.props.importedData.global.capacitybuilding.y &&
                     (<WidgetGraph title = {this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.titleInstitutions}
                                   graph = {<VictoryChart domainPadding={15}>
                                     <VictoryAxis
@@ -109,22 +109,22 @@ class CapacityBuildingContent extends Component {
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
                                         data   = {[
-                                          { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].label,
-                                            y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions,
-                                            label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions + " institutions trained"
-                                          },
-                                          { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].label,
-                                            y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].nbInstitutions,
-                                            label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].nbInstitutions + " institutions trained"
-                                          },
-                                          { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].label,
-                                            y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].nbInstitutions,
-                                            label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].nbInstitutions + " institutions trained"
-                                          },
-                                          { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].label,
-                                            y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].nbInstitutions,
-                                            label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].nbInstitutions + " institutions trained"
-                                          },
+                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].label,
+                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions,
+                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions + " institutions trained"
+                                          // },
+                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].label,
+                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].nbInstitutions,
+                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].nbInstitutions + " institutions trained"
+                                          // },
+                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].label,
+                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].nbInstitutions,
+                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].nbInstitutions + " institutions trained"
+                                          // },
+                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].label,
+                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].nbInstitutions,
+                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].nbInstitutions + " institutions trained"
+                                          // },
                                         ]}
                                     />}
                                   </VictoryChart>

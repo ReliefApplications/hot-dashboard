@@ -124,7 +124,7 @@ class CapacityBuildingContent extends Component {
 
                   {/* Custom widget */}
                   <Grid item xs={12} sm={6} md={4}>
-                    {this.props.importedData.global.main.totalBuildings && (
+                    {this.props.importedData && (
                         <Card className="widget-container">
                           <CardContent className="widget-text">
                             <Typography variant="caption"> Custom widget </Typography>
@@ -133,12 +133,12 @@ class CapacityBuildingContent extends Component {
                                 {new Intl.NumberFormat('en-GB', {
                                   minimumFractionDigits : 0,
                                   maximumFractionDigits : 0
-                                }).format(this.props.importedData.global.main.totalBuildings.data)} Buildings</Typography>
+                                }).format(142535689)} Buildings</Typography>
                               <Typography className="widget-mappedElements-text-item-grey">
                                 {new Intl.NumberFormat('en-GB', {
                                   minimumFractionDigits : 0,
                                   maximumFractionDigits : 0
-                                }).format(this.props.importedData.global.main.totalRoads.data)} Roads</Typography>
+                                }).format(35648698948)} Roads</Typography>
                             </div>
                           </CardContent>
                         </Card>)}
@@ -146,7 +146,7 @@ class CapacityBuildingContent extends Component {
 
                   {/* Double bar chart example */}
                   <Grid item xs={12} sm={6} md={4}>
-                    {this.props.importedData.ramanihuria &&
+                    {this.props.importedData &&
                     (<WidgetGraph title = "Double bar chart example"
                                   graph = {<VictoryChart domainPadding={15}>
                                     <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
@@ -155,9 +155,9 @@ class CapacityBuildingContent extends Component {
                                             labelComponent={<VictoryTooltip/>}
                                             style  = {{ data: { fill: "#D73F3F" } }}
                                             data   = {[
-                                              { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].label,
-                                                y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].nbAttendees,
-                                                label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].nbAttendees + " people trained"
+                                              { x: "Jan 2012",
+                                                y: 15,
+                                                label: 15 + " people trained"
                                               },
                                             ]}
                                         />}
@@ -167,9 +167,9 @@ class CapacityBuildingContent extends Component {
                                             labelComponent={<VictoryTooltip/>}
                                             style  = {{ data: { fill: "#FAA71E" } }}
                                             data   = {[
-                                              { x: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].label,
-                                                y: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions,
-                                                label: this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions + " institutions trained"
+                                              { x: "Jan 2012",
+                                                y: 7,
+                                                label: 7 + " institutions trained"
                                               },
                                             ]}
                                         />}
@@ -177,6 +177,7 @@ class CapacityBuildingContent extends Component {
                                     </VictoryGroup>
                                   </VictoryChart>
                                   }/>
+
                     )}
                   </Grid>
 
@@ -191,11 +192,11 @@ class CapacityBuildingContent extends Component {
                                           parent : { border: "1px solid #ccc"}
                                         }}
                                         data = {[
-                                          { x: '2014', y: this.props.importedData.global.main.usageOfHotData.data2014 },
-                                          { x: '2015', y: this.props.importedData.global.main.usageOfHotData.data2015 },
-                                          { x: '2016', y: this.props.importedData.global.main.usageOfHotData.data2016 },
-                                          { x: '2017', y: this.props.importedData.global.main.usageOfHotData.data2017 },
-                                          { x: '2018', y: this.props.importedData.global.main.usageOfHotData.data2018 }
+                                          { x: '2014', y: 133 },
+                                          { x: '2015', y: 230 },
+                                          { x: '2016', y: 274 },
+                                          { x: '2017', y: 138 },
+                                          { x: '2018', y: 54 }
                                         ]}
                                     />
                                   </VictoryChart>}/>
@@ -228,11 +229,11 @@ class CapacityBuildingContent extends Component {
                                            style={{ data: { fill: "#D73F3F" } }}
                                            size={4}
                                            data={[
-                                             { x: '2014', y: this.props.importedData.global.main.usageOfHotData.data2014 },
-                                             { x: '2015', y: this.props.importedData.global.main.usageOfHotData.data2015 },
-                                             { x: '2016', y: this.props.importedData.global.main.usageOfHotData.data2016 },
-                                             { x: '2017', y: this.props.importedData.global.main.usageOfHotData.data2017 },
-                                             { x: '2018', y: this.props.importedData.global.main.usageOfHotData.data2018 }
+                                             { x: '2014', y: 133 },
+                                             { x: '2015', y: 230 },
+                                             { x: '2016', y: 274 },
+                                             { x: '2017', y: 138 },
+                                             { x: '2018', y: 54 }
                                            ]}
                                        />
                                      </VictoryChart>}/>)}

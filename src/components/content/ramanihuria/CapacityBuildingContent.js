@@ -49,13 +49,36 @@ class CapacityBuildingContent extends Component {
       return res;
     };
     const nbInstitutionsData = function (data) {
+      let sortInstitutions = function (a, b) {
+        if (a.y < b.y) {
+            return -1;
+        } else if (a.y > b.y) {
+          return 1;
+        } else {
+          return 0;
+        }
+      };
+
       let res = [];
-      for (let i=0; i<4; i++)
+      for (let i=0; i<data.length; i++)
+      {
+        res.push({
+          x: data[i].shorten,
+          y: data[i].nbAttendees,
+          label: data[i].nbAttendees + " attendees"
+        });
+      }
+      res.sort(sortInstitutions);
+      return res;
+    };
+    const tableToData = function (data, customLabel) {
+      let res = [];
+      for (let i=0; i<data.length; i++)
       {
         res.push({
           x: data[i].label,
-          y: data[i].nbInstitutions,
-          label: data[i].nbInstitutions + " people trained"
+          y: data[i].value,
+          label: data[i].value + " " + customLabel
         })
       }
       return res;
@@ -68,28 +91,30 @@ class CapacityBuildingContent extends Component {
           (<MuiThemeProvider theme={GlobalTheme}>
                 {/* First row */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
-                  {/* Workshops that happened */}
+                  {/* Organizations supported */}
                   <Grid item xs={12} sm={6} md={3}>
-                    {this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions &&
-                    (<WidgetIndicator title={this.props.importedData.ramanihuria.capacitybuilding.nbworkshops.title}
+                    {this.props.importedData.ramanihuria.capacitybuilding.nborganizations &&
+                    (<WidgetIndicator title={this.props.importedData.ramanihuria.capacitybuilding.nborganizations.title}
                                       img={mapIMG}
-                                      data={this.props.importedData.ramanihuria.capacitybuilding.attendeesAndInstitutions.workshops}/>)}
+                                      data={this.props.importedData.ramanihuria.capacitybuilding.nborganizations.data.length}/>)}
                   </Grid>
 
                 </Grid>
 
                 {/* Second row */}
+                {/* Number of attendees monthly */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
                   {/* Number of workshop attendees */}
                   <Grid item xs={12} sm={6} md={4}>
-                    {this.props.importedData.ramanihuria &&
+                    {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesMonthly &&
                     (<WidgetGraph title = {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesMonthly.title}
                                   graph = {<VictoryChart domainPadding={15}>
                                     <VictoryAxis
-                                        style={{ tickLabels: { padding: 20, angle: -0 } }}
+                                        style = {{ tickLabels: { padding: 20 } }}
                                     />
                                     <VictoryAxis
                                         dependentAxis
+                                        style = {{ tickLabels: { padding: 20 } }}
                                     />
                                     {<VictoryBar
                                         labelComponent={<VictoryTooltip/>}
@@ -102,21 +127,21 @@ class CapacityBuildingContent extends Component {
                     )}
                   </Grid>
 
-                  {/* Number of institutions trained */}
+                  {/* Number of attendees trained per institutions */}
                   <Grid item xs={12} sm={6} md={4}>
-                    {this.props.importedData.ramanihuria &&
-                    (<WidgetGraph title = {this.props.importedData.ramanihuria.capacitybuilding.nbattendeestraining.title}
+                    {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesInstitutions &&
+                    (<WidgetGraph title = {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesInstitutions.title}
                                   graph = {<VictoryChart domainPadding={15}>
                                     <VictoryAxis
-                                        style={{ tickLabels: { padding: 20, angle: -0 } }}
+                                        style={{ tickLabels: { padding: 20 } }}
                                     />
                                     <VictoryAxis
                                         dependentAxis
                                     />
-                                    {<VictoryBar
+                                    {<VictoryBar horizontal
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
-                                        data   = {nbInstitutionsData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesMonthly.data)}
+                                        data   = {nbInstitutionsData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesInstitutions.data)}
                                     />}
                                   </VictoryChart>
                                   }/>
@@ -124,6 +149,49 @@ class CapacityBuildingContent extends Component {
                     )}
                   </Grid>
 
+                  {/* Number of attendees trained per institutions */}
+                  <Grid item xs={12} sm={6} md={4}>
+                    {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesTraining &&
+                    (<WidgetGraph title = {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesTraining.title}
+                                  graph = {<VictoryChart domainPadding={15}>
+                                    <VictoryAxis
+                                        style={{ tickLabels: { padding: 20 } }}
+                                    />
+                                    <VictoryAxis
+                                        dependentAxis
+                                    />
+                                    {<VictoryBar
+                                                 labelComponent={<VictoryTooltip/>}
+                                                 style  = {{ data: { fill: "#D73F3F" } }}
+                                                 data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesTraining.data, "trainings")}
+                                    />}
+                                  </VictoryChart>
+                                  }/>
+
+                    )}
+                  </Grid>
+
+                  {/* Number of workshops per month */}
+                  <Grid item xs={12} sm={6} md={4}>
+                    {this.props.importedData.ramanihuria.capacitybuilding.nbWorkshops &&
+                    (<WidgetGraph title = {this.props.importedData.ramanihuria.capacitybuilding.nbWorkshops.title}
+                                  graph = {<VictoryChart domainPadding={15}>
+                                    <VictoryAxis
+                                        style={{ tickLabels: { padding: 20 } }}
+                                    />
+                                    <VictoryAxis
+                                        dependentAxis
+                                    />
+                                    <VictoryBar
+                                                 labelComponent={<VictoryTooltip/>}
+                                                 style  = {{ data: { fill: "#D73F3F" } }}
+                                                 data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbWorkshops.data, "workshops")}
+                                    />
+                                  </VictoryChart>
+                                  }/>
+
+                    )}
+                  </Grid>
                   {/* Training by genders */}
                   {/*<Grid item xs={12} sm={6} md={4}>*/}
                   {/*{this.props.importedIndicators.global && (*/}

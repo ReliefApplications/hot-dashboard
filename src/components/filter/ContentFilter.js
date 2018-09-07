@@ -40,23 +40,25 @@ class ContentFilter extends Component {
     let selectedContent = []; //Object sended to container (Home)
 
     // Initialize all content state to false
-    let selectedcontentName               = '';
+    let selectedcontentName            = '';
     let mainContentChanged             = false;
     let capacityBuildingContentChanged = false;
     let awarenessContentChanged        = false;
+    let MappingCommunityContentChanged = false;
 
     // Check which button is clicked
     if     (content === 'main')              { mainContentChanged             = true;  selectedcontentName='Main';              }
     else if(content === 'capacity_building') { capacityBuildingContentChanged = true;  selectedcontentName='Capacity building'; }
     else if(content === 'awareness')         { awarenessContentChanged        = true;  selectedcontentName='Awareness';         }
-    else if(content === 'mapping_community') { awarenessContentChanged        = true;  selectedcontentName='Mapping community'; }
+    else if(content === 'mapping_community') { MappingCommunityContentChanged = true;  selectedcontentName='Mapping community'; }
 
     // Push new item to the array to send
     selectedContent.push({
       contentName             : selectedcontentName,
       mainContent             : mainContentChanged,
       capacityBuildingContent : capacityBuildingContentChanged,
-      awarenessContent        : awarenessContentChanged
+      awarenessContent        : awarenessContentChanged,
+      mappingCommunityContent : MappingCommunityContentChanged
     });
 
     this.setState({
@@ -69,7 +71,6 @@ class ContentFilter extends Component {
 
 
   render() {
-
     return (
         <div className="tabs">
           {/* 'Main' button */}

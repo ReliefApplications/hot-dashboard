@@ -5,8 +5,6 @@ import React, { Component } from 'react';
 import './MainContent.css';
 
 /** Logos **/
-import mapathonsIMG  from '../../../assets/images/logos/mapathons.png';
-import projectsIMG   from '../../../assets/images/logos/projects.png';
 import mapIMG        from '../../../assets/images/logos/map.png';
 
 /** Material UI **/
@@ -53,34 +51,19 @@ class MainContent extends Component {
           (<MuiThemeProvider theme={GlobalTheme}>
                 {/* First row */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
-                  {/* Active projects */}
-                  <Grid item xs={12} sm={6} md={3}>
-                    {this.props.importedData.global.main.totalProjects && (<WidgetIndicator title={this.props.importedData.global.main.totalProjects.title}
-                                                                         img={projectsIMG}
-                                                                         data={this.props.importedData.global.main.totalProjects.data}/>)}
-                  </Grid>
-
-                  {/* Total mappers */}
-                  <Grid item xs={12} sm={6} md={3}>
-                    {this.props.importedData.global.main.totalMappers && (<WidgetIndicator title={this.props.importedData.global.main.totalMappers.title}
-                                                                         img={mapIMG}
-                                                                         data={this.props.importedData.global.main.totalMappers.data}/>)}
-                  </Grid>
-
-                  {/* Mapathons */}
-                  <Grid item xs={12} sm={6} md={3}>
-                    {this.props.importedData.global.main.totalMapathons && (<WidgetIndicator title={this.props.importedData.global.main.totalMapathons.title}
-                                                                         img={mapathonsIMG}
-                                                                         data={this.props.importedData.global.main.totalMapathons.data}/>)}
-                  </Grid>
-
-
                   {/* Maps edits */}
                   <Grid item xs={12} sm={6} md={3}>
                     {this.props.importedData.global.main.totalEdits && (<WidgetIndicator title={this.props.importedData.global.main.totalEdits.title}
-                                                                         img={mapIMG}
-                                                                         data={this.props.importedData.global.main.totalEdits.data}/>)}
+                                                                                         img={mapIMG}
+                                                                                         data={this.props.importedData.global.main.totalEdits.data}/>)}
                   </Grid>
+
+                  {/* Active projects */}
+                  {/*<Grid item xs={12} sm={6} md={3}>*/}
+                    {/*{this.props.importedData.global.main.totalProjects && (<WidgetIndicator title={this.props.importedData.global.main.totalProjects.title}*/}
+                                                                         {/*img={projectsIMG}*/}
+                                                                         {/*data={this.props.importedData.global.main.totalProjects.data}/>)}*/}
+                  {/*</Grid>*/}
                 </Grid>
 
                 {/* Second row */}

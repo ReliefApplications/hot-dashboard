@@ -26,14 +26,15 @@ class Home extends React.Component {
     this.selectProjectFromHeader     = this.selectProjectFromHeader.bind(this);
     this.selectContentFromFilterTabs = this.selectContentFromFilterTabs.bind(this);
     this.state = {
-      MainContent               : MainContentGlobal,
-      CapacityBuildingContent   : CapacityBuildingContentGlobal,
-      AwarenessContent          : AwarenessContentGlobal,
+      MainContent                     : MainContentGlobal,
+      CapacityBuildingContent         : CapacityBuildingContentGlobal,
+      AwarenessContent                : AwarenessContentGlobal,
+      MappingCommunityContent         : MappingCommunityContent,
       menuLeft                        : false,    // State of the left menu.
       mainContentSelected             : true,     // When Main Content is selected
       capacityBuildingContentSelected : false,    // When Capacity Building Content is selected
       awarenessContentSelected        : false,    // When Awareness Content is selected
-      MappingCommunityContent        : false,    // When Mapping Community Content is selected
+      MappingCommunitySelected         : false,    // When Mapping Community Content is selected
 
       //By default, the global project and the main content are displayed
       projectName : 'Global', // Name of the actual project
@@ -96,7 +97,7 @@ class Home extends React.Component {
       mainContentSelected             : true,
       capacityBuildingContentSelected : false,
       awarenessContentSelected        : false,
-      mappingCommunityContent         : false,
+      MappingCommunitySelected        : false,
       projectName                     : selectedProjectFromHeader,
     });
   }
@@ -120,7 +121,7 @@ class Home extends React.Component {
     const { mainContentSelected }             = this.state;
     const { capacityBuildingContentSelected } = this.state;
     const { awarenessContentSelected }        = this.state;
-    const { mappingCommunitySelected }        = this.state;
+    const { mappingCommunityContentSelected }        = this.state;
     const { importedData }                    = this.state;
 
     return (
@@ -139,7 +140,7 @@ class Home extends React.Component {
           {mainContentSelected             && (<this.state.MainContent             importedData = {importedData} ></this.state.MainContent>)}
           {capacityBuildingContentSelected && (<this.state.CapacityBuildingContent importedData = {importedData} ></this.state.CapacityBuildingContent>)}
           {awarenessContentSelected        && (<this.state.AwarenessContent importedData = {importedData}></this.state.AwarenessContent>)}
-          {mappingCommunitySelected        && (<this.state.MappingCommunityContent importedData = {importedData}></this.state.MappingCommunityContent>)}
+          {mappingCommunityContentSelected        && (<this.state.MappingCommunityContent importedData = {importedData}></this.state.MappingCommunityContent>)}
         </div>
     );
   }
