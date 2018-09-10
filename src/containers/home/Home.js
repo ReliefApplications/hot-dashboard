@@ -4,10 +4,10 @@ import React from 'react';
 /** Containers **/
 import Header             from '../../components/header/Header'
 import FilterTabs         from '../../components/filter/ContentFilter'
-import MainContentGlobal        from '../../components/content/global/MainContent'
+import MappingContentGlobal        from '../../components/content/global/MappingContent'
 import CapacityBuildingContentGlobal from '../../components/content/global/CapacityBuildingContent'
 import AwarenessContentGlobal from '../../components/content/global/AwarenessContent'
-import MappingCommunityContent from '../../components/content/global/MappingCommunityContent'
+import CommunityContent from '../../components/content/global/CommunityContent'
 
 /** CSS **/
 import './Home.css';
@@ -17,6 +17,7 @@ import Reader from "../../core/utils/Reader";
 
 /** Material **/
 import Divider         from '@material-ui/core/Divider';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const reader = new Reader();
 
@@ -26,22 +27,23 @@ class Home extends React.Component {
     this.selectProjectFromHeader     = this.selectProjectFromHeader.bind(this);
     this.selectContentFromFilterTabs = this.selectContentFromFilterTabs.bind(this);
     this.state = {
-      MainContent                     : MainContentGlobal,
+      MappingContent                  : MappingContentGlobal,
       CapacityBuildingContent         : CapacityBuildingContentGlobal,
       AwarenessContent                : AwarenessContentGlobal,
-      MappingCommunityContent         : MappingCommunityContent,
+      CommunityContent                : CommunityContent,
       menuLeft                        : false,    // State of the left menu.
-      mainContentSelected             : true,     // When Main Content is selected
+      mappingContentSelected          : true,     // When Mapping Content is selected
       capacityBuildingContentSelected : false,    // When Capacity Building Content is selected
       awarenessContentSelected        : false,    // When Awareness Content is selected
-      MappingCommunitySelected         : false,    // When Mapping Community Content is selected
+      CommunitySelected               : false,    // When Community Content is selected
 
       //By default, the global project and the main content are displayed
       projectName : 'Global', // Name of the actual project
-      contentName : 'Main',   // Name of the actual content
+      contentName : 'Mapping',   // Name of the actual content
 
       importedProjects    : [],
       importedData : [],
+      loading: true,
     };
   }
 
@@ -51,7 +53,6 @@ class Home extends React.Component {
 
   /** Call all datas file from the GitHub api once the page is rendered **/
   async componentDidMount() {
-    // new Preprocess().process();
     this.setState({importedData : await new Promise((resolve,reject) => {
         // Getting data from the preprocessed file
         reader.getJsonFromAWS()
@@ -60,7 +61,10 @@ class Home extends React.Component {
               let projectsNames = Object.keys(data);
               // This push is only here to add the demo project manually to the project list
               projectsNames.push("demo");
-              this.setState({importedProjects: projectsNames});
+              this.setState({
+                importedProjects: projectsNames,
+                loading: false
+              });
               resolve(data);
             })
             .catch((error) =>{
@@ -70,11 +74,12 @@ class Home extends React.Component {
       })
       // This .then function is only here to add fake content in order to display the menu buttons on the demo dashboard
           .then(function(res) {
+            // console.log("*********HOME***********", res);
             res["demo"] = {
-              main: {data : "yes"},
+              mapping: {data : "yes"},
               capacitybuilding: {data : "yes"},
               awareness: {data : "yes"},
-              mappingcommunity: {data : "yes"}
+              community: {data : "yes"}
             };
             return res;
           }
@@ -88,28 +93,36 @@ class Home extends React.Component {
 
   /** Selecting the project from the header button **/
   async selectProjectFromHeader(selectedProjectFromHeader){
-    import('../../components/content/'+selectedProjectFromHeader+'/MainContent').then((res) => this.setState({MainContent : res.default}));
+    this.setState({
+      loading: true
+    });
+    import('../../components/content/'+selectedProjectFromHeader+'/MappingContent').then((res) => this.setState({MappingContent : res.default}));
     import('../../components/content/'+selectedProjectFromHeader+'/CapacityBuildingContent').then((res) => this.setState({CapacityBuildingContent : res.default}));
     import('../../components/content/'+selectedProjectFromHeader+'/AwarenessContent').then((res) => this.setState({AwarenessContent : res.default}));
-    import('../../components/content/'+selectedProjectFromHeader+'/MappingCommunityContent').then((res) => this.setState({MappingCommunityContent : res.default}));
+    import('../../components/content/'+selectedProjectFromHeader+'/CommunityContent').then((res) => this.setState({CommunityContent : res.default}));
     this.setState({
-      contentName                     : 'Main',
-      mainContentSelected             : true,
+      contentName                     : 'Mapping',
+      mappingContentSelected          : true,
       capacityBuildingContentSelected : false,
       awarenessContentSelected        : false,
-      MappingCommunitySelected        : false,
+      communityContentSelected        : false,
       projectName                     : selectedProjectFromHeader,
+      loading: false
     });
   }
 
   /** Selecting the new content chosen in the filter tabs component **/
-  selectContentFromFilterTabs(selectedContent){
+  async selectContentFromFilterTabs(selectedContent){
+    this.setState({
+      loading: true
+    });
     this.setState({
       contentName                     : selectedContent[0].contentName,
-      mainContentSelected             : selectedContent[0].mainContent,
+      mappingContentSelected          : selectedContent[0].mappingContent,
       capacityBuildingContentSelected : selectedContent[0].capacityBuildingContent,
       awarenessContentSelected        : selectedContent[0].awarenessContent,
-      mappingCommunityContentSelected : selectedContent[0].mappingCommunityContent
+      communityContentSelected        : selectedContent[0].communityContent,
+      loading: false
     });
   }
 
@@ -118,15 +131,14 @@ class Home extends React.Component {
   //------------------------------------------------------------------------//
 
   render() {
-    const { mainContentSelected }             = this.state;
+    const { mappingContentSelected }          = this.state;
     const { capacityBuildingContentSelected } = this.state;
     const { awarenessContentSelected }        = this.state;
-    const { mappingCommunityContentSelected }        = this.state;
+    const { communityContentSelected }        = this.state;
     const { importedData }                    = this.state;
 
     return (
         <div className="Home">
-
           {/* Header */}
           <Header sendToHome={this.selectProjectFromHeader} contentName={this.state.contentName} importedProjects={this.state.importedProjects}></Header>
 
@@ -135,12 +147,12 @@ class Home extends React.Component {
 
           {/* Line between filter component & content */}
           <Divider />
-
+          {this.state.loading          && (<CircularProgress id="loader" style={{ color: "#D73F3F" }} thickness={7} />)}
           {/* Contents */}
-          {mainContentSelected             && (<this.state.MainContent             importedData = {importedData} ></this.state.MainContent>)}
-          {capacityBuildingContentSelected && (<this.state.CapacityBuildingContent importedData = {importedData} ></this.state.CapacityBuildingContent>)}
-          {awarenessContentSelected        && (<this.state.AwarenessContent importedData = {importedData}></this.state.AwarenessContent>)}
-          {mappingCommunityContentSelected        && (<this.state.MappingCommunityContent importedData = {importedData}></this.state.MappingCommunityContent>)}
+          {!this.state.loading         && mappingContentSelected          && (<this.state.MappingContent          importedData = {importedData}/>)}
+          {!this.state.loading         && capacityBuildingContentSelected && (<this.state.CapacityBuildingContent importedData = {importedData}/>)}
+          {!this.state.loading         && awarenessContentSelected        && (<this.state.AwarenessContent        importedData = {importedData}/>)}
+          {!this.state.loading         && communityContentSelected        && (<this.state.CommunityContent        importedData = {importedData}/>)}
         </div>
     );
   }

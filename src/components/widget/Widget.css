@@ -4,7 +4,10 @@
 /** External widgets **/
 .widget-container {
     display       : flex;
+    flex-direction: column;
     margin: 40px 20px 0px;
+    font-size: 1rem !important;
+    color: rgba(0, 0, 0, 0.54) !important;
 }
 /** External widgets **/
 .indicator-container {
@@ -23,4 +26,5 @@
     text-align      : center;
     margin          : 0 auto;
     padding         : 10px;
+
 }

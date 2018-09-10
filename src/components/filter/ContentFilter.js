@@ -30,35 +30,34 @@ class ContentFilter extends Component {
     this.selectContent = this.selectContent.bind(this);
 
     this.state = {
-      displayedContent : 'main'
+      displayedContent : 'mapping'
     };
   }
 
   /** Open content & close mini menu **/
   selectContent = (content) => () => {
-    // console.log(this.props.contentName);
     let selectedContent = []; //Object sended to container (Home)
 
     // Initialize all content state to false
     let selectedcontentName            = '';
-    let mainContentChanged             = false;
+    let mappingContentChanged          = false;
     let capacityBuildingContentChanged = false;
     let awarenessContentChanged        = false;
-    let MappingCommunityContentChanged = false;
+    let communityContentChanged = false;
 
     // Check which button is clicked
-    if     (content === 'main')              { mainContentChanged             = true;  selectedcontentName='Main';              }
+    if     (content === 'mapping')           { mappingContentChanged          = true;  selectedcontentName='Mapping';           }
     else if(content === 'capacity_building') { capacityBuildingContentChanged = true;  selectedcontentName='Capacity building'; }
     else if(content === 'awareness')         { awarenessContentChanged        = true;  selectedcontentName='Awareness';         }
-    else if(content === 'mapping_community') { MappingCommunityContentChanged = true;  selectedcontentName='Mapping community'; }
+    else if(content === 'community')         { communityContentChanged        = true;  selectedcontentName='Community';         }
 
     // Push new item to the array to send
     selectedContent.push({
       contentName             : selectedcontentName,
-      mainContent             : mainContentChanged,
+      mappingContent          : mappingContentChanged,
       capacityBuildingContent : capacityBuildingContentChanged,
       awarenessContent        : awarenessContentChanged,
-      mappingCommunityContent : MappingCommunityContentChanged
+      communityContent        : communityContentChanged
     });
 
     this.setState({
@@ -73,15 +72,15 @@ class ContentFilter extends Component {
   render() {
     return (
         <div className="tabs">
-          {/* 'Main' button */}
+          {/* 'Mapping' button */}
           {(this.props.importedData === undefined) ?
               null
-              : ((Object.keys(this.props.importedData.main).length !== 0) ?
-                  <Button style     = {(this.props.contentName === 'Main') ? FilterSelected : Buttons}
+              : ((Object.keys(this.props.importedData.mapping).length !== 0) ?
+                  <Button style     = {(this.props.contentName === 'Mapping') ? FilterSelected : Buttons}
                           variant   = "contained"
                           component = "span"
-                          onClick   = {this.selectContent('main')}>
-                  Main
+                          onClick   = {this.selectContent('mapping')}>
+                  Mapping
                   </Button>
                       : null)}
 
@@ -97,15 +96,15 @@ class ContentFilter extends Component {
                   </Button>
                   : null)}
 
-          {/* 'Mapping Community' button */}
+          {/* 'Community' button */}
           {(this.props.importedData === undefined) ?
               null
-              : ((Object.keys(this.props.importedData.mappingcommunity).length !== 0) ?
-                  <Button style     = {(this.props.contentName === 'Mapping community') ? FilterSelected : Buttons}
+              : ((Object.keys(this.props.importedData.community).length !== 0) ?
+                  <Button style     = {(this.props.contentName === 'Community') ? FilterSelected : Buttons}
                           variant   = "contained"
                           component = "span"
-                          onClick   = {this.selectContent('mapping_community')}>
-                    Mapping community
+                          onClick   = {this.selectContent('community')}>
+                    Community
                   </Button>
                   : null)}
 

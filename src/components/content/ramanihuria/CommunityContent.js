@@ -32,7 +32,7 @@ const GlobalTheme = createMuiTheme({
 });
 
 
-class MappingCommunityContent extends Component {
+class CommunityContent extends Component {
   //------------------------------------------------------------------------//
   //-------------------------------- Render --------------------------------//
   //------------------------------------------------------------------------//
@@ -40,7 +40,7 @@ class MappingCommunityContent extends Component {
   render() {
     const nbParticipantsWomen = function (data) {
       let res = [];
-      for (let i=0; i<data.length; i++)
+      for (let i=data.length-1; i>=0; i--)
       {
         res.push({
           x: data[i].label,
@@ -52,7 +52,7 @@ class MappingCommunityContent extends Component {
     };
     const nbParticipantsMen = function (data) {
       let res = [];
-      for (let i=0; i<data.length; i++)
+      for (let i=data.length-1; i>=0; i--)
       {
         res.push({
           x: data[i].label,
@@ -64,7 +64,7 @@ class MappingCommunityContent extends Component {
     };
     const nbParticipantsOld = function (data) {
       let res = [];
-      for (let i=0; i<data.length; i++)
+      for (let i=data.length-1; i>=0; i--)
       {
         res.push({
           x: data[i].label,
@@ -76,7 +76,7 @@ class MappingCommunityContent extends Component {
     };
     const nbParticipantsNew = function (data) {
       let res = [];
-      for (let i=0; i<data.length; i++)
+      for (let i=data.length-1; i>=0; i--)
       {
         res.push({
           x: data[i].label,
@@ -96,48 +96,48 @@ class MappingCommunityContent extends Component {
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
                   {/* Events conducted */}
                   <Grid item xs={12} sm={6} md={3}>
-                    {this.props.importedData.ramanihuria.mappingcommunity.nbEvents &&
-                    (<WidgetIndicator title={this.props.importedData.ramanihuria.mappingcommunity.nbEvents.title}
+                    {this.props.importedData.ramanihuria.community.nbEvents &&
+                    (<WidgetIndicator title={this.props.importedData.ramanihuria.community.nbEvents.title}
                                       img={mapIMG}
-                                      data={this.props.importedData.ramanihuria.mappingcommunity.nbEvents.data}/>)}
+                                      data={this.props.importedData.ramanihuria.community.nbEvents.data}/>)}
                   </Grid>
                 </Grid>
 
                 {/* Second row */}
                 {/* Number of people participating in an event */}
                 <Grid item xs={12} sm={6} md={4}>
-                  {this.props.importedData.ramanihuria.mappingcommunity.nbParticipants &&
-                  (<WidgetGraph title = {this.props.importedData.ramanihuria.mappingcommunity.nbParticipants.title}
-                                graph = {<VictoryChart domainPadding={15}>
+                  {this.props.importedData.ramanihuria.community.nbParticipants &&
+                  (<WidgetGraph title = {this.props.importedData.ramanihuria.community.nbParticipants.title}
+                                graph = {<VictoryChart domainPadding={30}>
                                   <VictoryAxis
                                       style={{ tickLabels: { padding: 20 } }}
                                   />
                                   <VictoryAxis
                                       dependentAxis
                                   />
-                                  <VictoryGroup offset={10} style={{ data: { width: 15 } }}>
+                                  <VictoryGroup offset={10} style={{ data: { width: 10 } }}>
                                     <VictoryStack>
                                       <VictoryBar
                                           labelComponent={<VictoryTooltip/>}
                                           style  = {{ data: { fill: "#D73F3F" } }}
-                                          data   = {nbParticipantsWomen(this.props.importedData.ramanihuria.mappingcommunity.nbParticipants.data)}
+                                          data   = {nbParticipantsWomen(this.props.importedData.ramanihuria.community.nbParticipants.data)}
                                       />
                                       <VictoryBar
                                           labelComponent={<VictoryTooltip/>}
                                           style  = {{ data: { fill: "#FAA71E" } }}
-                                          data   = {nbParticipantsMen(this.props.importedData.ramanihuria.mappingcommunity.nbParticipants.data)}
+                                          data   = {nbParticipantsMen(this.props.importedData.ramanihuria.community.nbParticipants.data)}
                                       />
                                     </VictoryStack>
                                     <VictoryStack>
                                       <VictoryBar
                                           labelComponent={<VictoryTooltip/>}
-                                          style  = {{ data: { fill: "#D73F3F" } }}
-                                          data   = {nbParticipantsNew(this.props.importedData.ramanihuria.mappingcommunity.nbParticipants.data)}
+                                          style  = {{ data: { fill: "#3B29AD" } }}
+                                          data   = {nbParticipantsNew(this.props.importedData.ramanihuria.community.nbParticipants.data)}
                                       />
                                       <VictoryBar
                                           labelComponent={<VictoryTooltip/>}
-                                          style  = {{ data: { fill: "#FAA71E" } }}
-                                          data   = {nbParticipantsOld(this.props.importedData.ramanihuria.mappingcommunity.nbParticipants.data)}
+                                          style  = {{ data: { fill: "#268181" } }}
+                                          data   = {nbParticipantsOld(this.props.importedData.ramanihuria.community.nbParticipants.data)}
                                       />
                                     </VictoryStack>
                                   </VictoryGroup>
@@ -153,4 +153,4 @@ class MappingCommunityContent extends Component {
   }
 }
 
-export default MappingCommunityContent;
+export default CommunityContent;

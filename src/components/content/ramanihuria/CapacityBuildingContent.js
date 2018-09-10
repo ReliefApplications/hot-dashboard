@@ -36,44 +36,18 @@ class CapacityBuildingContent extends Component {
   //------------------------------------------------------------------------//
 
   render() {
-    const nbAttendeesData = function (data) {
-      let res = [];
-      for (let i=0; i<4; i++)
-      {
-        res.push({
-          x: data[i].label,
-          y: data[i].nbAttendees,
-          label: data[i].nbAttendees + " people trained"
-        })
-      }
-      return res;
-    };
-    const nbInstitutionsData = function (data) {
-      let sortInstitutions = function (a, b) {
+    const tableToData = function (data, customLabel, sortingChoice) {
+      let dataSort = function (a, b) {
         if (a.y < b.y) {
-            return -1;
+          return -1;
         } else if (a.y > b.y) {
           return 1;
         } else {
           return 0;
         }
       };
-
       let res = [];
-      for (let i=0; i<data.length; i++)
-      {
-        res.push({
-          x: data[i].shorten,
-          y: data[i].nbAttendees,
-          label: data[i].nbAttendees + " attendees"
-        });
-      }
-      res.sort(sortInstitutions);
-      return res;
-    };
-    const tableToData = function (data, customLabel) {
-      let res = [];
-      for (let i=0; i<data.length; i++)
+      for (let i=data.length-1; i>=0; i--)
       {
         res.push({
           x: data[i].label,
@@ -81,7 +55,11 @@ class CapacityBuildingContent extends Component {
           label: data[i].value + " " + customLabel
         })
       }
-      return res;
+      switch (sortingChoice) {
+        case "data":
+          res.sort(dataSort);
+          break;
+      }      return res;
     };
 
     return (
@@ -119,7 +97,7 @@ class CapacityBuildingContent extends Component {
                                     {<VictoryBar
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
-                                        data   = {nbAttendeesData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesMonthly.data)}
+                                        data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesMonthly.data, "people trained")}
                                     />}
                                   </VictoryChart>
                                   }/>
@@ -141,10 +119,11 @@ class CapacityBuildingContent extends Component {
                                     {<VictoryBar horizontal
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
-                                        data   = {nbInstitutionsData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesInstitutions.data)}
+                                        data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesInstitutions.data, "attendees", "data")}
                                     />}
-                                  </VictoryChart>
-                                  }/>
+                                  </VictoryChart>}
+                                  data = {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesInstitutions.data}
+                        />
 
                     )}
                   </Grid>
@@ -165,8 +144,9 @@ class CapacityBuildingContent extends Component {
                                                  style  = {{ data: { fill: "#D73F3F" } }}
                                                  data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesTraining.data, "trainings")}
                                     />}
-                                  </VictoryChart>
-                                  }/>
+                                  </VictoryChart>}
+                                  data = {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesTraining.data}
+                        />
 
                     )}
                   </Grid>
@@ -187,8 +167,8 @@ class CapacityBuildingContent extends Component {
                                                  style  = {{ data: { fill: "#D73F3F" } }}
                                                  data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbWorkshops.data, "workshops")}
                                     />
-                                  </VictoryChart>
-                                  }/>
+                                  </VictoryChart>}
+                        />
 
                     )}
                   </Grid>

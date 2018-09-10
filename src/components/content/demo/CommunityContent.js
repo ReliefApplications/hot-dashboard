@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 /** CSS **/
-import './MainContent.css';
+import './CommunityContent.css';
 
 /** Logos **/
 import mapIMG        from '../../../assets/images/logos/map.png';
@@ -46,29 +46,22 @@ const GlobalTheme = createMuiTheme({
 });
 
 
-class MainContent extends Component {
+class CommunityContent extends Component {
   //------------------------------------------------------------------------//
   //-------------------------------- Render --------------------------------//
   //------------------------------------------------------------------------//
 
   render() {
     return (
-        // The padding prevent the page to be too wide because of the option spacing
         <div style={{ padding: 12 }}>
-          {/* We only show the dashboard if the matching data fetched from the rawdata is existing */}
-          {this.props.importedData &&
+          {this.props.importedData.global &&
           (<MuiThemeProvider theme={GlobalTheme}>
                 {/* First row */}
-                <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
-                  {/* A widdgetIndicator can be used to show a little image and a value */}
-                  <Grid item xs={12} sm={6} md={3}> {/* item of the container that uses bootstrap breakpoints */}
-                    {/* We check again if the data displayed in the widget does exist. Then, we add the widget */}
-                    {this.props.importedData && (<WidgetIndicator title="This is a 'WidgetIndicator'" //The title is the text displayed above the data
-                                                                  img={mapIMG} //The image displayed on the left of the widget
-                                                                  data={200}/>)} {/* The data is the value */}
-                    {/* {this.props.importedData.global.main.totalProjects && (<WidgetIndicator title={this.props.importedData.global.main.totalProjects.title}*/}
-                    {/*img={projectsIMG}*/}
-                    {/*data={this.props.importedData.global.main.totalProjects.data}/>)}*/}
+                <Grid container spacing={24} className="content-row">
+                  <Grid item xs={12} sm={6} md={3}>
+                    {this.props.importedData && (<WidgetIndicator title="This is a 'WidgetIndicator'"
+                                                                  img={mapIMG}
+                                                                  data={200}/>)}
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     {this.props.importedData && (<WidgetIndicator title="Indicator example 2"
@@ -89,10 +82,10 @@ class MainContent extends Component {
                 {/* En of the first row */}
 
                 {/* Second row */}
-                <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
+                <Grid container spacing={24} className="content-row">
                   {/* Bar diagram example */}
                   <Grid item xs={12} sm={6} md={4}>
-                    {this.props.importedData &&
+                    {this.props.importedData.global.capacitybuilding.attendeesAndInstitutions &&
                     (<WidgetGraph title = "Bar diagram example"
                                   graph = {<VictoryChart domainPadding={15}>
                                     <VictoryAxis
@@ -127,28 +120,6 @@ class MainContent extends Component {
                                   }/>
 
                     )}
-                    {/*{this.props.importedData.global.capacitybuilding.attendeesAndInstitutions &&*/}
-                    {/*(<WidgetGraph title = {this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.titleInstitutions}*/}
-                                  {/*graph = {<VictoryChart domainPadding={15}>*/}
-                                    {/*<VictoryAxis*/}
-                                        {/*style={{ tickLabels: { padding: 20, angle: -0 } }}*/}
-                                    {/*/>*/}
-                                    {/*<VictoryAxis*/}
-                                        {/*dependentAxis*/}
-                                    {/*/>*/}
-                                    {/*{<VictoryBar*/}
-                                        {/*labelComponent={<VictoryTooltip/>}*/}
-                                        {/*style  = {{ data: { fill: "#D73F3F" } }}*/}
-                                        {/*data   = {[*/}
-                                          {/*{ x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].label,*/}
-                                            {/*y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions,*/}
-                                            {/*label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions + " institutions trained"*/}
-                                          {/*},*/}
-                                        {/*]}*/}
-                                    {/*/>}*/}
-                                  {/*</VictoryChart>*/}
-                                  {/*}/>*/}
-                    {/*)}*/}
                   </Grid>
 
                   {/* Custom widget */}
@@ -275,4 +246,4 @@ class MainContent extends Component {
   }
 }
 
-export default MainContent;
+export default CommunityContent;

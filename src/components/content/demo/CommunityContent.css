@@ -7,7 +7,6 @@
 .content-row {
     display      : flex;
     text-align   : center;
-    justify-content: space-between;
     padding      : 0 !important;
 }
 
@@ -17,7 +16,7 @@
 /** External widgets **/
 .widget-container {
     display       : flex;
-    height: 365px;
+    /*height: 365px;*/
     margin: 40px 20px 0px;
 }
 .widget-text{
@@ -28,7 +27,6 @@
     margin          : 0 auto;
     padding         : 16px 10px 10px;
 }
-
 /** 'Mapped elements' div **/
 .widget-mappedElements-text{
     display         : flex;

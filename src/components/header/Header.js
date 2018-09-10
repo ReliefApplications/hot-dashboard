@@ -9,9 +9,6 @@ import MenuItem     from '@material-ui/core/MenuItem';
 /** CSS **/
 import './Header.css';
 
-/** Constants **/
-// import {BUTTONSSTYLE} from '../../core/external/Constants';
-
 /** Styles **/
 const Buttons = {
   background : '#C43636',
@@ -64,7 +61,7 @@ class Header extends Component {
     // Close the mini menu
     this.setState({
       anchorProject   : null,
-      selectedProject : projectName,
+      selectedProject : projectName
     });
 
     // Sending the project

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 /** CSS **/
-import './MainContent.css';
+import './MappingContent.css';
 
 /** Logos **/
 import mapathonsIMG  from '../../../assets/images/logos/mapathons.png';
@@ -28,7 +28,7 @@ const GlobalTheme = createMuiTheme({
   },
 });
 
-class MappingCommunityContent extends Component {
+class CommunityContent extends Component {
   render() {
 
     return (
@@ -40,16 +40,17 @@ class MappingCommunityContent extends Component {
             <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
               {/* Total mappers */}
               <Grid item xs={12} sm={6} md={3}>
-                {this.props.importedData.global.mappingcommunity.totalMappers && (<WidgetIndicator title={this.props.importedData.global.mappingcommunity.totalMappers.title}
+                {this.props.importedData.global.community.totalMappers && (<WidgetIndicator title={this.props.importedData.global.community.totalMappers.title}
                                                                                        img={mapIMG}
-                                                                                       data={this.props.importedData.global.mappingcommunity.totalMappers.data}/>)}
+                                                                                       data={this.props.importedData.global.community.totalMappers.data}/>)}
               </Grid>
 
               {/* Mapathons */}
               <Grid item xs={12} sm={6} md={3}>
-                {this.props.importedData.global.main.totalMapathons && (<WidgetIndicator title={this.props.importedData.global.main.totalMapathons.title}
+                {/* We're using the totalEvents value because each event is a mapathon so the total number is the length of the list */}
+                {this.props.importedData.global.community.totalEvents && (<WidgetIndicator title={this.props.importedData.global.community.totalEvents.title}
                                                                                          img={mapathonsIMG}
-                                                                                         data={this.props.importedData.global.main.totalMapathons.data}/>)}
+                                                                                         data={this.props.importedData.global.community.totalEvents.data.length}/>)}
               </Grid>
             </Grid>
           </MuiThemeProvider>)}
@@ -58,4 +59,4 @@ class MappingCommunityContent extends Component {
   }
 }
 
-export default MappingCommunityContent;
+export default CommunityContent;

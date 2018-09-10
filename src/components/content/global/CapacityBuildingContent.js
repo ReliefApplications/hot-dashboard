@@ -39,16 +39,16 @@ class CapacityBuildingContent extends Component {
     return (
         // The padding prevent the page to be too wide because of the option spacing
         <div style={{ padding: 12 }}>
-          {this.props.importedData.global.capacitybuilding &&
+          {this.props.importedData &&
           (<MuiThemeProvider theme={GlobalTheme}>
                 {/* First row */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
                   {/* Workshops that happened */}
                   <Grid item xs={12} sm={6} md={3}>
-                    {this.props.importedData.global.capacitybuilding.y &&
-                    (<WidgetIndicator title={this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.titleWorkshop}
+                    {this.props.importedData.global.capacitybuilding.totalOrganizationsSupported &&
+                    (<WidgetIndicator title={this.props.importedData.global.capacitybuilding.totalOrganizationsSupported.title}
                                       img={mapIMG}
-                                      data={this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.workshops}/>)}
+                                      data={this.props.importedData.global.capacitybuilding.totalOrganizationsSupported.value}/>)}
                   </Grid>
 
                 </Grid>
