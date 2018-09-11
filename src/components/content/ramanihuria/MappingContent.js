@@ -43,12 +43,12 @@ class MappingContent extends Component {
   render() {
     const nbSubwardsData = function (data) {
       let res = [];
-      for (let i=3; i>=0; i--)
+      for (let i=data.length-1; i>=0; i--)
       {
         res.push({
-          x: data[i].Date,
-          y: data[i].TOTAL,
-          label: data[i].TOTAL + " sub-wards completed"
+          x: data[i].label,
+          y: data[i].value,
+          label: data[i].value + " sub-wards completed"
         })
       }
       return res;
@@ -72,8 +72,8 @@ class MappingContent extends Component {
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
                   {/* Number of sub-wards complete */}
                   <Grid item xs={12} sm={6} md={4}>
-                    {this.props.importedData.ramanihuria.mapping.nbsubwardscompleted &&
-                    (<WidgetGraph title = {this.props.importedData.ramanihuria.mapping.nbsubwardscompleted.title}
+                    {this.props.importedData.ramanihuria.mapping.nbSubwardsCompleted &&
+                    (<WidgetGraph title = {this.props.importedData.ramanihuria.mapping.nbSubwardsCompleted.title}
                                   graph = {<VictoryChart domainPadding={15}>
                                     <VictoryAxis
                                         style={{ tickLabels: { padding: 20, angle: -0 } }}
@@ -84,7 +84,7 @@ class MappingContent extends Component {
                                     <VictoryBar
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
-                                        data   = {nbSubwardsData(this.props.importedData.ramanihuria.mapping.nbsubwardscompleted.data)}
+                                        data   = {nbSubwardsData(this.props.importedData.ramanihuria.mapping.nbSubwardsCompleted.data)}
                                     />
                                   </VictoryChart>}
                         />

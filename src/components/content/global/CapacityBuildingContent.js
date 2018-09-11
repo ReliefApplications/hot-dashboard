@@ -36,6 +36,33 @@ class CapacityBuildingContent extends Component {
   //------------------------------------------------------------------------//
 
   render() {
+    const tableToData = function (data, customLabel, sortingChoice) {
+      let dataSort = function (a, b) {
+        if (a.y < b.y) {
+          return -1;
+        } else if (a.y > b.y) {
+          return 1;
+        } else {
+          return 0;
+        }
+      };
+      let res = [];
+      for (let i=data.length-1; i>=0; i--)
+      {
+        res.push({
+          x: data[i].label,
+          y: data[i].value,
+          label: data[i].value + " " + customLabel
+        })
+      }
+      switch (sortingChoice) {
+        case "data":
+          res.sort(dataSort);
+          break;
+        default:
+      }      return res;
+    };
+
     return (
         // The padding prevent the page to be too wide because of the option spacing
         <div style={{ padding: 12 }}>
@@ -55,38 +82,22 @@ class CapacityBuildingContent extends Component {
 
                 {/* Second row */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
-                  {/* Number of people trained */}
+                  {/* Number of attendees monthly */}
                   <Grid item xs={12} sm={6} md={4}>
-                    {this.props.importedData.global.capacitybuilding.y &&
-                    (<WidgetGraph title = {this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.titleAttendees}
+                    {this.props.importedData.global.capacitybuilding.totalNbAttendeesMonthly &&
+                    (<WidgetGraph title = {this.props.importedData.global.capacitybuilding.totalNbAttendeesMonthly.title}
                                   graph = {<VictoryChart domainPadding={15}>
                                     <VictoryAxis
-                                        style={{ tickLabels: { padding: 20, angle: -0 } }}
+                                        style = {{ tickLabels: { padding: 20 } }}
                                     />
                                     <VictoryAxis
                                         dependentAxis
+                                        style = {{ tickLabels: { padding: 20 } }}
                                     />
                                     {<VictoryBar
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
-                                        data   = {[
-                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].label,
-                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].nbAttendees,
-                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].nbAttendees + " people trained"
-                                          // },
-                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].label,
-                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].nbAttendees,
-                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].nbAttendees + " people trained"
-                                          // },
-                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].label,
-                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].nbAttendees,
-                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].nbAttendees + " people trained"
-                                          // },
-                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].label,
-                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].nbAttendees,
-                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].nbAttendees + " people trained"
-                                          // },
-                                        ]}
+                                        data   = {tableToData(this.props.importedData.global.capacitybuilding.totalNbAttendeesMonthly.data, "people trained")}
                                     />}
                                   </VictoryChart>
                                   }/>
@@ -94,13 +105,36 @@ class CapacityBuildingContent extends Component {
                     )}
                   </Grid>
 
-                  {/* Number of institutions trained */}
+                  {/* Number of attendees trained per institutions */}
                   <Grid item xs={12} sm={6} md={4}>
-                    {this.props.importedData.global.capacitybuilding.y &&
-                    (<WidgetGraph title = {this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.titleInstitutions}
+                    {this.props.importedData.global.capacitybuilding.totalNbAttendeesInstitutions &&
+                    (<WidgetGraph title = {this.props.importedData.global.capacitybuilding.totalNbAttendeesInstitutions.title}
                                   graph = {<VictoryChart domainPadding={15}>
                                     <VictoryAxis
-                                        style={{ tickLabels: { padding: 20, angle: -0 } }}
+                                        style={{ tickLabels: { padding: 20 } }}
+                                    />
+                                    <VictoryAxis
+                                        dependentAxis
+                                    />
+                                    {<VictoryBar horizontal
+                                                 labelComponent={<VictoryTooltip/>}
+                                                 style  = {{ data: { fill: "#D73F3F" } }}
+                                                 data   = {tableToData(this.props.importedData.global.capacitybuilding.totalNbAttendeesInstitutions.data, "attendees", "data")}
+                                    />}
+                                  </VictoryChart>}
+                                  data = {this.props.importedData.global.capacitybuilding.totalNbAttendeesInstitutions.data}
+                        />
+
+                    )}
+                  </Grid>
+
+                  {/* Number of attendees trained per institutions */}
+                  <Grid item xs={12} sm={6} md={4}>
+                    {this.props.importedData.global.capacitybuilding.totalNbAttendeesTraining &&
+                    (<WidgetGraph title = {this.props.importedData.global.capacitybuilding.totalNbAttendeesTraining.title}
+                                  graph = {<VictoryChart domainPadding={15}>
+                                    <VictoryAxis
+                                        style={{ tickLabels: { padding: 20 } }}
                                     />
                                     <VictoryAxis
                                         dependentAxis
@@ -108,66 +142,36 @@ class CapacityBuildingContent extends Component {
                                     {<VictoryBar
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
-                                        data   = {[
-                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].label,
-                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions,
-                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[0].nbInstitutions + " institutions trained"
-                                          // },
-                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].label,
-                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].nbInstitutions,
-                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[1].nbInstitutions + " institutions trained"
-                                          // },
-                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].label,
-                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].nbInstitutions,
-                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[2].nbInstitutions + " institutions trained"
-                                          // },
-                                          // { x: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].label,
-                                          //   y: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].nbInstitutions,
-                                          //   label: this.props.importedData.global.capacitybuilding.attendeesAndInstitutions.data[3].nbInstitutions + " institutions trained"
-                                          // },
-                                        ]}
+                                        data   = {tableToData(this.props.importedData.global.capacitybuilding.totalNbAttendeesTraining.data, "trainings")}
                                     />}
-                                  </VictoryChart>
-                                  }/>
+                                  </VictoryChart>}
+                                  data = {this.props.importedData.global.capacitybuilding.totalNbAttendeesTraining.data}
+                        />
 
                     )}
                   </Grid>
 
-                  {/* Number of sub-wards complete */}
-                  {/*<Grid item xs={12} sm={6} md={4}>*/}
-                  {/*{this.props.importedData.global &&*/}
-                  {/*(<WidgetGraph title = "Number of sub-wards complete"*/}
-                  {/*graph = {<VictoryChart domainPadding={ {x: 15}}>*/}
-                  {/*<VictoryAxis*/}
-                  {/*style={{ tickLabels: { padding: 20, angle: -0 } }}*/}
-                  {/*/>*/}
-                  {/*<VictoryAxis*/}
-                  {/*dependentAxis*/}
-                  {/*/>*/}
-                  {/*<VictoryLine*/}
-                  {/*style={{*/}
-                  {/*data   : { stroke: "#2C3038" },*/}
-                  {/*parent : { border: "1px solid #ccc"}*/}
-                  {/*}}*/}
-                  {/*data   = {[*/}
-                  {/*{ x: this.props.importedData.global.main.nbsubwardscompleted[0].Date,*/}
-                  {/*y: this.props.importedData.global.main.nbsubwardscompleted[0].TOTAL*/}
-                  {/*},*/}
-                  {/*{ x: this.props.importedData.global.main.nbsubwardscompleted[1].Date,*/}
-                  {/*y: this.props.importedData.global.main.nbsubwardscompleted[1].TOTAL*/}
-                  {/*},*/}
-                  {/*{ x: this.props.importedData.global.main.nbsubwardscompleted[2].Date,*/}
-                  {/*y: this.props.importedData.global.main.nbsubwardscompleted[2].TOTAL*/}
-                  {/*},*/}
-                  {/*{ x: this.props.importedData.global.main.nbsubwardscompleted[3].Date,*/}
-                  {/*y: this.props.importedData.global.main.nbsubwardscompleted[3].TOTAL*/}
-                  {/*}*/}
-                  {/*]}*/}
-                  {/*/>*/}
-                  {/*</VictoryChart>}*/}
-                  {/*/>*/}
-                  {/*)}*/}
-                  {/*</Grid>*/}
+                  {/* Number of workshops per month */}
+                  <Grid item xs={12} sm={6} md={4}>
+                    {this.props.importedData.global.capacitybuilding.totalNbWorkshops &&
+                    (<WidgetGraph title = {this.props.importedData.global.capacitybuilding.totalNbWorkshops.title}
+                                  graph = {<VictoryChart domainPadding={15}>
+                                    <VictoryAxis
+                                        style={{ tickLabels: { padding: 20 } }}
+                                    />
+                                    <VictoryAxis
+                                        dependentAxis
+                                    />
+                                    <VictoryBar
+                                        labelComponent={<VictoryTooltip/>}
+                                        style  = {{ data: { fill: "#D73F3F" } }}
+                                        data   = {tableToData(this.props.importedData.global.capacitybuilding.totalNbWorkshops.data, "workshops")}
+                                    />
+                                  </VictoryChart>}
+                        />
+
+                    )}
+                  </Grid>
                 </Grid>
               </MuiThemeProvider>
           )}

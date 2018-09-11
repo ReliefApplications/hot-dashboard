@@ -236,7 +236,7 @@ class MappingContent extends Component {
                   <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData.global && (
                         <WidgetGraph title = "Pie chart example"
-                                     graph = {<VictoryPie
+                                     graph = {<VictoryPie domainPadding={15}
                                          padAngle    = {2}
                                          innerRadius = {100}
                                          width       = {475}

@@ -8,11 +8,10 @@ import CardContent    from '@material-ui/core/CardContent';
 import IconButton     from "@material-ui/core/IconButton/IconButton";
 import MoreVertIcon   from '@material-ui/icons/MoreVert';
 import CloseIcon      from '@material-ui/icons/Close';
-import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
-import Dialog from "@material-ui/core/Dialog/Dialog";
-import DialogContent from "@material-ui/core/DialogContent/DialogContent";
-import Button from "@material-ui/core/Button/Button";
-import DialogActions from "@material-ui/core/DialogActions/DialogActions";
+import Dialog         from "@material-ui/core/Dialog/Dialog";
+import DialogContent  from "@material-ui/core/DialogContent/DialogContent";
+import Button         from "@material-ui/core/Button/Button";
+import DialogActions  from "@material-ui/core/DialogActions/DialogActions";
 
 /** CSS **/
 import './Widget.css';

@@ -59,6 +59,7 @@ class CapacityBuildingContent extends Component {
         case "data":
           res.sort(dataSort);
           break;
+        default:
       }      return res;
     };
 
@@ -80,9 +81,8 @@ class CapacityBuildingContent extends Component {
                 </Grid>
 
                 {/* Second row */}
-                {/* Number of attendees monthly */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
-                  {/* Number of workshop attendees */}
+                  {/* Number of attendees monthly */}
                   <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesMonthly &&
                     (<WidgetGraph title = {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesMonthly.title}
@@ -117,9 +117,9 @@ class CapacityBuildingContent extends Component {
                                         dependentAxis
                                     />
                                     {<VictoryBar horizontal
-                                        labelComponent={<VictoryTooltip/>}
-                                        style  = {{ data: { fill: "#D73F3F" } }}
-                                        data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesInstitutions.data, "attendees", "data")}
+                                                 labelComponent={<VictoryTooltip/>}
+                                                 style  = {{ data: { fill: "#D73F3F" } }}
+                                                 data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesInstitutions.data, "attendees", "data")}
                                     />}
                                   </VictoryChart>}
                                   data = {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesInstitutions.data}
@@ -140,9 +140,9 @@ class CapacityBuildingContent extends Component {
                                         dependentAxis
                                     />
                                     {<VictoryBar
-                                                 labelComponent={<VictoryTooltip/>}
-                                                 style  = {{ data: { fill: "#D73F3F" } }}
-                                                 data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesTraining.data, "trainings")}
+                                        labelComponent={<VictoryTooltip/>}
+                                        style  = {{ data: { fill: "#D73F3F" } }}
+                                        data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesTraining.data, "trainings")}
                                     />}
                                   </VictoryChart>}
                                   data = {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesTraining.data}
@@ -163,32 +163,15 @@ class CapacityBuildingContent extends Component {
                                         dependentAxis
                                     />
                                     <VictoryBar
-                                                 labelComponent={<VictoryTooltip/>}
-                                                 style  = {{ data: { fill: "#D73F3F" } }}
-                                                 data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbWorkshops.data, "workshops")}
+                                        labelComponent={<VictoryTooltip/>}
+                                        style  = {{ data: { fill: "#D73F3F" } }}
+                                        data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbWorkshops.data, "workshops")}
                                     />
                                   </VictoryChart>}
                         />
 
                     )}
                   </Grid>
-                  {/* Training by genders */}
-                  {/*<Grid item xs={12} sm={6} md={4}>*/}
-                  {/*{this.props.importedIndicators.global && (*/}
-                  {/*<WidgetGraph title = "Trainings (by gender)"*/}
-                  {/*graph = {<VictoryPie*/}
-                  {/*padAngle    = {2}*/}
-                  {/*innerRadius = {100}*/}
-                  {/*width       = {475}*/}
-                  {/*colorScale  = {[ "#FAA71E", "#D73F3F"]}*/}
-                  {/*style={{ labels: {fontSize: 18} }}*/}
-                  {/*data = {[*/}
-                  {/*{ x: "Women", y: this.props.importedData.ramanihuria.capacitybuilding.trainings.women },*/}
-                  {/*{ x: "Men",   y: this.props.importedData.ramanihuria.capacitybuilding.trainings.men },*/}
-                  {/*]}*/}
-                  {/*/>}/>)}*/}
-                  {/*</Grid>*/}
-
                 </Grid>
               </MuiThemeProvider>
           )}
