@@ -22,7 +22,6 @@ const Buttons = {
 class Header extends Component {
   constructor(props) {
     super(props);
-
     this.openMiniMenu              = this.openMiniMenu.bind(this);
     this.closeMiniMenu             = this.closeMiniMenu.bind(this);
     this.selectProjectFromMiniMenu = this.selectProjectFromMiniMenu.bind(this);

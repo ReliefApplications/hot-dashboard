@@ -5,9 +5,9 @@ import React from 'react';
 import Header             from '../../components/header/Header'
 import FilterTabs         from '../../components/filter/ContentFilter'
 import MappingContentGlobal        from '../../components/content/global/MappingContent'
-import CapacityBuildingContentGlobal from '../../components/content/global/CapacityBuildingContent'
-import AwarenessContentGlobal from '../../components/content/global/AwarenessContent'
-import CommunityContent from '../../components/content/global/CommunityContent'
+// import CapacityBuildingContentGlobal from '../../components/content/global/CapacityBuildingContent'
+// import AwarenessContentGlobal from '../../components/content/global/AwarenessContent'
+// import CommunityContent from '../../components/content/global/CommunityContent'
 
 /** CSS **/
 import './Home.css';
@@ -28,9 +28,9 @@ class Home extends React.Component {
     this.selectContentFromFilterTabs = this.selectContentFromFilterTabs.bind(this);
     this.state = {
       MappingContent                  : MappingContentGlobal,
-      CapacityBuildingContent         : CapacityBuildingContentGlobal,
-      AwarenessContent                : AwarenessContentGlobal,
-      CommunityContent                : CommunityContent,
+      CapacityBuildingContent         : null,
+      AwarenessContent                : null,
+      CommunityContent                : null,
       menuLeft                        : false,    // State of the left menu.
       mappingContentSelected          : true,     // When Mapping Content is selected
       capacityBuildingContentSelected : false,    // When Capacity Building Content is selected
@@ -39,7 +39,7 @@ class Home extends React.Component {
 
       //By default, the global project and the main content are displayed
       projectName : 'Global', // Name of the actual project
-      contentName : 'Mapping',   // Name of the actual content
+      contentName : 'Main',   // Name of the actual content
 
       importedProjects    : [],
       importedData : [],
@@ -74,7 +74,6 @@ class Home extends React.Component {
       })
       // This .then function is only here to add fake content in order to display the menu buttons on the demo dashboard
           .then(function(res) {
-            // console.log("*********HOME***********", res);
             res["demo"] = {
               mapping: {data : "yes"},
               capacitybuilding: {data : "yes"},
@@ -100,15 +99,25 @@ class Home extends React.Component {
     import('../../components/content/'+selectedProjectFromHeader+'/CapacityBuildingContent').then((res) => this.setState({CapacityBuildingContent : res.default}));
     import('../../components/content/'+selectedProjectFromHeader+'/AwarenessContent').then((res) => this.setState({AwarenessContent : res.default}));
     import('../../components/content/'+selectedProjectFromHeader+'/CommunityContent').then((res) => this.setState({CommunityContent : res.default}));
-    this.setState({
-      contentName                     : 'Mapping',
-      mappingContentSelected          : true,
-      capacityBuildingContentSelected : false,
-      awarenessContentSelected        : false,
-      communityContentSelected        : false,
-      projectName                     : selectedProjectFromHeader,
-      loading: false
-    });
+    selectedProjectFromHeader === "global" ?
+        this.setState({
+          contentName                     : 'Main',
+          mappingContentSelected          : true,
+          capacityBuildingContentSelected : false,
+          awarenessContentSelected        : false,
+          communityContentSelected        : false,
+          projectName                     : selectedProjectFromHeader,
+          loading: false
+        }) :
+        this.setState({
+          contentName                     : 'Mapping',
+          mappingContentSelected          : true,
+          capacityBuildingContentSelected : false,
+          awarenessContentSelected        : false,
+          communityContentSelected        : false,
+          projectName                     : selectedProjectFromHeader,
+          loading: false
+        });
   }
 
   /** Selecting the new content chosen in the filter tabs component **/
@@ -143,10 +152,11 @@ class Home extends React.Component {
           <Header sendToHome={this.selectProjectFromHeader} contentName={this.state.contentName} importedProjects={this.state.importedProjects}></Header>
 
           {/* Filter Tabs */}
-          <FilterTabs sendToHome={this.selectContentFromFilterTabs} contentName={this.state.contentName} importedData={importedData[this.state.projectName.toLowerCase()]}></FilterTabs>
+          {this.state.contentName !== "Main"          && (<FilterTabs sendToHome={this.selectContentFromFilterTabs} contentName={this.state.contentName} importedData={importedData[this.state.projectName.toLowerCase()]}></FilterTabs>)}
+           {/* Line between filter component & content*/}
+          {this.state.contentName !== "Main"          && (<Divider />)}
 
-          {/* Line between filter component & content */}
-          <Divider />
+
           {this.state.loading          && (<CircularProgress id="loader" style={{ color: "#D73F3F" }} thickness={7} />)}
           {/* Contents */}
           {!this.state.loading         && mappingContentSelected          && (<this.state.MappingContent          importedData = {importedData}/>)}

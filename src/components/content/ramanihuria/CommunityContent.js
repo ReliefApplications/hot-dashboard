@@ -62,7 +62,7 @@ class CommunityContent extends Component {
               {this.props.importedData.ramanihuria.community.nbEvents &&
               (<WidgetIndicator title={this.props.importedData.ramanihuria.community.nbEvents.title}
                                 img={mapathonsIMG}
-                                data={this.props.importedData.ramanihuria.community.nbEvents.data}/>)}
+                                data={this.props.importedData.ramanihuria.community.nbEvents.value}/>)}
             </Grid>
           </Grid>
 

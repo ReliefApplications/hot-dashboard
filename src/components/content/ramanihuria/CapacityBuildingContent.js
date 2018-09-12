@@ -153,8 +153,8 @@ class CapacityBuildingContent extends Component {
 
                   {/* Number of workshops per month */}
                   <Grid item xs={12} sm={6} md={4}>
-                    {this.props.importedData.ramanihuria.capacitybuilding.nbWorkshops &&
-                    (<WidgetGraph title = {this.props.importedData.ramanihuria.capacitybuilding.nbWorkshops.title}
+                    {this.props.importedData.ramanihuria.capacitybuilding.nbWorkshopsMonthly &&
+                    (<WidgetGraph title = {this.props.importedData.ramanihuria.capacitybuilding.nbWorkshopsMonthly.title}
                                   graph = {<VictoryChart domainPadding={15}>
                                     <VictoryAxis
                                         style={{ tickLabels: { padding: 20 } }}
@@ -165,7 +165,7 @@ class CapacityBuildingContent extends Component {
                                     <VictoryBar
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
-                                        data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbWorkshops.data, "workshops")}
+                                        data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbWorkshopsMonthly.data, "workshops")}
                                     />
                                   </VictoryChart>}
                         />

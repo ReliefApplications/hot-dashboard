@@ -2,18 +2,17 @@
 import React, { Component } from 'react';
 
 /** CSS **/
-import './MappingContent.css';
+import './CapacityBuildingContent.css';
 
 /** Logos **/
-import mapathonsIMG  from '../../../assets/images/logos/mapathons.png';
-import mapIMG        from '../../../assets/images/logos/map.png';
+import mapathonsIMG from "../../../assets/images/logos/mapathons.png";
 
 /** Material UI **/
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import Grid           from '@material-ui/core/Grid';
 
 /** Components **/
-import WidgetIndicator from '../../widget/Indicator';
+import WidgetIndicator from "../../widget/Indicator";
 import WidgetGraph from "../../widget/Graph";
 
 /** Plugins **/
@@ -23,20 +22,20 @@ import { VictoryBar  }  from 'victory';
 import { VictoryTooltip }  from 'victory';
 import { VictoryStack }  from 'victory';
 
-/** Styles **/
+/** Themes **/
 const GlobalTheme = createMuiTheme({
   typography: {
     fontSize   :  18,
     fontFamily : "'Barlow Condensed', sans-serif"
   },
-  palette: {
-    primary: {
-      main : '#D73F3F',
-    }
-  },
 });
 
+
 class CommunityContent extends Component {
+  //------------------------------------------------------------------------//
+  //-------------------------------- Render --------------------------------//
+  //------------------------------------------------------------------------//
+
   render() {
     const tableToData = function (data, customLabel, dataDisplayed) {
       let res = [];
@@ -52,34 +51,27 @@ class CommunityContent extends Component {
     };
 
     return (
-      // The padding prevent the page to be too wide because of the option spacing
+        // The padding prevent the page to be too wide because of the option spacing
       <div style={{ padding: 12 }}>
         {this.props.importedData &&
         (<MuiThemeProvider theme={GlobalTheme}>
           {/* First row */}
           <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
-            {/* Total mappers */}
+            {/* Events conducted */}
             <Grid item xs={12} sm={6} md={3}>
-              {this.props.importedData.global.community.totalMappers && (<WidgetIndicator title={this.props.importedData.global.community.totalMappers.title}
-                                                                                          img={mapIMG}
-                                                                                          data={this.props.importedData.global.community.totalMappers.data}/>)}
-            </Grid>
-
-            {/* Mapathons */}
-            <Grid item xs={12} sm={6} md={3}>
-              {/* We're using the totalEvents value because each event is a mapathon so the total number is the length of the list */}
-              {this.props.importedData.global.community.totalEvents && (<WidgetIndicator title={this.props.importedData.global.community.totalEvents.title}
-                                                                                         img={mapathonsIMG}
-                                                                                         data={this.props.importedData.global.community.totalEvents.data.length}/>)}
+              {this.props.importedData.dummyproject.community.nbEvents &&
+              (<WidgetIndicator title={this.props.importedData.dummyproject.community.nbEvents.title}
+                                img={mapathonsIMG}
+                                data={this.props.importedData.dummyproject.community.nbEvents.value}/>)}
             </Grid>
           </Grid>
 
           {/* Second row */}
           <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
-            {/* Number of people participating in an event (gender) */}
+            {/* Number of people participating in an event */}
             <Grid item xs={12} sm={6} md={4}>
-              {this.props.importedData.global.community.totalNbParticipantsGender &&
-              (<WidgetGraph title = {this.props.importedData.global.community.totalNbParticipantsGender.title}
+              {this.props.importedData.dummyproject.community.nbParticipantsGender &&
+              (<WidgetGraph title = {this.props.importedData.dummyproject.community.nbParticipantsGender.title}
                             graph = {<VictoryChart domainPadding={30}>
                               <VictoryAxis
                                   style={{ tickLabels: { padding: 20 } }}
@@ -91,12 +83,12 @@ class CommunityContent extends Component {
                                 <VictoryBar
                                     labelComponent={<VictoryTooltip/>}
                                     style  = {{ data: { fill: "#D73F3F" } }}
-                                    data   = {tableToData(this.props.importedData.global.community.totalNbParticipantsGender.data, "women participants", "female")}
+                                    data   = {tableToData(this.props.importedData.dummyproject.community.nbParticipantsGender.data, "women participants", "female")}
                                 />
                                 <VictoryBar
                                     labelComponent={<VictoryTooltip/>}
                                     style  = {{ data: { fill: "#FAA71E" } }}
-                                    data   = {tableToData(this.props.importedData.global.community.totalNbParticipantsGender.data, "men participants", "male")}
+                                    data   = {tableToData(this.props.importedData.dummyproject.community.nbParticipantsGender.data, "men participants", "male")}
                                 />
                               </VictoryStack>
                             </VictoryChart>
@@ -104,10 +96,10 @@ class CommunityContent extends Component {
               )}
             </Grid>
 
-            {/* Number of people participating in an event (new/old) */}
+            {/* Number of people participating in an event */}
             <Grid item xs={12} sm={6} md={4}>
-              {this.props.importedData.global.community.totalNbParticipantsNew &&
-              (<WidgetGraph title = {this.props.importedData.global.community.totalNbParticipantsNew.title}
+              {this.props.importedData.dummyproject.community.nbParticipantsNew &&
+              (<WidgetGraph title = {this.props.importedData.dummyproject.community.nbParticipantsNew.title}
                             graph = {<VictoryChart domainPadding={30}>
                               <VictoryAxis
                                   style={{ tickLabels: { padding: 20 } }}
@@ -119,21 +111,22 @@ class CommunityContent extends Component {
                                 <VictoryBar
                                     labelComponent={<VictoryTooltip/>}
                                     style  = {{ data: { fill: "#D73F3F" } }}
-                                    data   = {tableToData(this.props.importedData.global.community.totalNbParticipantsNew.data, "new participants", "new")}
+                                    data   = {tableToData(this.props.importedData.dummyproject.community.nbParticipantsNew.data, "new participants", "new")}
                                 />
                                 <VictoryBar
                                     labelComponent={<VictoryTooltip/>}
                                     style  = {{ data: { fill: "#FAA71E" } }}
-                                    data   = {tableToData(this.props.importedData.global.community.totalNbParticipantsNew.data, "old participants", "old")}
+                                    data   = {tableToData(this.props.importedData.dummyproject.community.nbParticipantsNew.data, "old participants", "old")}
                                 />
                               </VictoryStack>
                             </VictoryChart>
                             }/>
-              )}
-            </Grid>
-          </Grid>
-        </MuiThemeProvider>)}
-      </div>
+                  )}
+                </Grid>
+              </Grid>
+            </MuiThemeProvider>
+          )}
+        </div>
     );
   }
 }
