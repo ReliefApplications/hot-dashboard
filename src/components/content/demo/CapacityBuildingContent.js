@@ -31,6 +31,7 @@ import { VictoryTooltip   }  from 'victory';
 import { VictoryStack   }  from 'victory';
 import { VictoryGroup   }  from 'victory';
 import { VictoryScatter   }  from 'victory';
+import CardHeader from "@material-ui/core/CardHeader/CardHeader";
 
 /** Themes **/
 const GlobalTheme = createMuiTheme({
@@ -55,8 +56,9 @@ class CapacityBuildingContent extends Component {
     return (
         <div style={{ padding: 12 }}>
           {this.props.importedData.global &&
-          (<MuiThemeProvider theme={GlobalTheme}>
-                {/* First row */}
+          (//<MuiThemeProvider theme={GlobalTheme}>
+              <div>
+              {/* First row */}
                 <Grid container spacing={24} className="content-row">
                   <Grid item xs={12} sm={6} md={3}>
                     {this.props.importedData && (<WidgetIndicator title="This is a 'WidgetIndicator'"
@@ -126,8 +128,10 @@ class CapacityBuildingContent extends Component {
                   <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData && (
                         <Card className="widget-container">
+                          <CardHeader
+                              title="Custom widget"
+                          />
                           <CardContent className="widget-text">
-                            <Typography variant="caption"> Custom widget </Typography>
                             <div className="widget-mappedElements-text">
                               <Typography className="widget-mappedElements-text-item-green" color="primary">
                                 {new Intl.NumberFormat('en-GB', {
@@ -239,7 +243,8 @@ class CapacityBuildingContent extends Component {
                                      </VictoryChart>}/>)}
                   </Grid>
                 </Grid>
-              </MuiThemeProvider>
+              {/*</MuiThemeProvider>*/}>
+            </div>
           )}
         </div>
     );

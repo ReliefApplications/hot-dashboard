@@ -41,15 +41,30 @@ class MappingContent extends Component {
   //------------------------------------------------------------------------//
 
   render() {
-    const nbSubwardsData = function (data) {
+    const tableToData = function (data, customLabel, dataDisplayed, sortingChoice) {
+      let dataSort = function (a, b) {
+        if (a.y < b.y) {
+          return -1;
+        } else if (a.y > b.y) {
+          return 1;
+        } else {
+          return 0;
+        }
+      };
       let res = [];
       for (let i=data.length-1; i>=0; i--)
       {
         res.push({
           x: data[i].label,
-          y: data[i].value,
-          label: data[i].value + " sub-wards completed"
+          y: data[i][dataDisplayed],
+          label: data[i][dataDisplayed] + " " + customLabel
         })
+      }
+      switch (sortingChoice) {
+        case "data":
+          res.sort(dataSort);
+          break;
+        default:
       }
       return res;
     };
@@ -57,8 +72,9 @@ class MappingContent extends Component {
     return (
         <div style={{ padding: 12 }}>
           {this.props.importedData.dummyproject &&
-          (<MuiThemeProvider theme={GlobalTheme}>
-                {/* First row */}
+          (//<MuiThemeProvider theme={GlobalTheme}>
+              <div>
+              {/* First row */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
                   {/* Map edits */}
                   <Grid item xs={12} sm={6} md={3}>
@@ -82,16 +98,18 @@ class MappingContent extends Component {
                                         dependentAxis
                                     />
                                     <VictoryBar
+                                        barRatio={5}
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
-                                        data   = {nbSubwardsData(this.props.importedData.dummyproject.mapping.nbSubwardsCompleted.data)}
+                                        data   = {tableToData(this.props.importedData.ramanihuria.mapping.nbSubwardsCompleted.data, "sub-wards completed", "value")}
                                     />
                                   </VictoryChart>}
                         />
                     )}
                   </Grid>
                 </Grid>
-              </MuiThemeProvider>
+              {/*</MuiThemeProvider>*/}>
+              </div>
           )}
         </div>
     );

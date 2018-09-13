@@ -36,7 +36,7 @@ class CapacityBuildingContent extends Component {
   //------------------------------------------------------------------------//
 
   render() {
-    const tableToData = function (data, customLabel, sortingChoice) {
+    const tableToData = function (data, customLabel, dataDisplayed, sortingChoice) {
       let dataSort = function (a, b) {
         if (a.y < b.y) {
           return -1;
@@ -51,8 +51,8 @@ class CapacityBuildingContent extends Component {
       {
         res.push({
           x: data[i].label,
-          y: data[i].value,
-          label: data[i].value + " " + customLabel
+          y: data[i][dataDisplayed],
+          label: data[i][dataDisplayed] + " " + customLabel
         })
       }
       switch (sortingChoice) {
@@ -60,14 +60,16 @@ class CapacityBuildingContent extends Component {
           res.sort(dataSort);
           break;
         default:
-      }      return res;
+      }
+      return res;
     };
 
     return (
         // The padding prevent the page to be too wide because of the option spacing
         <div style={{ padding: 12 }}>
           {this.props.importedData &&
-          (<MuiThemeProvider theme={GlobalTheme}>
+          (//<MuiThemeProvider theme={GlobalTheme}>
+              <div>
                 {/* First row */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
                   {/* Organizations supported */}
@@ -95,9 +97,10 @@ class CapacityBuildingContent extends Component {
                                         style = {{ tickLabels: { padding: 20 } }}
                                     />
                                     {<VictoryBar
+                                        barRatio={0.5}
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
-                                        data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesMonthly.data, "people trained")}
+                                        data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesMonthly.data, "people trained", "value")}
                                     />}
                                   </VictoryChart>
                                   }/>
@@ -119,7 +122,7 @@ class CapacityBuildingContent extends Component {
                                     {<VictoryBar horizontal
                                                  labelComponent={<VictoryTooltip/>}
                                                  style  = {{ data: { fill: "#D73F3F" } }}
-                                                 data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesInstitutions.data, "attendees", "data")}
+                                                 data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesInstitutions.data, "attendees", "value", "data")}
                                     />}
                                   </VictoryChart>}
                                   data = {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesInstitutions.data}
@@ -140,9 +143,10 @@ class CapacityBuildingContent extends Component {
                                         dependentAxis
                                     />
                                     {<VictoryBar
+                                        barRatio={0.5}
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
-                                        data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesTraining.data, "trainings")}
+                                        data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesTraining.data, "trainings", "value")}
                                     />}
                                   </VictoryChart>}
                                   data = {this.props.importedData.ramanihuria.capacitybuilding.nbAttendeesTraining.data}
@@ -163,9 +167,10 @@ class CapacityBuildingContent extends Component {
                                         dependentAxis
                                     />
                                     <VictoryBar
+                                        barRatio={0.5}
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
-                                        data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbWorkshopsMonthly.data, "workshops")}
+                                        data   = {tableToData(this.props.importedData.ramanihuria.capacitybuilding.nbWorkshopsMonthly.data, "workshops", "value")}
                                     />
                                   </VictoryChart>}
                         />
@@ -173,7 +178,8 @@ class CapacityBuildingContent extends Component {
                     )}
                   </Grid>
                 </Grid>
-              </MuiThemeProvider>
+              {/*</MuiThemeProvider>*/}
+              </div>
           )}
         </div>
     );

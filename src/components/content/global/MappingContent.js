@@ -25,6 +25,9 @@ import { VictoryBar   }  from 'victory';
 import { VictoryAxis   }  from 'victory';
 import { VictoryTooltip   }  from 'victory';
 import { VictoryStack   }  from 'victory';
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import MoreVertIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import CardHeader from "@material-ui/core/CardHeader/CardHeader";
 
 /** Themes **/
 const GlobalTheme = createMuiTheme({
@@ -78,7 +81,8 @@ class MappingContent extends Component {
         // The padding prevent the page to be too wide because of the option spacing
         <div style={{ padding: 12 }}>
           {this.props.importedData.global &&
-          (<MuiThemeProvider theme={GlobalTheme}>
+          (//<MuiThemeProvider theme={GlobalTheme}>
+              <div>
                 {/* First row */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
                   {/* Maps edits */}
@@ -119,7 +123,7 @@ class MappingContent extends Component {
                                       data={this.props.importedData.global.main.totalNbTrainings.value}/>)}
                   </Grid>
 
-                  {/* Workshops that happened */}
+                  {/* Number of organizations supported */}
                   <Grid item xs={12} sm={6} md={3}>
                     {this.props.importedData.global.main.totalOrganizationsSupported &&
                     (<WidgetIndicator title={this.props.importedData.global.main.totalOrganizationsSupported.title}
@@ -134,8 +138,10 @@ class MappingContent extends Component {
                   <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData.global.main.totalBuildings && (
                         <Card className="widget-container">
+                          <CardHeader
+                              title="Number of elements mapped"
+                          />
                           <CardContent className="widget-text">
-                            <Typography variant="caption"> Number of elements mapped </Typography>
                             <div className="widget-mappedElements-text">
                               <Typography className="widget-mappedElements-text-item-green" color="primary">
                                 {new Intl.NumberFormat('en-GB', {
@@ -152,11 +158,11 @@ class MappingContent extends Component {
                         </Card>)}
                   </Grid>
 
-                  {/* Number of people participating in an event (gender) */}
+                  {/* Number of people who participated in events (gender) */}
                   <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData.global.main.totalNbParticipantsGender &&
                     (<WidgetGraph title = {this.props.importedData.global.main.totalNbParticipantsGender.title}
-                                  graph = {<VictoryChart domainPadding={30}>
+                                  graph = {<VictoryChart domainPadding={18}>
                                     <VictoryAxis
                                         style={{ tickLabels: { padding: 20 } }}
                                     />
@@ -165,11 +171,13 @@ class MappingContent extends Component {
                                     />
                                     <VictoryStack>
                                       <VictoryBar
+                                          barRatio={0.5}
                                           labelComponent={<VictoryTooltip/>}
                                           style  = {{ data: { fill: "#D73F3F" } }}
                                           data   = {tableToData(this.props.importedData.global.main.totalNbParticipantsGender.data, "women participants", "female")}
                                       />
                                       <VictoryBar
+                                          barRatio={0.5}
                                           labelComponent={<VictoryTooltip/>}
                                           style  = {{ data: { fill: "#FAA71E" } }}
                                           data   = {tableToData(this.props.importedData.global.main.totalNbParticipantsGender.data, "men participants", "male")}
@@ -180,7 +188,7 @@ class MappingContent extends Component {
                     )}
                   </Grid>
 
-                  {/* Number of attendees trained per training type */}
+                  {/* Number of people trained per training type */}
                   <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData.global.main.totalNbAttendeesTraining &&
                     (<WidgetGraph title = {this.props.importedData.global.main.totalNbAttendeesTraining.title}
@@ -191,19 +199,42 @@ class MappingContent extends Component {
                                     <VictoryAxis
                                         dependentAxis
                                     />
-                                    {<VictoryBar
+                                    <VictoryBar
+                                        barRatio={0.8}
                                         labelComponent={<VictoryTooltip/>}
                                         style  = {{ data: { fill: "#D73F3F" } }}
                                         data   = {tableToData(this.props.importedData.global.main.totalNbAttendeesTraining.data, "trainings", "value")}
-                                    />}
+                                    />
                                   </VictoryChart>}
                                   data = {this.props.importedData.global.main.totalNbAttendeesTraining.data}
                         />
+                    )}
+                  </Grid>
 
+                  {/* Number of people participating in an event aggregated by training type */}
+                  <Grid item xs={12} sm={6} md={4}>
+                    {this.props.importedData.global.main.totalNbParticipantsType &&
+                    (<WidgetGraph title = {this.props.importedData.global.main.totalNbParticipantsType.title}
+                                  graph = {<VictoryChart domainPadding={15}>
+                                    <VictoryAxis
+                                        style={{ tickLabels: { padding: 20 } }}
+                                    />
+                                    <VictoryAxis
+                                        dependentAxis
+                                    />
+                                    <VictoryBar
+                                        barRatio={0.5}
+                                        labelComponent={<VictoryTooltip/>}
+                                        style  = {{ data: { fill: "#D73F3F" } }}
+                                        data   = {tableToData(this.props.importedData.global.main.totalNbParticipantsType.data, "participants", "value")}
+                                    />
+                                  </VictoryChart>
+                                  }/>
                     )}
                   </Grid>
                 </Grid>
-              </MuiThemeProvider>
+                {/*</MuiThemeProvider>*/}>
+              </div>
           )}
         </div>
     );

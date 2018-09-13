@@ -37,7 +37,16 @@ class CommunityContent extends Component {
   //------------------------------------------------------------------------//
 
   render() {
-    const tableToData = function (data, customLabel, dataDisplayed) {
+    const tableToData = function (data, customLabel, dataDisplayed, sortingChoice) {
+      let dataSort = function (a, b) {
+        if (a.y < b.y) {
+          return -1;
+        } else if (a.y > b.y) {
+          return 1;
+        } else {
+          return 0;
+        }
+      };
       let res = [];
       for (let i=data.length-1; i>=0; i--)
       {
@@ -47,6 +56,12 @@ class CommunityContent extends Component {
           label: data[i][dataDisplayed] + " " + customLabel
         })
       }
+      switch (sortingChoice) {
+        case "data":
+          res.sort(dataSort);
+          break;
+        default:
+      }
       return res;
     };
 
@@ -54,8 +69,9 @@ class CommunityContent extends Component {
         // The padding prevent the page to be too wide because of the option spacing
       <div style={{ padding: 12 }}>
         {this.props.importedData &&
-        (<MuiThemeProvider theme={GlobalTheme}>
-          {/* First row */}
+        (//<MuiThemeProvider theme={GlobalTheme}>
+            <div>
+              {/* First row */}
           <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
             {/* Events conducted */}
             <Grid item xs={12} sm={6} md={3}>
@@ -72,7 +88,7 @@ class CommunityContent extends Component {
             <Grid item xs={12} sm={6} md={4}>
               {this.props.importedData.dummyproject.community.nbParticipantsGender &&
               (<WidgetGraph title = {this.props.importedData.dummyproject.community.nbParticipantsGender.title}
-                            graph = {<VictoryChart domainPadding={30}>
+                            graph = {<VictoryChart domainPadding={18}>
                               <VictoryAxis
                                   style={{ tickLabels: { padding: 20 } }}
                               />
@@ -100,7 +116,7 @@ class CommunityContent extends Component {
             <Grid item xs={12} sm={6} md={4}>
               {this.props.importedData.dummyproject.community.nbParticipantsNew &&
               (<WidgetGraph title = {this.props.importedData.dummyproject.community.nbParticipantsNew.title}
-                            graph = {<VictoryChart domainPadding={30}>
+                            graph = {<VictoryChart domainPadding={18}>
                               <VictoryAxis
                                   style={{ tickLabels: { padding: 20 } }}
                               />
@@ -123,8 +139,30 @@ class CommunityContent extends Component {
                             }/>
                   )}
                 </Grid>
+
+                {/* Number of people participating in an event aggregated by training type */}
+                <Grid item xs={12} sm={6} md={4}>
+                  {this.props.importedData.dummyproject.community.nbParticipantsType &&
+                  (<WidgetGraph title = {this.props.importedData.dummyproject.community.nbParticipantsType.title}
+                                graph = {<VictoryChart domainPadding={15}>
+                                  <VictoryAxis
+                                      style={{ tickLabels: { padding: 30 } }}
+                                  />
+                                  <VictoryAxis
+                                      dependentAxis
+                                  />
+                                  <VictoryBar
+                                      labelComponent={<VictoryTooltip/>}
+                                      style  = {{ data: { fill: "#D73F3F" } }}
+                                      data   = {tableToData(this.props.importedData.dummyproject.community.nbParticipantsType.data, "participants", "value")}
+                                  />
+                                </VictoryChart>
+                                }/>
+                  )}
+                </Grid>
               </Grid>
-            </MuiThemeProvider>
+             {/*</MuiThemeProvider>*/}
+            </div>
           )}
         </div>
     );

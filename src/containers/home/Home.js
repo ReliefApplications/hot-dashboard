@@ -149,7 +149,7 @@ class Home extends React.Component {
     return (
         <div className="Home">
           {/* Header */}
-          <Header sendToHome={this.selectProjectFromHeader} contentName={this.state.contentName} importedProjects={this.state.importedProjects}></Header>
+          <Header sendToHome={this.selectProjectFromHeader} contentName={this.state.contentName} importedProjects={this.state.importedProjects}/>
 
           {/* Filter Tabs */}
           {this.state.contentName !== "Main"          && (<FilterTabs sendToHome={this.selectContentFromFilterTabs} contentName={this.state.contentName} importedData={importedData[this.state.projectName.toLowerCase()]}></FilterTabs>)}

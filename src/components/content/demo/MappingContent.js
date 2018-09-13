@@ -31,6 +31,7 @@ import { VictoryTooltip   }  from 'victory';
 import { VictoryStack   }  from 'victory';
 import { VictoryGroup   }  from 'victory';
 import { VictoryScatter   }  from 'victory';
+import CardHeader from "@material-ui/core/CardHeader/CardHeader";
 
 /** Themes **/
 const GlobalTheme = createMuiTheme({
@@ -57,7 +58,8 @@ class MappingContent extends Component {
         <div style={{ padding: 12 }}>
           {/* We only show the dashboard if the matching data fetched from the rawdata is existing */}
           {this.props.importedData &&
-          (<MuiThemeProvider theme={GlobalTheme}>
+          (//<MuiThemeProvider theme={GlobalTheme}>
+              <div>
                 {/* First row */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
                   {/* A widdgetIndicator can be used to show a little image and a value */}
@@ -155,8 +157,10 @@ class MappingContent extends Component {
                   <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData && (
                         <Card className="widget-container">
+                          <CardHeader
+                              title="Custom widget"
+                          />
                           <CardContent className="widget-text">
-                            <Typography variant="caption"> Custom widget </Typography>
                             <div className="widget-mappedElements-text">
                               <Typography className="widget-mappedElements-text-item-green" color="primary">
                                 {new Intl.NumberFormat('en-GB', {
@@ -268,7 +272,8 @@ class MappingContent extends Component {
                                      </VictoryChart>}/>)}
                   </Grid>
                 </Grid>
-              </MuiThemeProvider>
+              {/*</MuiThemeProvider>*/}>
+              </div>
           )}
         </div>
     );
