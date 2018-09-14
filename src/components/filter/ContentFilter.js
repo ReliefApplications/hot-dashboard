@@ -8,13 +8,7 @@ import Button          from '@material-ui/core/Button';
 import './ContentFilter.css';
 
 /** Styles **/
-const Buttons = {
-  background : '#FFFFFF',
-  color      : '#D73F3F',
-  margin     : '0 0 0 5px',
-  fontFamily : "'Barlow Condensed', sans-serif",
-  fontSize   :  18
-};
+// When the content is displayed the button is different so that the user knows he's on this part of the project
 const FilterSelected = {
   background : '#D73F3F',
   color      : 'white',
@@ -23,18 +17,19 @@ const FilterSelected = {
   fontSize   :  18,
 };
 
-
+/**
+ * This component is used to choose which content from a project we want to display
+ */
 class ContentFilter extends Component {
   constructor(props) {
     super(props);
     this.selectContent = this.selectContent.bind(this);
-
     this.state = {
       displayedContent : 'mapping'
     };
   }
 
-  /** Open content & close mini menu **/
+  /** When the content is selected, the selection is sent to the Home component in order to display the right page **/
   selectContent = (content) => () => {
     let selectedContent = []; //Object sended to container (Home)
 
@@ -67,8 +62,9 @@ class ContentFilter extends Component {
     this.props.sendToHome(selectedContent)
   };
 
-
-
+  //------------------------------------------------------------------------//
+  //-------------------------------- Render --------------------------------//
+  //------------------------------------------------------------------------//
   render() {
     return (
         <div className="tabs">
@@ -76,7 +72,7 @@ class ContentFilter extends Component {
           {(this.props.importedData === undefined) ?
               null
               : ((Object.keys(this.props.importedData.mapping).length !== 0) ?
-                  <Button style     = {(this.props.contentName === 'Mapping') ? FilterSelected : Buttons}
+                  <Button style     = {(this.props.contentName === 'Mapping') ? FilterSelected : null}
                           variant   = "contained"
                           component = "span"
                           onClick   = {this.selectContent('mapping')}>
@@ -88,7 +84,7 @@ class ContentFilter extends Component {
           {(this.props.importedData === undefined) ?
               null
               : ((Object.keys(this.props.importedData.capacitybuilding).length !== 0) ?
-                  <Button style     = {(this.props.contentName === 'Capacity building') ? FilterSelected : Buttons}
+                  <Button style     = {(this.props.contentName === 'Capacity building') ? FilterSelected : null}
                           variant   = "contained"
                           component = "span"
                           onClick   = {this.selectContent('capacity_building')}>
@@ -100,7 +96,7 @@ class ContentFilter extends Component {
           {(this.props.importedData === undefined) ?
               null
               : ((Object.keys(this.props.importedData.community).length !== 0) ?
-                  <Button style     = {(this.props.contentName === 'Community') ? FilterSelected : Buttons}
+                  <Button style     = {(this.props.contentName === 'Community') ? FilterSelected : null}
                           variant   = "contained"
                           component = "span"
                           onClick   = {this.selectContent('community')}>
@@ -112,7 +108,7 @@ class ContentFilter extends Component {
           {(this.props.importedData === undefined) ?
               null
               : ((Object.keys(this.props.importedData.awareness).length !== 0) ?
-                <Button style     = {(this.props.contentName === 'Awareness') ? FilterSelected : Buttons}
+                <Button style     = {(this.props.contentName === 'Awareness') ? FilterSelected : null}
                         variant   = "contained"
                         component = "span"
                         onClick   = {this.selectContent('awareness')}>

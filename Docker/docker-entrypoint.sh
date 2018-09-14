@@ -6,7 +6,4 @@ if [ ! -d node_modules ]; then
     npm install
 fi
 
-# export PORT=3630
 npm start
-# you can precise your environment
-# ng serve --host 0.0.0.0 --env=dev --port 4560

@@ -9,7 +9,6 @@ import mapIMG        from '../../../assets/images/logos/map.png';
 import mapathonsIMG from "../../../assets/images/logos/mapathons.png";
 
 /** Material UI **/
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Typography       from '@material-ui/core/Typography';
 import Card             from '@material-ui/core/Card';
 import CardContent      from '@material-ui/core/CardContent';
@@ -25,30 +24,16 @@ import { VictoryBar   }  from 'victory';
 import { VictoryAxis   }  from 'victory';
 import { VictoryTooltip   }  from 'victory';
 import { VictoryStack   }  from 'victory';
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import MoreVertIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import CardHeader from "@material-ui/core/CardHeader/CardHeader";
-
-/** Themes **/
-const GlobalTheme = createMuiTheme({
-  typography: {
-    fontSize   :  18,
-    fontFamily : "'Barlow Condensed', sans-serif"
-  },
-  palette: {
-    primary: {
-      main : '#FFFFFF',
-    }
-  },
-});
-
 
 class MappingContent extends Component {
   //------------------------------------------------------------------------//
   //-------------------------------- Render --------------------------------//
   //------------------------------------------------------------------------//
-
   render() {
+    /**
+     * This function is used to create the data for the graphs
+     */
     const tableToData = function (data, customLabel, dataDisplayed, sortingChoice) {
       let dataSort = function (a, b) {
         if (a.y < b.y) {
@@ -81,7 +66,7 @@ class MappingContent extends Component {
         // The padding prevent the page to be too wide because of the option spacing
         <div style={{ padding: 12 }}>
           {this.props.importedData.global &&
-          (//<MuiThemeProvider theme={GlobalTheme}>
+          (
               <div>
                 {/* First row */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
@@ -115,7 +100,7 @@ class MappingContent extends Component {
                                       data={this.props.importedData.global.main.totalNbEvents.value}/>)}
                   </Grid>
 
-                  {/* Workshops that happened */}
+                  {/* Number of training conducted */}
                   <Grid item xs={12} sm={6} md={3}>
                     {this.props.importedData.global.main.totalNbTrainings &&
                     (<WidgetIndicator title={this.props.importedData.global.main.totalNbTrainings.title}
@@ -188,7 +173,7 @@ class MappingContent extends Component {
                     )}
                   </Grid>
 
-                  {/* Number of people trained per training type */}
+                  {/* Number of people trained (training type) */}
                   <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData.global.main.totalNbAttendeesTraining &&
                     (<WidgetGraph title = {this.props.importedData.global.main.totalNbAttendeesTraining.title}
@@ -211,7 +196,7 @@ class MappingContent extends Component {
                     )}
                   </Grid>
 
-                  {/* Number of people participating in an event aggregated by training type */}
+                  {/* Number of people who participated in events (event type) */}
                   <Grid item xs={12} sm={6} md={4}>
                     {this.props.importedData.global.main.totalNbParticipantsType &&
                     (<WidgetGraph title = {this.props.importedData.global.main.totalNbParticipantsType.title}
@@ -233,7 +218,6 @@ class MappingContent extends Component {
                     )}
                   </Grid>
                 </Grid>
-                {/*</MuiThemeProvider>*/}>
               </div>
           )}
         </div>

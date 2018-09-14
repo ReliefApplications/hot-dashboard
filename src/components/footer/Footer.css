@@ -1,0 +1,244 @@
+/*------------------------------------------------------------------------//
+//------------------------------- Footer ---------------------------------//
+//------------------------------------------------------------------------*/
+.site-footer {
+  background-color: #D73F3F;
+  text-align: start;
+}
+.site-footer h4 {
+  color: #FFFFFF;
+  font-size: 1.375rem;
+  font-weight: 400;
+  line-height: 1.3;
+  margin: 0 0 8px;
+}
+.site-footer .nav-group {
+  margin-bottom: 32px;
+}
+.site-footer .nav-group a {
+  display: block;
+  color: #FFFFFF;
+  margin-bottom: 12px;
+}
+
+.site-footer .nav-group a:hover {
+  color: #F5CFCF;
+}
+
+.site-footer .social-links {
+  margin-top: 40px;
+}
+.site-footer .social-links svg {
+  height: 18px;
+}
+.site-footer .social-links svg path {
+  fill: #FFFFFF;
+}
+.site-footer .social-links a:hover svg path {
+  fill: #C23939;
+}
+
+.social-links {
+  margin: 0 16px 0 0;
+  padding: 0;
+}
+.social-links li {
+  display: inline-block;
+  margin-right: 2px;
+}
+.social-links a svg {
+  height: 14px;
+  width: auto;
+}
+.social-links a span {
+  display: inline-block;
+  text-indent: -9999px;
+}
+
+.footer-group {
+  padding: 16px;
+}
+
+.footer-logo {
+  display: inline-block;
+  width: 112px;
+  height: 112px;
+  border-radius: 56px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, .1);
+}
+.footer-logo:hover {
+  box-shadow: 0px 2px 15px rgba(0,0,0,.2);
+}
+.footer-logo img {
+  width: 112px;
+  height: 112px;
+}
+
+.footer-logos, .footer-nav {
+  border-right: 1px solid #AC3232;
+}
+
+.footer-copyright {
+  background-color: #6C2020;
+  padding: 12px 0;
+}
+.footer-copyright .container {
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+  margin: 0 auto;
+}
+.footer-copyright p {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #F1BCBC;
+  vertical-align: middle;
+  flex: 1;
+  padding-right: 16px;
+}
+.footer-copyright img {
+  width: 40px;
+  height: 24px;
+}
+
+@media (min-width: 1022px) {
+  .footer-group {
+    padding: 0 40px;
+  }
+  .site-footer {
+    padding: 40px 0 0;
+  }
+  .site-footer .social-links {
+    margin-top: 80px;
+  }
+  .footer-body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 40px;
+  }
+}
+
+
+/*------------------------------------------------------------------------//
+//----------------------------- Navigation -------------------------------//
+//------------------------------------------------------------------------*/
+@media (min-width: 1022px) {
+  .nav-group a {
+    padding: 14px 0;
+    margin-right: 24px;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+  }
+  .nav-group a .active {
+    border-bottom: 2px solid #D73F3F;
+  }
+  .nav-group a .active:hover,
+  .nav-group a .active:active,
+  .nav-group a .active:focus {
+    border-bottom: 2px solid #F5CFCF;
+  }
+}
+
+@media (max-width: 1022px) {
+  .nav-logo {
+    display: none;
+  }
+
+  .nav-group a {
+    display: block;
+  }
+  .social-links a svg {
+  height: 20px;
+  width: auto;
+}
+}
+
+@media (min-width: 1022px) and (max-width: 1278px) {
+  .nav-group a{
+    font-size: 0.875rem;
+  }
+  .nav-logo{
+    width: 167px;
+    height: 40px;
+    margin-top: 4px;
+  }
+  .nav-group a {
+    padding: 15px 0;
+    margin-right: 16px;
+  }
+}
+
+.nav-group a {
+  text-transform: uppercase;
+  letter-spacing: .035em;
+  text-decoration: none;
+}
+.nav-main {
+  transition: width .3s ease;
+}
+.nav-group {
+}
+.nav-group a {
+  font-family: "Barlow Condensed",sans-serif;
+  padding: 0;
+  line-height: 16px;
+}
+.nav-group a:last-child {
+  margin-right: 0;
+}
+
+/*------------------------------------------------------------------------//
+//------------------------------- Buttons --------------------------------//
+//------------------------------------------------------------------------*/
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 12px 14px;
+  border-radius: 2px;
+  box-shadow: 0px 2px 10px rgba(0,0,0,.1);
+  transition: all .2s ease-in-out;
+  margin-right: 4px;
+  cursor: pointer;
+}
+.btn:hover {
+   box-shadow: 0px 2px 15px rgba(0,0,0,.2);
+ }
+.btn.btn-info {
+  color: #FFFFFF;
+  background-color: #2C3038;
+}
+.btn.btn-info:hover {
+   background-color: #1f2227;
+ }
+.btn.btn-lg {
+  padding: 16px 16px;
+}
+.btn.btn-lg.btn-outline {
+   padding: 15px 15px;
+ }
+.btn.btn-chevron {
+  position: relative;
+}
+.btn.btn-chevron:after {
+   content: '';
+   display: inline-block;
+   margin-left: 16px;
+   width: 6px;
+   height: 10px;
+  background: url(https://www.hotosm.org/images/chevron-white.svg) no-repeat right center;
+  background-size: contain;
+ }
+.btn.btn-chevron.btn-block:after {
+   position: absolute;
+   top: 15px;
+   right: 16px;
+ }
+.btn.btn-chevron.btn-block.btn-lg:after {
+   position: absolute;
+   top: 19px;
+   right: 16px;
+ }
+.btn.btn-block {
+   display: block;
+   margin-right: 0;
+ }

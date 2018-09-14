@@ -5,6 +5,7 @@ services:
         image: hot/dashboard
         build: .
         ports:
+#   the local port:the port of the running app on docker side
             - '3000:3000'
         volumes:
             - './:/usr/dockers/devapp/'

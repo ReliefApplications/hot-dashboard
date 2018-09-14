@@ -10,7 +10,6 @@
     font-size: 1rem !important;
     color: rgba(0, 0, 0, 0.54) !important;
 }
-/** External widgets **/
 .indicator-container {
     display       : flex;
     height: auto !important;
@@ -27,5 +26,4 @@
     text-align      : center;
     margin          : 0 auto;
     padding         : 10px;
-
 }

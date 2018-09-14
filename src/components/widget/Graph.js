@@ -19,14 +19,16 @@ import './Widget.css';
 class WidgetGraph extends Component {
   constructor(props) {
     super(props);
-
     this.displayInfos = this.displayInfos.bind(this);
     this.hideInfos    = this.hideInfos.bind(this);
     this.state = {
-      anchorProject              : null,
+      anchorProject : null,
     };
   }
 
+  //------------------------------------------------------------------------//
+  //--------------------------- Content display ----------------------------//
+  //------------------------------------------------------------------------//
   /** Open the panel that display the informations **/
   displayInfos = () => {
     this.setState({
@@ -39,6 +41,9 @@ class WidgetGraph extends Component {
     this.setState({ anchorProject: false });
   };
 
+  //------------------------------------------------------------------------//
+  //-------------------------------- Render --------------------------------//
+  //------------------------------------------------------------------------//
   render() {
     const dataDesc = function (data) {
       let res = [];

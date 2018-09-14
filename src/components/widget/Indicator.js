@@ -10,10 +10,11 @@ import CardMedia      from '@material-ui/core/CardMedia';
 /** CSS **/
 import './Widget.css';
 
-
+/**
+ * This Indicator is used to display a title and a number with an image
+ */
 class WidgetIndicator extends Component {
   render() {
-
     return (
       <div>
         <Card className="indicator-container">

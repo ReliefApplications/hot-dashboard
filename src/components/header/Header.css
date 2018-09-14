@@ -5,11 +5,11 @@
 //------------------------------------------------------------------------*/
 .header {
   display : flex;
-  flex-direction : row;
+  flex-direction : column;
   align-items: center;
-  padding          : 10px;
-  background-color : #D73F3F;
-  color            : white;
+  padding          : 0 0 10px 0;
+  color : #D73F3F;
+  background-color            : white;
   font-family: 'Barlow Condensed', sans-serif;
   box-shadow: 0 5px 50px 0 #929DB3;
 }
@@ -19,4 +19,101 @@
   width : 87%;
   margin: 0;
   padding: 0 10px;
+  font-weight: 400;
+}
+
+.menu-project-selector {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+#MiniMenuGlobal {
+  color : #D73F3F;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 400;
+}
+
+/*------------------------------------------------------------------------//
+//------------------------- Header from hotosm ---------------------------//
+//------------------------------------------------------------------------*/
+@media (min-width: 1022px) {
+  .nav-secondary {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    border-bottom: 1px solid #E1E0E0;
+  }
+  .nav-secondary .tagline {
+    flex: 1;
+    margin: 0 0 0 40px;
+  }
+  #nav-container {
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: row-reverse;
+    will-change: auto;
+  }
+  #nav-container.fixed-nav {
+    box-shadow: 0px 1px 0px rgba(225, 224, 224, 1.000);
+  }
+  #nav-container.fixed-nav .hr-v {
+    height: 24px;
+  }
+  #nav-container.fixed-nav .nav-main-container {
+    padding: 0;
+    height: 48px;
+  }
+}
+
+@media (max-width: 1022px) {
+  .nav-secondary .tagline {
+    position: absolute;
+    bottom: 30px;
+    right: 24px;
+  }
+  .nav-secondary .nav-item-donate {
+    display: block;
+    margin: 16px 0 24px;
+  }
+  #nav-container {
+    background-color: #FFEDED;
+    padding: 24px;
+    margin-bottom: 16px;
+    display: none;
+  }
+  #nav-container.show-nav {
+    display: block;
+  }
+}
+
+.nav-secondary {
+  text-align: start;
+  width: 100%;
+}
+
+.nav-secondary .tagline {
+  font-size: .75rem;
+  color: #D73F3F;
+  opacity: .85;
+}
+
+.nav-secondary .nav-item-donate {
+  background-color: #D73F3F;
+  color: #FFFFFF;
+  font-family: "Barlow Condensed", sans-serif;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+  line-height: 1;
+  text-align: center;
+  padding: 11px 40px 13px;
+}
+
+#nav-container {
+  transition: all .3s ease;
+}
+#nav-container a {
+  text-decoration: none;
 }

@@ -8,7 +8,6 @@ import './MappingContent.css';
 import mapIMG        from '../../../assets/images/logos/map.png';
 
 /** Material UI **/
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Grid             from '@material-ui/core/Grid';
 
 /** Components **/
@@ -21,26 +20,14 @@ import { VictoryAxis  }  from 'victory';
 import { VictoryBar  }  from 'victory';
 import { VictoryTooltip }  from 'victory';
 
-/** Themes **/
-const GlobalTheme = createMuiTheme({
-  typography: {
-    fontSize   :  18,
-    fontFamily : "'Barlow Condensed', sans-serif"
-  },
-  palette: {
-    primary: {
-      main : '#FFFFFF',
-    }
-  },
-});
-
-
 class MappingContent extends Component {
   //------------------------------------------------------------------------//
   //-------------------------------- Render --------------------------------//
   //------------------------------------------------------------------------//
-
   render() {
+    /**
+     * This function is used to create the data for the graphs
+     */
     const tableToData = function (data, customLabel, dataDisplayed, sortingChoice) {
       let dataSort = function (a, b) {
         if (a.y < b.y) {
@@ -72,7 +59,7 @@ class MappingContent extends Component {
     return (
         <div style={{ padding: 12 }}>
           {this.props.importedData.dummyproject &&
-          (//<MuiThemeProvider theme={GlobalTheme}>
+          (
               <div>
               {/* First row */}
                 <Grid container spacing={24} className="content-row">  {/* Spacing = space between cards */}
@@ -108,7 +95,6 @@ class MappingContent extends Component {
                     )}
                   </Grid>
                 </Grid>
-              {/*</MuiThemeProvider>*/}>
               </div>
           )}
         </div>

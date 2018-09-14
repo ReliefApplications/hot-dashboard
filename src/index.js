@@ -10,10 +10,20 @@ import Home                  from './containers/home/Home';
 import './index.css';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
+/**
+ * This constant is used to override the base MuiTheme
+ * It's used all across the website
+ * @type {Theme}
+ */
 const GlobalTheme = createMuiTheme({
   typography: {
     fontSize   :  18,
-    fontFamily : "'Barlow Condensed', sans-serif"
+    fontFamily : '"Barlow Condensed", sans-serif'
+  },
+  palette: {
+    primary: {
+      main: '#FFFFFF'
+    }
   },
   overrides: {
     MuiCardHeader: {
@@ -26,6 +36,32 @@ const GlobalTheme = createMuiTheme({
     MuiTypography: {
       colorPrimary: {
         color: 'white',
+      }
+    },
+    MuiButton: {
+      raised: {
+        background : 'white',
+        color      : '#D73F3F',
+        margin     : '0 0 0 10px',
+        fontFamily : '"Barlow Condensed", sans-serif',
+        fontSize   : 18,
+        '&:hover': {
+          background : 'rgba(0, 0, 0, 0.05)',
+          color : '#C43636'
+        }
+      },
+    },
+    MuiList: {
+      padding: {
+        padding: '0 !important'
+      }
+    },
+    MuiMenuItem: {
+      root: {
+        fontFamily : '"Barlow Condensed", sans-serif',
+        fontWeight : 400,
+        background : 'white',
+        color      : '#D73F3F',
       }
     }
   },
