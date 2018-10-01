@@ -99,14 +99,34 @@ class Home extends React.Component {
     this.setState({
       loading: true
     });
-    import('../../components/content/'+projectSelected+'/MappingContent')
-      .then((res) => this.setState({MappingContent : res.default}));
-    import('../../components/content/'+projectSelected+'/CapacityBuildingContent')
-      .then((res) => this.setState({CapacityBuildingContent : res.default}));
-    import('../../components/content/'+projectSelected+'/AwarenessContent')
-      .then((res) => this.setState({AwarenessContent : res.default}));
-    import('../../components/content/'+projectSelected+'/CommunityContent')
-      .then((res) => this.setState({CommunityContent : res.default}));
+    try {
+      await import('../../components/content/'+projectSelected+'/MappingContent')
+        .then((res) => this.setState({MappingContent : res.default}));
+    }
+    catch (e){
+      // console.error(e);
+    }
+    try {
+      await import('../../components/content/'+projectSelected+'/CapacityBuildingContent')
+        .then((res) => this.setState({CapacityBuildingContent : res.default}));
+    }
+    catch (e){
+      // console.error(e);
+    }
+    try {
+      await import('../../components/content/'+projectSelected+'/CommunityContent')
+        .then((res) => this.setState({CommunityContent : res.default}));
+    }
+    catch (e){
+      // console.error(e);
+    }
+    try {
+      await import('../../components/content/'+projectSelected+'/AwarenessContent')
+        .then((res) => this.setState({AwarenessContent : res.default}));
+    }
+    catch (e){
+      // console.error(e);
+    }
     projectSelected === "global" ?
       this.setState({
         contentName                     : 'Main',
